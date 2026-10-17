@@ -12,29 +12,42 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { sessionToken, dwellTimeSeconds = 35, interactionCount = 12, mouseEventsRecorded = 25, scrollDepthPercent = 80, userResponses } = body;
+  const sessionToken = body.sessionToken;
+  const taskId = body.taskId;
+  const telemetry = body.telemetry || {};
 
-  if (!sessionToken) {
-    return NextResponse.json({ error: 'sessionToken is required.' }, { status: 400 });
-  }
+  const dwellTimeSeconds = Number(body.dwellTimeSeconds ?? telemetry.dwellSeconds ?? 35);
+  const interactionCount = Number(body.interactionCount ?? telemetry.keyPresses ?? 12);
+  const mouseEventsRecorded = Number(body.mouseEventsRecorded ?? telemetry.mouseMovements ?? 25);
+  const scrollDepthPercent = Number(body.scrollDepthPercent ?? 80);
+  const userResponses = body.userResponses || body.answers;
 
-  const tokenData = verifySessionToken(sessionToken);
-  if (!tokenData || tokenData.userId !== auth.session!.userId) {
-    return NextResponse.json({ error: 'Invalid or forged task session token.' }, { status: 401 });
-  }
+  let task = null;
 
-  const task = await prisma.userTask.findUnique({
-    where: { sessionToken },
-    include: {
-      campaign: true,
-      user: {
-        include: { wallet: true },
+  if (sessionToken) {
+    const tokenData = verifySessionToken(sessionToken);
+    if (!tokenData || tokenData.userId !== auth.session!.userId) {
+      return NextResponse.json({ error: 'Invalid or forged task session token.' }, { status: 401 });
+    }
+    task = await prisma.userTask.findUnique({
+      where: { sessionToken },
+      include: {
+        campaign: true,
+        user: { include: { wallet: true } },
       },
-    },
-  });
+    });
+  } else if (taskId) {
+    task = await prisma.userTask.findFirst({
+      where: { id: taskId, userId: auth.session!.userId },
+      include: {
+        campaign: true,
+        user: { include: { wallet: true } },
+      },
+    });
+  }
 
   if (!task) {
-    return NextResponse.json({ error: 'Task session not found.' }, { status: 404 });
+    return NextResponse.json({ error: 'Valid sessionToken or taskId is required.' }, { status: 404 });
   }
 
   if (task.status === 'VALIDATED') {
@@ -42,7 +55,7 @@ export async function POST(req: NextRequest) {
   }
 
   const telemetryPayload: TelemetryPayload = {
-    sessionToken,
+    sessionToken: task.sessionToken,
     dwellTimeSeconds: Number(dwellTimeSeconds),
     interactionCount: Number(interactionCount),
     mouseEventsRecorded: Number(mouseEventsRecorded),

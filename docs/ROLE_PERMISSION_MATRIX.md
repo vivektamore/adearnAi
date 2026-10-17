@@ -1,37 +1,53 @@
-# Role-Based Access Control (RBAC) Matrix — AdEarn AI
+# Role-Based Access Control (RBAC) Matrix — AdEarn AI (Authoritative Specification)
 
-AdEarn AI enforces strict least-privilege server-side authorization across three primary role groups.
-
----
-
-## 1. Access Matrix
-
-| Resource / Capability | User (`USER`) | Advertiser (`ADVERTISER`) | Admin (`ADMIN`) |
-|---|:---:|:---:|:---:|
-| **User Application** | | | |
-| View Feed & Eligible Campaigns | ✅ | ✅ | ✅ |
-| Initiate & Complete Tasks | ✅ | ❌ | ✅ |
-| View Personal Wallet & Ledger | ✅ (Own) | ❌ | ✅ (All) |
-| Request UPI/Bank Payout | ✅ (Own) | ❌ | ❌ |
-| Manage Personal Profile & Consents | ✅ (Own) | ❌ | ✅ |
-| **Advertiser Portal** | | | |
-| View Organization Overview | ❌ | ✅ (Own Org) | ✅ (All Orgs) |
-| Create & Edit Campaigns | ❌ | ✅ (Own Org) | ✅ |
-| Upload & Review Creative Assets | ❌ | ✅ (Own Org) | ✅ |
-| View Attribution Analytics | ❌ | ✅ (Own Org) | ✅ |
-| Top-Up Escrow & Download GST Invoices| ❌ | ✅ (Own Org) | ✅ |
-| **Admin Operations Portal** | | | |
-| View Operations Dashboard | ❌ | ❌ | ✅ |
-| Campaign Moderation Queue (Approve/Reject)| ❌ | ❌ | ✅ |
-| Fraud & Kinematic Forensic Lab | ❌ | ❌ | ✅ |
-| Payout Clearing & Dual Approval | ❌ | ❌ | ✅ |
-| Immutable Audit Log Search | ❌ | ❌ | ✅ |
-| Platform Unit Economics & Margins | ❌ | ❌ | ✅ |
-| System Configuration & API Settings | ❌ | ❌ | ✅ |
+AdEarn AI enforces strict least-privilege server-side authorization through a 3-tier system role hierarchy (`USER`, `ADVERTISER`, `ADMIN`) coupled with organization tenancy isolation via `UserOrganization`.
 
 ---
 
-## 2. Multi-Tenant Organization Isolation
+## 1. System Role Hierarchy
 
-- When an `ADVERTISER` user performs any query or mutation on campaigns, creative assets, or billing records, the server strictly filters by `organizationId` linked to their authenticated session.
-- Any attempt to access a campaign belonging to another organization (e.g. IDOR manipulation of `/api/advertiser/campaigns/:id`) returns `403 Forbidden` and records a security audit incident.
+1. **`USER` (Creator / Consumer)**:
+   - Discovers sponsored campaigns on `/feed`.
+   - Completes interactive tasks with kinematic attention telemetry verification.
+   - Accumulates verified rewards in personal wallet (`Wallet.userId`).
+   - Initiates voluntary payouts to masked UPI IDs / Indian Bank Accounts.
+   - Manages DPDP Act privacy consents and personal data export requests.
+2. **`ADVERTISER` (Enterprise Brand / Agency Partner)**:
+   - Manages tenant organization (`Organization.id`).
+   - Creates and funds advertising campaigns from unreserved nodal escrow.
+   - Inspects live telemetry, dwell distributions, and conversion attribution.
+   - Tops up escrow balance and downloads GST tax invoices (18% GST).
+3. **`ADMIN` (Platform Operations & Compliance Desk)**:
+   - Superintends platform health and operations control room (`/admin`).
+   - Moderates submitted campaigns (Approve / Reject with reason / Request changes).
+   - Forensic inspection of kinematic bot anomalies and fraud quarantine actions.
+   - Dual-approves and dispatches payout clearing batches.
+   - Inspects HMAC-SHA256 tamper-evident audit logs and unit economics.
+
+---
+
+## 2. Granular Permissions Matrix
+
+| Capability / API Route | User (`USER`) | Advertiser (`ADVERTISER`) | Admin (`ADMIN`) | Enforcement Layer |
+|---|:---:|:---:|:---:|---|
+| **User Application Features** | | | | |
+| Browse Feed & Campaign Detail (`GET /api/campaigns`) | ✅ | ✅ | ✅ | Public / Authenticated |
+| Initiate Task Session (`POST /api/tasks/start`) | ✅ | ❌ | ✅ | `requireAuth(['USER', 'ADMIN'])` |
+| Submit Task Telemetry (`POST /api/tasks/submit`) | ✅ | ❌ | ✅ | `requireAuth(['USER', 'ADMIN'])` |
+| View Personal Wallet (`GET /api/wallet`) | ✅ (Own) | ❌ | ✅ (All) | Scoped to `auth.session.userId` |
+| Request Payout (`POST /api/payouts`) | ✅ (Own) | ❌ | ❌ | `requireAuth(['USER'])` |
+| Manage Profile & Consents (`PUT /api/user/profile`)| ✅ (Own) | ❌ | ✅ | Scoped to `auth.session.userId` |
+| **Advertiser Portal Features** | | | | |
+| View Organization Flight (`GET /api/advertiser/overview`)| ❌ | ✅ (Own Org) | ✅ (All) | Scoped to `auth.session.organizationId` |
+| Create & Fund Campaign (`POST /api/advertiser/campaigns`) | ❌ | ✅ (Own Org) | ✅ | Tenant Isolated via `UserOrganization` |
+| Real-time Telemetry (`GET /api/advertiser/campaigns/:id`)| ❌ | ✅ (Own Org) | ✅ | Checked against campaign `organizationId` |
+| Multi-touch Attribution (`GET /api/advertiser/analytics`)| ❌ | ✅ (Own Org) | ✅ | Scoped to tenant organization |
+| Escrow Top-Up & GST Invoices (`/api/advertiser/billing`) | ❌ | ✅ (Own Org) | ✅ | Scoped to organization wallet |
+| **Admin Operations Features** | | | | |
+| Control Room Metrics (`GET /api/admin/overview`) | ❌ | ❌ | ✅ | `requireAuth(['ADMIN'])` |
+| Campaign Moderation (`POST /api/admin/moderation`) | ❌ | ❌ | ✅ | `requireAuth(['ADMIN'])` + Audit Log |
+| Fraud Lab & Bot Actions (`POST /api/admin/fraud`) | ❌ | ❌ | ✅ | `requireAuth(['ADMIN'])` + Audit Log |
+| Payout Batch Clearing (`POST /api/admin/payouts`) | ❌ | ❌ | ✅ | `requireAuth(['ADMIN'])` + Audit Log |
+| Cryptographic Audit Search (`GET /api/admin/audit-logs`) | ❌ | ❌ | ✅ | `requireAuth(['ADMIN'])` |
+| Unit Economics Dashboard (`GET /api/admin/unit-economics`)| ❌ | ❌ | ✅ | `requireAuth(['ADMIN'])` |
+| Platform & Key Settings (`PUT /api/admin/settings`) | ❌ | ❌ | ✅ | `requireAuth(['ADMIN'])` |
