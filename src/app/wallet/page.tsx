@@ -103,7 +103,7 @@ export default function RewardWalletPage() {
               Available to Withdraw
             </span>
             <div className="font-headline text-3xl font-bold text-secondary tabular-nums">
-              {formatINR(wallet?.availablePaise ?? 24500)}
+              {formatINR(wallet?.availablePaise ?? 0)}
             </div>
             <p className="text-xs text-on-surface-variant">Cleared and ready for instant UPI payout.</p>
           </div>
@@ -119,7 +119,7 @@ export default function RewardWalletPage() {
               </span>
             </div>
             <div className="font-headline text-3xl font-bold text-on-tertiary-container tabular-nums">
-              {formatINR(wallet?.pendingPaise ?? 6800)}
+              {formatINR(wallet?.pendingPaise ?? 0)}
             </div>
             <p className="text-xs text-on-surface-variant">In 24–48h advertiser reconciliation window.</p>
           </div>
@@ -130,7 +130,7 @@ export default function RewardWalletPage() {
               Cumulative Approved
             </span>
             <div className="font-headline text-3xl font-bold text-on-surface tabular-nums">
-              {formatINR(wallet?.lifetimeEarnedPaise ?? 142000)}
+              {formatINR(wallet?.lifetimeEarnedPaise ?? 0)}
             </div>
             <p className="text-xs text-on-surface-variant">Total audited earnings credited to date.</p>
           </div>

@@ -103,7 +103,7 @@ export default function WithdrawalsPage() {
           <div className="p-3 rounded-xl bg-surface-container-low border border-outline-variant/30 text-right shrink-0">
             <span className="text-[11px] text-on-surface-variant uppercase font-semibold block">Available to Withdraw</span>
             <span className="font-headline text-2xl font-bold text-secondary tabular-nums">
-              {formatINR(wallet?.availablePaise ?? 24500)}
+              {formatINR(wallet?.availablePaise ?? 0)}
             </span>
           </div>
         </div>
@@ -151,7 +151,7 @@ export default function WithdrawalsPage() {
                   <span>Minimum threshold: ₹100.00</span>
                   <button
                     type="button"
-                    onClick={() => setAmountRupees(((Number(wallet?.availablePaise ?? 24500)) / 100).toFixed(0))}
+                    onClick={() => setAmountRupees(((Number(wallet?.availablePaise ?? 0)) / 100).toFixed(0))}
                     className="text-secondary font-semibold hover:underline"
                   >
                     Withdraw All Available

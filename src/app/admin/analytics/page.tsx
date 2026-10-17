@@ -42,7 +42,7 @@ export default function AdminUnitEconomicsPage() {
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Gross Campaign Spend</span>
             <div className="font-headline text-2xl font-bold text-on-surface tabular-nums">
-              {formatINR(data?.metrics?.totalGrossCampaignSpendPaise ?? 34528000)}
+              {formatINR(data?.metrics?.totalGrossCampaignSpendPaise ?? 0)}
             </div>
             <span className="text-[11px] text-on-surface-variant">Confirmed advertiser spend</span>
           </div>
@@ -50,7 +50,7 @@ export default function AdminUnitEconomicsPage() {
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Creator Reward Liabilities</span>
             <div className="font-headline text-2xl font-bold text-on-surface tabular-nums">
-              {formatINR(data?.metrics?.totalUserRewardLiabilitiesPaise ?? 25965100)}
+              {formatINR(data?.metrics?.totalUserRewardLiabilitiesPaise ?? 0)}
             </div>
             <span className="text-[11px] text-on-surface-variant">Approved user disbursements</span>
           </div>
@@ -58,9 +58,9 @@ export default function AdminUnitEconomicsPage() {
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Platform Net Contribution Margin</span>
             <div className="font-headline text-2xl font-bold text-secondary tabular-nums">
-              {formatINR(data?.metrics?.platformGrossMarginPaise ?? 8562900)}
+              {formatINR(data?.metrics?.platformGrossMarginPaise ?? 0)}
             </div>
-            <span className="text-[11px] text-secondary font-semibold">Take-Rate: {data?.metrics?.takeRatePercent ?? '24.8%'}</span>
+            <span className="text-[11px] text-secondary font-semibold">Take-Rate: {data?.metrics?.takeRatePercent ?? '0%'}</span>
           </div>
 
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">

@@ -112,7 +112,7 @@ export default function UserDashboardPage() {
                 </span>
                 <div className="flex items-baseline gap-1">
                   <span className="font-headline text-3xl font-bold text-secondary tracking-tight tabular-nums">
-                    {loading ? '₹...' : formatINR(data?.metrics?.availableBalancePaise ?? 24500)}
+                    {loading ? '₹...' : formatINR(data?.metrics?.availableBalancePaise ?? 0)}
                   </span>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export default function UserDashboardPage() {
                 </div>
                 <div className="flex items-baseline gap-1">
                   <span className="font-headline text-3xl font-bold text-on-tertiary-container tracking-tight tabular-nums">
-                    {loading ? '₹...' : formatINR(data?.metrics?.pendingBalancePaise ?? 6800)}
+                    {loading ? '₹...' : formatINR(data?.metrics?.pendingBalancePaise ?? 0)}
                   </span>
                 </div>
               </div>
@@ -175,7 +175,7 @@ export default function UserDashboardPage() {
                 </span>
                 <div className="flex items-baseline gap-1">
                   <span className="font-headline text-3xl font-bold text-on-surface tracking-tight tabular-nums">
-                    {loading ? '₹...' : formatINR(data?.metrics?.lifetimeEarnedPaise ?? 142000)}
+                    {loading ? '₹...' : formatINR(data?.metrics?.lifetimeEarnedPaise ?? 0)}
                   </span>
                 </div>
               </div>
@@ -198,7 +198,7 @@ export default function UserDashboardPage() {
                 </span>
                 <div className="flex items-baseline gap-1">
                   <span className="font-headline text-3xl font-bold text-on-surface tracking-tight tabular-nums">
-                    {loading ? '₹...' : formatINR(data?.metrics?.lifetimePaidPaise ?? 110700)}
+                    {loading ? '₹...' : formatINR(data?.metrics?.lifetimePaidPaise ?? 0)}
                   </span>
                 </div>
               </div>
@@ -314,7 +314,7 @@ export default function UserDashboardPage() {
                 href="/feed"
                 className="w-full flex items-center justify-center gap-1 py-2.5 rounded-lg bg-primary-container text-on-primary text-sm font-semibold hover:bg-opacity-90 transition-opacity"
               >
-                <span>Browse {data?.metrics?.activeCampaignsAvailable ?? 4} Available Campaigns</span>
+                <span>Browse {data?.metrics?.activeCampaignsAvailable ?? 0} Available Campaigns</span>
                 <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
               </Link>
             </div>

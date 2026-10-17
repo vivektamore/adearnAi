@@ -77,10 +77,10 @@ export default function ChromeExtensionCompanionPage() {
                   Available Withdrawable Balance
                 </span>
                 <div className="font-headline text-2xl font-bold tabular-nums">
-                  {formatINR(session?.wallet?.availablePaise ?? 24500)}
+                  {formatINR(session?.wallet?.availablePaise ?? 0)}
                 </div>
                 <div className="flex justify-between items-center text-[11px] pt-1 border-t border-on-primary-container/20">
-                  <span className="text-on-primary-container">Pending Hold: {formatINR(session?.wallet?.pendingPaise ?? 6800)}</span>
+                  <span className="text-on-primary-container">Pending Hold: {formatINR(session?.wallet?.pendingPaise ?? 0)}</span>
                   <Link href="/withdrawals" className="text-secondary-fixed font-bold hover:underline">
                     Withdraw →
                   </Link>
@@ -91,7 +91,7 @@ export default function ChromeExtensionCompanionPage() {
               <div className="p-3 rounded-xl bg-surface-container-low border border-outline-variant/20 flex items-center justify-between text-xs">
                 <div>
                   <span className="font-bold text-on-surface block">
-                    {session?.companionTelemetry?.eligibleCampaignsCount ?? 4} Sponsored Activities
+                    {session?.companionTelemetry?.eligibleCampaignsCount ?? 0} Sponsored Activities
                   </span>
                   <span className="text-[11px] text-on-surface-variant">Eligible for voluntary participation</span>
                 </div>

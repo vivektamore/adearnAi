@@ -12,6 +12,7 @@ Create `/home/adearn/scripts/backup_db.sh`:
 #!/usr/bin/env bash
 set -eo pipefail
 
+
 BACKUP_DIR="/home/adearn/backups/mysql"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 FILENAME="${BACKUP_DIR}/adearn_ai_${TIMESTAMP}.sql.gz"

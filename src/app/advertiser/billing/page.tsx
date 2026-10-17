@@ -75,7 +75,7 @@ export default function AdvertiserBillingPage() {
           <div className="p-3 rounded-xl bg-surface-container-low border border-outline-variant/30 text-right shrink-0">
             <span className="text-[11px] text-on-surface-variant uppercase font-semibold block">Total Escrow Balance</span>
             <span className="font-headline text-2xl font-bold text-secondary tabular-nums">
-              {formatINR(data?.wallet?.escrowPaise ?? 45000000)}
+              {formatINR(data?.wallet?.escrowPaise ?? 0)}
             </span>
           </div>
         </div>

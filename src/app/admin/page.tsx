@@ -61,7 +61,7 @@ export default function AdminOperationsPage() {
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Total Escrow Liabilities</span>
             <div className="font-headline text-2xl font-bold text-secondary tabular-nums">
-              {formatINR(data?.metrics?.totalEscrowPaise ?? 45000000)}
+              {formatINR(data?.metrics?.totalEscrowPaise ?? 0)}
             </div>
             <span className="text-[11px] text-on-surface-variant">100% backed in HDFC Nodal Pool</span>
           </div>
@@ -69,7 +69,7 @@ export default function AdminOperationsPage() {
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Creator Wallet Liabilities</span>
             <div className="font-headline text-2xl font-bold text-on-surface tabular-nums">
-              {formatINR(data?.metrics?.totalAvailablePaise ?? 24500)}
+              {formatINR(data?.metrics?.totalAvailablePaise ?? 0)}
             </div>
             <span className="text-[11px] text-on-surface-variant">Ready for instant UPI claim</span>
           </div>
@@ -77,7 +77,7 @@ export default function AdminOperationsPage() {
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Active Campaigns Live</span>
             <div className="font-headline text-2xl font-bold text-on-surface">
-              {data?.metrics?.activeCampaigns ?? 4}
+              {data?.metrics?.activeCampaigns ?? 0}
             </div>
             <span className="text-[11px] text-secondary font-semibold">All flights adhering to ASCI</span>
           </div>

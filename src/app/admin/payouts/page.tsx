@@ -68,7 +68,7 @@ export default function PayoutClearingNodalPage() {
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Total Disbursed to Date</span>
             <div className="font-headline text-2xl font-bold text-secondary tabular-nums">
-              {formatINR(data?.nodalPoolSummary?.totalDisbursedPaise ?? 110700)}
+              {formatINR(data?.nodalPoolSummary?.totalDisbursedPaise ?? 0)}
             </div>
             <span className="text-[11px] text-on-surface-variant">Settled with verified banking UTRs</span>
           </div>

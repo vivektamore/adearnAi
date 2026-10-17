@@ -10,7 +10,9 @@
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
     "prisma:seed": "node scripts/seed.js",
-    "test": "node --test test/**/*.test.js"
+    "test:unit": "node test/run_tests.js",
+    "test:e2e": "node test/e2e_workflows.test.js",
+    "test": "node test/run_tests.js && node test/e2e_workflows.test.js"
   },
   "dependencies": {
     "@prisma/client": "^5.21.1",

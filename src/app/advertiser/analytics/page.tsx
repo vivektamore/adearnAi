@@ -41,7 +41,7 @@ export default function AdvertiserAnalyticsPage() {
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Total Verified Conversions</span>
             <div className="font-headline text-2xl font-bold text-secondary">
-              {analytics?.metrics?.validatedOutcomes ?? 8642}
+              {analytics?.metrics?.validatedOutcomes ?? 0}
             </div>
             <span className="text-[11px] text-on-surface-variant">100% verified outcomes</span>
           </div>
@@ -49,25 +49,25 @@ export default function AdvertiserAnalyticsPage() {
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Average Attention Dwell</span>
             <div className="font-headline text-2xl font-bold text-on-surface">
-              {analytics?.metrics?.averageAttentionDwellSec ?? 38.4}s
+              {analytics?.metrics?.averageAttentionDwellSec ?? 0}s
             </div>
-            <span className="text-[11px] text-secondary font-semibold">18s above requirement</span>
+            <span className="text-[11px] text-secondary font-semibold">Measured dwell time</span>
           </div>
 
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Retention & Completion</span>
             <div className="font-headline text-2xl font-bold text-on-surface">
-              {analytics?.metrics?.multiTouchRetentionRate ?? 94.6}%
+              {analytics?.metrics?.multiTouchRetentionRate ?? 0}%
             </div>
-            <span className="text-[11px] text-secondary font-semibold">+6.2% vs industry benchmark</span>
+            <span className="text-[11px] text-secondary font-semibold">Audited completion rate</span>
           </div>
 
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">IVT & Bot Interceptions</span>
             <div className="font-headline text-2xl font-bold text-on-surface">
-              {analytics?.metrics?.ivtRate ?? 0.82}%
+              {analytics?.metrics?.ivtRate ?? 0}%
             </div>
-            <span className="text-[11px] text-secondary font-semibold">712 bot blocks prevented</span>
+            <span className="text-[11px] text-secondary font-semibold">Kinematic filter active</span>
           </div>
         </div>
 

@@ -138,13 +138,13 @@ export default function AdvertiserOverviewPage() {
                 <span className="material-symbols-outlined text-[18px] text-secondary">payments</span>
               </div>
               <div className="font-headline text-xl lg:text-2xl font-bold text-on-surface tabular-nums">
-                {loading ? '₹...' : formatINR(data?.metrics?.totalSpendPaise ?? 34528000)}
+                {loading ? '₹...' : formatINR(data?.metrics?.totalSpendPaise ?? 0)}
               </div>
             </div>
             <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20">
               <span className="inline-flex items-center gap-0.5 text-secondary text-xs font-semibold">
                 <span className="material-symbols-outlined text-[14px]">trending_up</span>
-                +12.4% vs L30D
+                Verified Flight Spend
               </span>
               <span className="text-[11px] text-on-surface-variant">Confirmed spend</span>
             </div>
@@ -158,11 +158,11 @@ export default function AdvertiserOverviewPage() {
                 <span className="material-symbols-outlined text-[18px] text-secondary">verified</span>
               </div>
               <div className="font-headline text-xl lg:text-2xl font-bold text-secondary tabular-nums">
-                {loading ? '₹...' : formatINR(data?.metrics?.escrowBalancePaise ?? 45000000)}
+                {loading ? '₹...' : formatINR(data?.metrics?.escrowBalancePaise ?? 0)}
               </div>
             </div>
             <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20">
-              <span className="text-[11px] text-on-surface-variant">~38 days runway</span>
+              <span className="text-[11px] text-on-surface-variant">Unreserved Escrow</span>
               <span className="px-1.5 py-0.5 rounded bg-surface-container text-secondary text-[10px] font-bold">100% Reserve</span>
             </div>
           </div>
@@ -175,7 +175,7 @@ export default function AdvertiserOverviewPage() {
                 <span className="material-symbols-outlined text-[18px] text-secondary">task_alt</span>
               </div>
               <div className="font-headline text-xl lg:text-2xl font-bold text-on-surface tabular-nums">
-                {loading ? '...' : (data?.metrics?.verifiedOutcomes ?? 8642).toLocaleString('en-IN')}
+                {loading ? '...' : (data?.metrics?.verifiedOutcomes ?? 0).toLocaleString('en-IN')}
               </div>
             </div>
             <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20">
@@ -195,15 +195,15 @@ export default function AdvertiserOverviewPage() {
                 <span className="material-symbols-outlined text-[18px] text-secondary">price_check</span>
               </div>
               <div className="font-headline text-xl lg:text-2xl font-bold text-on-surface tabular-nums">
-                {loading ? '₹...' : formatINR(data?.metrics?.effectiveCpoPaise ?? 3995)}
+                {loading ? '₹...' : formatINR(data?.metrics?.effectiveCpoPaise ?? 0)}
               </div>
             </div>
             <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20">
               <span className="inline-flex items-center gap-0.5 text-secondary text-xs font-semibold">
-                <span className="material-symbols-outlined text-[14px]">arrow_downward</span>
-                -4.2% cost
+                <span className="material-symbols-outlined text-[14px]">verified</span>
+                Cost per Outcome
               </span>
-              <span className="text-[11px] text-on-surface-variant">Max: ₹45.00</span>
+              <span className="text-[11px] text-on-surface-variant">Audited Rate</span>
             </div>
           </div>
 
@@ -215,12 +215,12 @@ export default function AdvertiserOverviewPage() {
                 <span className="material-symbols-outlined text-[18px] text-on-surface-variant">shield</span>
               </div>
               <div className="font-headline text-xl lg:text-2xl font-bold text-on-surface tabular-nums">
-                {data?.metrics?.ivtRatePercent ?? 0.82}%
+                {data?.metrics?.ivtRatePercent ?? 0}%
               </div>
             </div>
             <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20">
-              <span className="text-secondary text-xs font-semibold">Ind. Avg: 3.8%</span>
-              <span className="text-[11px] text-on-surface-variant">{data?.metrics?.blockedIVTCount ?? 712} blocks</span>
+              <span className="text-secondary text-xs font-semibold">Telemetry Verified</span>
+              <span className="text-[11px] text-on-surface-variant">{data?.metrics?.blockedIVTCount ?? 0} blocks</span>
             </div>
           </div>
 
@@ -228,16 +228,16 @@ export default function AdvertiserOverviewPage() {
           <div className="p-space-md rounded-xl bg-surface-container-lowest shadow-xs border border-outline-variant/30 flex flex-col justify-between hover:shadow-sm transition-shadow">
             <div className="space-y-1">
               <div className="flex items-center justify-between text-on-surface-variant">
-                <span className="text-[11px] uppercase tracking-wider font-semibold">Pending SLA Recon</span>
-                <span className="material-symbols-outlined text-[18px] text-on-tertiary-container">hourglass_top</span>
+                <span className="text-[11px] uppercase tracking-wider font-semibold">Campaigns In Flight</span>
+                <span className="material-symbols-outlined text-[18px] text-on-tertiary-container">campaign</span>
               </div>
               <div className="font-headline text-xl lg:text-2xl font-bold text-on-surface tabular-nums">
-                ₹18,450.00
+                {data?.campaigns?.length ?? 0} Active
               </div>
             </div>
             <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20">
-              <span className="text-on-tertiary-container text-xs font-semibold">412 buffer</span>
-              <span className="text-[11px] text-on-surface-variant">&lt;45m SLA</span>
+              <span className="text-on-tertiary-container text-xs font-semibold">Flight Monitored</span>
+              <span className="text-[11px] text-on-surface-variant">Live telemetry</span>
             </div>
           </div>
         </div>
@@ -257,11 +257,11 @@ export default function AdvertiserOverviewPage() {
               <div className="flex items-center gap-space-md text-xs font-semibold">
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-sm bg-secondary"></span>
-                  <span>Valid ({data?.metrics?.verifiedOutcomes ?? 8642})</span>
+                  <span>Valid ({data?.metrics?.verifiedOutcomes ?? 0})</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-sm bg-error/70"></span>
-                  <span className="text-on-surface-variant">Blocked IVT ({data?.metrics?.blockedIVTCount ?? 712})</span>
+                  <span className="text-on-surface-variant">Blocked IVT ({data?.metrics?.blockedIVTCount ?? 0})</span>
                 </div>
               </div>
             </div>
