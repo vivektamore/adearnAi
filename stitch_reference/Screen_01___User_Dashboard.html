@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-fixed": "#ffdcc3", "secondary": "#006a61", "surface-dim": "#cbdbf5", "on-secondary-fixed-variant": "#005049", "on-error-container": "#93000a", "surface-tint": "#565e74", "on-surface-variant": "#45464d", "primary-fixed": "#dae2fd", "inverse-on-surface": "#eaf1ff", "on-secondary-container": "#006f66", "tertiary": "#000000", "error-container": "#ffdad6", "on-tertiary": "#ffffff", "background": "#f8f9ff", "surface-container-highest": "#d3e4fe", "on-primary-container": "#7c839b", "tertiary-container": "#2f1500", "surface-container-low": "#eff4ff", "surface-variant": "#d3e4fe", "on-tertiary-fixed": "#2f1500", "error": "#ba1a1a", "inverse-primary": "#bec6e0", "secondary-fixed": "#89f5e7", "on-surface": "#0b1c30", "outline": "#76777d", "on-error": "#ffffff", "on-secondary": "#ffffff", "on-background": "#0b1c30", "on-primary": "#ffffff", "on-primary-fixed-variant": "#3f465c", "secondary-fixed-dim": "#6bd8cb", "on-primary-fixed": "#131b2e", "surface-container-lowest": "#ffffff", "on-tertiary-container": "#c76c00", "on-secondary-fixed": "#00201d", "outline-variant": "#c6c6cd", "primary-fixed-dim": "#bec6e0", "secondary-container": "#86f2e4", "surface-container-high": "#dce9ff", "primary-container": "#131b2e", "surface-container": "#e5eeff", "primary": "#000000", "surface": "#f8f9ff", "surface-bright": "#f8f9ff", "on-tertiary-fixed-variant": "#6e3900", "tertiary-fixed-dim": "#ffb77d", "inverse-surface": "#213145" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "gutter-mobile": "1rem", "space-xl": "2rem", "gutter": "1.5rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "margin": "2rem", "space-lg": "1.5rem", "margin-mobile": "1rem", "space-md": "1rem" }, "fontFamily": { "label-lg": ["Inter"], "headline-lg": ["Plus Jakarta Sans"], "currency-body": ["Inter"], "label-sm": ["Inter"], "currency-display": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "body-lg": ["Inter"], "headline-sm": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "label-md": ["Inter"], "body-md": ["Inter"], "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"] }, "fontSize": { "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "currency-body": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "currency-display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.005em", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }], "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg-mobile": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-xl-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="w-full px-space-lg flex items-center justify-between h-16"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="AdEarn AI Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VmwWH_7MbEii-nVL6ENPqCrz1JNvI30bV7IKDuvDdCk5p9dG4aCkX7CdFblqIafNY56wzQM58OOFzNgPTgDE6GtN9xdhN6pb1qKzlwHV2qs0RjriwHwAy9F9cmxBaJF9G5VeLY0Et5RBlOdZ30v9Fvzq8wQABUxlw7WqvbtJizrAAx1ILg7pk3Qs7ZTQz9ScKRjkiBTQQ6QSCDfCLZBvsRUMvmuqHZUq7a2LzK_eep8-iM9Cqe2icGeU4"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-semibold">AdEarn AI</span></div><nav class="hidden xl:flex items-center gap-space-xs" data-active-classes="text-on-surface font-bold bg-surface-container-high rounded-lg"><a aria-current="page" class="px-space-md py-space-xs transition-colors text-on-surface font-bold bg-surface-container-high rounded-lg" data-path="dashboard" href="#">Dashboard</a><a class="px-space-md py-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="sponsored-content" href="#">Sponsored content</a><a class="px-space-md py-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="rewards-and-wallet" href="#">Rewards &amp; Wallet</a><a class="px-space-md py-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="withdrawals" href="#">Withdrawals</a><a class="px-space-md py-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="help-and-disputes" href="#">Help &amp; Disputes</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden sm:inline-flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px] text-secondary">public</span><span>IN · INR ₹</span></div><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span><span>Demonstration Environment · All metrics are illustrative</span></div><button aria-label="Notifications" class="relative p-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button><div class="flex items-center gap-space-sm pl-space-xs cursor-pointer group"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-surface-container-high" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjx4Wlo1rfFVpwXsGuC6ofci_ncb5NwdfcyEX_VAei-8cfNicyTwAvT10KSQDuDIEo9nnnvcxhk4cfNCGDYmE5ALdXgJFQ5wVTjxYhtEqCPslpPeV3tOh-WeY15ZEw1vZ-YIJIOW9aWwlAVph5yZXFaw04hN9hhEMuNitY6WwThjwbrfJZAS0G8qmGJYsMfZnLqEQxjIdpCms37GfSCDqHRpYs89PZYsGYncmNtazddOr1vit29l8npg"/><div class="hidden md:flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface leading-tight font-semibold">Arun Kumar</span><span class="font-label-sm text-label-sm text-secondary font-medium leading-tight">Verified Tier 1</span></div><span class="material-symbols-outlined text-on-surface-variant text-[18px] group-hover:text-on-surface transition-colors">expand_more</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex flex-col justify-between py-space-md"><div class="px-space-md flex flex-col gap-space-sm"><div class="px-space-sm py-space-xs font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase font-semibold">Quick Navigation</div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-high text-on-surface font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span>Overview</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="active-tasks" href="#"><span class="material-symbols-outlined text-[18px]">task_alt</span><span>Active Tasks</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="payout-history" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Payout History</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="privacy-settings" href="#"><span class="material-symbols-outlined text-[18px]">shield</span><span>Privacy Settings</span></a></nav></div><div class="px-space-md"><div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-space-xs"><div class="flex items-center gap-space-xs text-on-surface"><span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span><span class="font-label-md text-label-md font-semibold">Tier 1 Creator</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">Instant payouts &amp; standard Indian tax compliance active.</p></div></div></aside><div class="pl-64"><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<div class="w-full max-w-[1280px] mx-auto px-space-lg py-space-xl flex flex-col gap-space-xl">
+<!-- Page Header & Welcome Section -->
+<section class="flex flex-col gap-space-md bg-surface-container-lowest p-space-lg rounded-xl shadow-sm relative overflow-hidden">
+<div class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-secondary-fixed/20 blur-3xl pointer-events-none"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center flex-wrap gap-space-sm">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Welcome back, Arun</h1>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px] text-secondary" style="font-variation-settings: 'FILL' 1;">verified</span>
+              Verified KYC · Level 1
+            </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+              Sample Demonstration Data · 16 Oct 2026
+            </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+            Complete eligible sponsored activities to earn verified rewards. Rewards are credited upon advertiser verification. Earnings are never guaranteed.
+          </p>
+</div>
+<!-- Quick CTAs -->
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg hover:bg-on-secondary-container transition-all shadow-sm active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-[18px]">explore</span>
+<span>Explore Sponsored Campaigns</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface font-label-lg text-label-lg hover:bg-surface-container transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+<span>View Wallet Statement</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Four Prominent Metric Cards -->
+<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<!-- Card 1: Available Balance -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between gap-space-md relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Available Balance</span>
+<div class="flex items-baseline gap-1">
+<span class="font-currency-display text-currency-display text-secondary tracking-tight">₹245.00</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-secondary-container/50 text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ready for withdrawal to verified UPI</p>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-secondary font-semibold hover:underline" href="#">
+<span>Withdraw funds</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Card 2: Pending Rewards -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between gap-space-md group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Pending Rewards</span>
+<div class="relative group/tooltip cursor-help">
+<span class="material-symbols-outlined text-[15px] text-outline">help_outline</span>
+<div class="absolute left-1/2 -translate-x-1/2 bottom-full mb-1.5 hidden group-hover/tooltip:flex flex-col w-48 p-2 rounded bg-primary-container text-on-primary font-label-sm text-label-sm shadow-lg z-20 pointer-events-none">
+                  Pending verification (typically 24–48 hrs)
+                </div>
+</div>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-currency-display text-currency-display text-on-tertiary-container tracking-tight">₹68.00</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">hourglass_top</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<p class="font-body-sm text-body-sm text-on-surface-variant">2 activities awaiting advertiser validation</p>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-on-tertiary-container font-semibold hover:underline" href="#">
+<span>View details</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Card 3: Total Approved Earnings -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between gap-space-md group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Total Approved Earnings</span>
+<div class="flex items-baseline gap-1">
+<span class="font-currency-display text-currency-display text-on-surface tracking-tight">₹1,480.00</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-high text-on-surface flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">trending_up</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/60 text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold">+₹120.00 this week</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">34 lifetime verified activities completed</p>
+</div>
+</div>
+<!-- Card 4: Lifetime Payouts -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between gap-space-md group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Lifetime Payouts</span>
+<div class="flex items-baseline gap-1">
+<span class="font-currency-display text-currency-display text-on-surface tracking-tight">₹1,235.00</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-high text-on-surface flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">payments</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Processed via UPI (arun***@okhdfcbank)</p>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-on-surface font-semibold hover:underline" href="#">
+<span>Payout history</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Main Dashboard 2-Column Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- MAIN COLUMN: 8 Columns -->
+<div class="lg:col-span-8 flex flex-col gap-space-xl">
+<!-- Section: Eligible Sponsored Campaigns -->
+<section class="flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Eligible Sponsored Campaigns</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">4 eligible today</span>
+</div>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-secondary font-semibold hover:underline" href="#">
+<span>View all campaigns</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<!-- Category Filters -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1" id="campaign-filter-tabs">
+<button class="filter-btn px-3.5 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold whitespace-nowrap shadow-sm" type="button">All Categories</button>
+<button class="filter-btn px-3.5 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-label-sm text-label-sm font-medium whitespace-nowrap transition-colors" type="button">Surveys &amp; Feedback</button>
+<button class="filter-btn px-3.5 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-label-sm text-label-sm font-medium whitespace-nowrap transition-colors" type="button">Product Trials</button>
+<button class="filter-btn px-3.5 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-label-sm text-label-sm font-medium whitespace-nowrap transition-colors" type="button">Brand Engagements</button>
+</div>
+<!-- Campaign Cards Container -->
+<div class="flex flex-col gap-space-md">
+<!-- Campaign 1 -->
+<article class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md hover:shadow-md transition-shadow">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center font-headline-sm text-headline-sm text-secondary font-bold shrink-0">
+                    Z
+                  </div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center flex-wrap gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold text-secondary">FinTech &amp; Investing</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-widest font-semibold">Sponsored</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Investment Readiness Questionnaire 2026</h3>
+<div class="flex items-center gap-space-xs text-on-surface-variant mt-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">assignment</span>
+<span class="font-body-sm text-body-sm">Verified Survey (8 mins)</span>
+<span class="text-outline-variant font-body-sm">•</span>
+<span class="font-body-sm text-body-sm">Daily cap: 1/1 per user</span>
+</div>
+</div>
+</div>
+<div class="flex sm:flex-col items-end justify-between sm:justify-start gap-1 shrink-0">
+<span class="px-3 py-1 rounded-full bg-secondary-container/60 text-on-secondary-fixed-variant font-currency-body text-currency-body font-bold">
+                    Eligible: ₹45.00
+                  </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Verified account req.</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pt-space-xs bg-surface-container-low/50 p-space-sm rounded-lg">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px]">verified_user</span>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface underline" href="#">Campaign Terms &amp; Privacy</a>
+</div>
+<button class="inline-flex items-center justify-center gap-space-xs px-space-md py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:bg-on-surface transition-colors" type="button">
+<span>View Details &amp; Eligibility</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Campaign 2 -->
+<article class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md hover:shadow-md transition-shadow">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center font-headline-sm text-headline-sm text-on-surface font-bold shrink-0">
+                    S
+                  </div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center flex-wrap gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold text-secondary">SaaS &amp; Productivity</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-widest font-semibold">Sponsored</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Team Workflow Tool Onboarding Feedback</h3>
+<div class="flex items-center gap-space-xs text-on-surface-variant mt-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">devices</span>
+<span class="font-body-sm text-body-sm">Trial Experience (15 mins)</span>
+<span class="text-outline-variant font-body-sm">•</span>
+<span class="font-body-sm text-body-sm">Valid until 22 Oct 2026</span>
+</div>
+</div>
+</div>
+<div class="flex sm:flex-col items-end justify-between sm:justify-start gap-1 shrink-0">
+<span class="px-3 py-1 rounded-full bg-secondary-container/60 text-on-secondary-fixed-variant font-currency-body text-currency-body font-bold">
+                    Eligible: ₹80.00
+                  </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">External site transition</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pt-space-xs bg-surface-container-low/50 p-space-sm rounded-lg">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px]">security</span>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface underline" href="#">Campaign Terms</a>
+</div>
+<button class="inline-flex items-center justify-center gap-space-xs px-space-md py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:bg-on-surface transition-colors" type="button">
+<span>View Details &amp; Eligibility</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Campaign 3 -->
+<article class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md hover:shadow-md transition-shadow">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center font-headline-sm text-headline-sm text-secondary font-bold shrink-0">
+                    A
+                  </div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center flex-wrap gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold text-secondary">Health &amp; Wellness</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-widest font-semibold">Sponsored</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Ayurvedic Brand Awareness Poll &amp; Video Insight</h3>
+<div class="flex items-center gap-space-xs text-on-surface-variant mt-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">play_circle</span>
+<span class="font-body-sm text-body-sm">Brand Engagement (4 mins)</span>
+<span class="text-outline-variant font-body-sm">•</span>
+<span class="font-body-sm text-body-sm">Remaining slots: 142/500</span>
+</div>
+</div>
+</div>
+<div class="flex sm:flex-col items-end justify-between sm:justify-start gap-1 shrink-0">
+<span class="px-3 py-1 rounded-full bg-secondary-container/60 text-on-secondary-fixed-variant font-currency-body text-currency-body font-bold">
+                    Eligible: ₹25.00
+                  </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Instant validation</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pt-space-xs bg-surface-container-low/50 p-space-sm rounded-lg">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px]">verified_user</span>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface underline" href="#">Campaign Terms</a>
+</div>
+<button class="inline-flex items-center justify-center gap-space-xs px-space-md py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:bg-on-surface transition-colors" type="button">
+<span>View Details &amp; Eligibility</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</article>
+</div>
+</section>
+<!-- Section: Recent Reward Activity Table -->
+<section class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-xs">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Recent Reward Activity</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Audited history of your completed sponsored interactions.</p>
+</div>
+<!-- Search & Filters -->
+<div class="flex items-center gap-space-xs">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[18px] text-outline">search</span>
+<input class="h-9 pl-8 pr-3 bg-surface-container-low text-on-surface rounded-lg font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-secondary w-44" placeholder="Search reference..." type="text"/>
+</div>
+<select class="h-9 px-3 bg-surface-container-low text-on-surface rounded-lg font-label-sm text-label-sm focus:outline-none focus:ring-1 focus:ring-secondary cursor-pointer">
+<option>All Statuses</option>
+<option>Approved</option>
+<option>Pending Validation</option>
+</select>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant">
+<th class="py-2.5 px-space-md font-label-sm text-label-sm uppercase tracking-wider font-semibold rounded-l-lg">Date &amp; Time</th>
+<th class="py-2.5 px-space-md font-label-sm text-label-sm uppercase tracking-wider font-semibold">Campaign Name</th>
+<th class="py-2.5 px-space-md font-label-sm text-label-sm uppercase tracking-wider font-semibold">Type</th>
+<th class="py-2.5 px-space-md font-label-sm text-label-sm uppercase tracking-wider font-semibold text-right">Reward</th>
+<th class="py-2.5 px-space-md font-label-sm text-label-sm uppercase tracking-wider font-semibold text-center">Status</th>
+<th class="py-2.5 px-space-md font-label-sm text-label-sm uppercase tracking-wider font-semibold text-right rounded-r-lg">Reference ID</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors h-[52px]">
+<td class="py-3 px-space-md font-body-sm text-body-sm text-on-surface whitespace-nowrap">16 Oct 2026, 11:42 AM</td>
+<td class="py-3 px-space-md font-body-md text-body-md text-on-surface font-medium whitespace-nowrap">Zerodha Investor Survey</td>
+<td class="py-3 px-space-md font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">Survey</td>
+<td class="py-3 px-space-md font-currency-body text-currency-body text-secondary font-bold text-right tabular-nums whitespace-nowrap">+₹45.00</td>
+<td class="py-3 px-space-md text-center whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-container/50 text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      Approved
+                    </span>
+</td>
+<td class="py-3 px-space-md font-mono text-[12px] text-on-surface-variant text-right whitespace-nowrap">REF-20261016-8921</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors h-[52px]">
+<td class="py-3 px-space-md font-body-sm text-body-sm text-on-surface whitespace-nowrap">15 Oct 2026, 04:15 PM</td>
+<td class="py-3 px-space-md font-body-md text-body-md text-on-surface font-medium whitespace-nowrap">QuickCommerce Consumer Poll</td>
+<td class="py-3 px-space-md font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">Poll</td>
+<td class="py-3 px-space-md font-currency-body text-currency-body text-secondary font-bold text-right tabular-nums whitespace-nowrap">+₹20.00</td>
+<td class="py-3 px-space-md text-center whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-container/50 text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      Approved
+                    </span>
+</td>
+<td class="py-3 px-space-md font-mono text-[12px] text-on-surface-variant text-right whitespace-nowrap">REF-20261015-4412</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors h-[52px]">
+<td class="py-3 px-space-md font-body-sm text-body-sm text-on-surface whitespace-nowrap">15 Oct 2026, 02:30 PM</td>
+<td class="py-3 px-space-md font-body-md text-body-md text-on-surface font-medium whitespace-nowrap">NeoBank App Feature Feedback</td>
+<td class="py-3 px-space-md font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">App Trial</td>
+<td class="py-3 px-space-md font-currency-body text-currency-body text-on-tertiary-container font-bold text-right tabular-nums whitespace-nowrap">+₹68.00</td>
+<td class="py-3 px-space-md text-center whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container"></span>
+                      Pending Validation
+                    </span>
+</td>
+<td class="py-3 px-space-md font-mono text-[12px] text-on-surface-variant text-right whitespace-nowrap">REF-20261015-3109</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors h-[52px]">
+<td class="py-3 px-space-md font-body-sm text-body-sm text-on-surface whitespace-nowrap">12 Oct 2026, 09:10 AM</td>
+<td class="py-3 px-space-md font-body-md text-body-md text-on-surface font-medium whitespace-nowrap">Cloud Storage User Evaluation</td>
+<td class="py-3 px-space-md font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">Evaluation</td>
+<td class="py-3 px-space-md font-currency-body text-currency-body text-secondary font-bold text-right tabular-nums whitespace-nowrap">+₹50.00</td>
+<td class="py-3 px-space-md text-center whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-container/50 text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      Approved
+                    </span>
+</td>
+<td class="py-3 px-space-md font-mono text-[12px] text-on-surface-variant text-right whitespace-nowrap">REF-20261012-1084</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pt-space-xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Showing 4 of 38 transactions</span>
+<button class="inline-flex items-center gap-1 font-label-md text-label-md text-secondary hover:underline self-start sm:self-auto font-medium" type="button">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+<span>Download statement (CSV)</span>
+</button>
+</div>
+</section>
+</div>
+<!-- RIGHT SIDEBAR: 4 Columns -->
+<aside class="lg:col-span-4 flex flex-col gap-space-lg">
+<!-- Card A: Daily Reward Cap -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Daily Reward Cap</span>
+<div class="relative group/tooltip cursor-help">
+<span class="material-symbols-outlined text-[16px] text-outline">info</span>
+<div class="absolute right-0 bottom-full mb-1.5 hidden group-hover/tooltip:flex flex-col w-56 p-2 rounded bg-primary-container text-on-primary font-label-sm text-label-sm shadow-lg z-20 pointer-events-none">
+                  Daily caps prevent automated abuse and ensure fair distribution among active members. Resets at 00:00 IST.
+                </div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-secondary">43% Used</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-baseline font-body-sm text-body-sm">
+<span class="font-currency-body text-currency-body text-on-surface font-semibold">₹65.00</span>
+<span class="text-on-surface-variant">₹150.00 daily limit</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2.5 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-secondary rounded-full transition-all duration-500" style="width: 43.3%;"></div>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Remaining today:</span>
+<span class="font-currency-body text-currency-body text-secondary font-semibold">₹85.00 eligible</span>
+</div>
+</div>
+<!-- Card B: Account & Verification Status -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Verification &amp; Payout</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/60 text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold">Active</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Email -->
+<div class="flex items-center justify-between py-1">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Email Verified</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">arun.k*****@gmail.com</span>
+</div>
+<!-- Mobile -->
+<div class="flex items-center justify-between py-1">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Mobile Verified</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">+91 98765 *****</span>
+</div>
+<!-- UPI Destination -->
+<div class="flex items-center justify-between py-1">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Payout UPI Connected</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary font-medium">arun***@okhdfcbank</span>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between bg-surface-container-low p-space-sm rounded-lg">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Identity Tier 2 Upgrade</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Unlock ₹1,000/day cap</span>
+</div>
+<button class="px-space-md py-1 rounded bg-secondary text-on-secondary font-label-sm text-label-sm hover:bg-on-secondary-container transition-colors" type="button">
+              Upgrade Limit
+            </button>
+</div>
+</div>
+<!-- Card C: Transparency & Advertising Notice -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-xs text-secondary font-semibold">
+<span class="material-symbols-outlined text-[18px]">policy</span>
+<span class="font-label-lg text-label-lg">Why am I seeing these campaigns?</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            AdEarn AI connects you with advertisers seeking authentic user feedback. Campaigns are sponsored. You are never obligated to purchase products to earn rewards.
+          </p>
+<div class="flex items-center gap-space-sm pt-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<a class="hover:text-on-surface underline" href="#">Ad Preferences</a>
+<span>•</span>
+<a class="hover:text-on-surface underline" href="#">Privacy Policy</a>
+<span>•</span>
+<a class="hover:text-on-surface underline" href="#">Report an Ad</a>
+</div>
+</div>
+<!-- Card D: Interactive Functional State Previews -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase tracking-wider font-semibold text-on-surface-variant">State Previews</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Interactive Toggle</span>
+</div>
+<!-- Controls -->
+<div class="grid grid-cols-2 gap-2 p-1 rounded-lg bg-surface-container-low">
+<button class="py-1 px-2 rounded font-label-sm text-label-sm text-on-surface hover:bg-surface-container font-medium text-center transition-all" id="toggle-empty-btn" type="button">Empty State</button>
+<button class="py-1 px-2 rounded font-label-sm text-label-sm text-on-surface hover:bg-surface-container font-medium text-center transition-all" id="toggle-error-btn" type="button">Network Error</button>
+</div>
+<!-- Container for Dynamic Feedback State -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col items-center justify-center text-center gap-space-xs min-h-[110px]" id="state-preview-box">
+<span class="material-symbols-outlined text-[24px] text-secondary">check_circle</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Standard System View</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">All endpoints operational · 100% telemetry synced</span>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</div>
+<script>
+  // Simple Micro-interaction Script for Interactive Previews and Filter Tabs
+  (function initDashboard() {
+    // Category Tabs Filter Interaction
+    const filterButtons = document.querySelectorAll('#campaign-filter-tabs .filter-btn');
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => {
+          b.className = 'filter-btn px-3.5 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-label-sm text-label-sm font-medium whitespace-nowrap transition-colors';
+        });
+        btn.className = 'filter-btn px-3.5 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold whitespace-nowrap shadow-sm';
+      });
+    });
+
+    // Functional State Previews Toggle
+    const stateBox = document.getElementById('state-preview-box');
+    const emptyBtn = document.getElementById('toggle-empty-btn');
+    const errorBtn = document.getElementById('toggle-error-btn');
+
+    let currentView = 'default';
+
+    if (emptyBtn && stateBox) {
+      emptyBtn.addEventListener('click', () => {
+        if (currentView === 'empty') {
+          renderDefault();
+        } else {
+          currentView = 'empty';
+          stateBox.innerHTML = `
+            <span class="material-symbols-outlined text-[24px] text-outline">inbox</span>
+            <span class="font-label-sm text-label-sm font-semibold text-on-surface">No New Campaigns</span>
+            <span class="font-body-sm text-body-sm text-on-surface-variant">Check back at 18:00 IST for next advertiser batch.</span>
+          `;
+        }
+      });
+    }
+
+    if (errorBtn && stateBox) {
+      errorBtn.addEventListener('click', () => {
+        if (currentView === 'error') {
+          renderDefault();
+        } else {
+          currentView = 'error';
+          stateBox.innerHTML = `
+            <span class="material-symbols-outlined text-[24px] text-error">wifi_off</span>
+            <span class="font-label-sm text-label-sm font-semibold text-error">Network Sync Interrupted</span>
+            <button type="button" class="mt-1 px-2.5 py-1 rounded bg-error-container text-on-error-container font-label-sm text-label-sm hover:opacity-90">Retry Telemetry</button>
+          `;
+        }
+      });
+    }
+
+    function renderDefault() {
+      currentView = 'default';
+      stateBox.innerHTML = `
+        <span class="material-symbols-outlined text-[24px] text-secondary">check_circle</span>
+        <span class="font-label-sm text-label-sm font-semibold text-on-surface">Standard System View</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">All endpoints operational · 100% telemetry synced</span>
+      `;
+    }
+  })();
+</script></main></div></body></html>

@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "AdEarn AI Companion",
+  "version": "1.0.0",
+  "description": "Voluntary rewards companion and real-time wallet telemetry for verified Indian digital creators.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "AdEarn AI Companion"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "https://*.adearn.ai/*"
+  ]
+}

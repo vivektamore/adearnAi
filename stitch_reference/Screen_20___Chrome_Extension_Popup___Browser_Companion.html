@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"outline-variant":"#c6c6cd","surface-container":"#e5eeff","on-primary":"#ffffff","on-tertiary-fixed-variant":"#6e3900","inverse-surface":"#213145","secondary":"#006a61","on-tertiary-container":"#c76c00","secondary-container":"#86f2e4","surface-container-lowest":"#ffffff","surface-bright":"#f8f9ff","background":"#f8f9ff","on-surface":"#0b1c30","secondary-fixed-dim":"#6bd8cb","primary":"#000000","on-tertiary":"#ffffff","error-container":"#ffdad6","on-background":"#0b1c30","surface-container-low":"#eff4ff","surface-dim":"#cbdbf5","tertiary-container":"#2f1500","surface-variant":"#d3e4fe","surface-container-high":"#dce9ff","on-error":"#ffffff","tertiary-fixed":"#ffdcc3","surface-tint":"#565e74","on-tertiary-fixed":"#2f1500","primary-container":"#131b2e","error":"#ba1a1a","on-surface-variant":"#45464d","inverse-on-surface":"#eaf1ff","inverse-primary":"#bec6e0","surface":"#f8f9ff","on-secondary-fixed":"#00201d","tertiary-fixed-dim":"#ffb77d","on-primary-fixed-variant":"#3f465c","tertiary":"#000000","primary-fixed":"#dae2fd","secondary-fixed":"#89f5e7","on-secondary":"#ffffff","on-secondary-fixed-variant":"#005049","on-error-container":"#93000a","on-secondary-container":"#006f66","primary-fixed-dim":"#bec6e0","surface-container-highest":"#d3e4fe","on-primary-container":"#7c839b","on-primary-fixed":"#131b2e","outline":"#76777d"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"space-xl":"2rem","space-lg":"1.5rem","space-sm":"0.5rem","space-xs":"0.25rem","margin":"2rem","space-md":"1rem","gutter":"1.5rem","margin-mobile":"1rem","gutter-mobile":"1rem"},fontFamily:{"headline-lg":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"label-lg":["Inter"],"label-md":["Inter"],"headline-xl-mobile":["Plus Jakarta Sans"],"body-md":["Inter"],"headline-lg-mobile":["Plus Jakarta Sans"],"body-sm":["Inter"],"currency-body":["Inter"],"headline-sm":["Plus Jakarta Sans"],"currency-display":["Plus Jakarta Sans"],"body-lg":["Inter"],"headline-md":["Plus Jakarta Sans"],"label-sm":["Inter"]},fontSize:{"headline-lg":["28px",{lineHeight:"36px",letterSpacing:"-0.02em",fontWeight:"600"}],"headline-xl":["36px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.01em",fontWeight:"500"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"600"}],"headline-xl-mobile":["28px",{lineHeight:"36px",letterSpacing:"-0.015em",fontWeight:"700"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"0em",fontWeight:"400"}],"headline-lg-mobile":["22px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"body-sm":["12px",{lineHeight:"16px",letterSpacing:"0.005em",fontWeight:"400"}],"currency-body":["14px",{lineHeight:"20px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"600"}],"currency-display":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"body-lg":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"400"}],"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between py-space-md"><div class="flex flex-col gap-space-lg"><div class="flex items-center gap-space-sm px-space-md"><div class="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm">A</div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight leading-none">AdEarn AI</span><span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">Telemetry Lab</span></div></div><nav class="flex flex-col gap-space-xs px-space-sm" data-active-classes="bg-surface-container-high text-on-surface font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="extension-sandbox" href="#"><span class="material-symbols-outlined text-[20px]">browser_updated</span>Extension Sandbox</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="task-verification-live" href="#"><span class="material-symbols-outlined text-[20px]">verified</span>Active Task Session</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="telemetry-and-sync-status" href="#"><span class="material-symbols-outlined text-[20px]">sync</span>Telemetry &amp; States</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="companion-settings" href="#"><span class="material-symbols-outlined text-[20px]">tune</span>Runtime Config</a></nav></div><div class="px-space-md flex flex-col gap-space-sm"><div class="p-space-sm rounded-lg bg-surface-container flex items-center justify-between"><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant">Companion Mode</span><span class="font-label-md text-label-md text-secondary font-semibold">Manifest v3 Live</span></div><span class="w-2 h-2 rounded-full bg-secondary"></span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 flex items-center justify-between px-space-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-md"><span class="font-label-md text-label-md bg-surface-container px-space-sm py-space-xs rounded-lg text-on-surface font-semibold">AdEarn Runtime v2.4.1</span><div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm"><span class="w-2 h-2 rounded-full bg-secondary"></span>Bridge Connected (Port 8021)</div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container-lowest px-space-md py-space-xs rounded-lg shadow-[0_1px_3px_0_rgba(15,23,42,0.05)]"><span class="material-symbols-outlined text-secondary text-[18px]">account_balance_wallet</span><span class="font-currency-body text-currency-body text-on-surface">₹4,820.50</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-16 bg-surface min-h-screen px-space-xl py-space-lg"><div class="flex flex-col w-full">
+<!-- Top Regulatory & Architecture Header -->
+<header class="flex flex-col gap-space-sm mb-space-xl">
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary bg-surface-container px-space-sm py-space-xs rounded-full">Spec 20</span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Chrome Extension Popup &amp; Browser Companion</h1>
+</div>
+<div class="flex items-center gap-space-xs bg-error-container/60 text-on-error-container px-space-md py-space-xs rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span class="font-label-sm text-label-sm tracking-wide uppercase">UNAPPROVED DESIGN CONCEPT • PENDING TECHNICAL &amp; POLICY REVIEW</span>
+</div>
+</div>
+<div class="bg-surface-container-low px-space-md py-space-sm rounded-lg flex items-start gap-space-sm shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">policy</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+        This design concept does not imply Chrome Web Store approval, certification, or endorsement. Developed strictly for policy compliance evaluation under Google Single Purpose Guidelines &amp; DPDP Act 2023. Manifest V3 zero-DOM footprint verified.
+      </p>
+</div>
+</header>
+<!-- Interactive State Control Bar -->
+<section class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm mb-space-lg flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">view_carousel</span>
+<span class="font-label-lg text-label-lg text-on-surface">Interactive Canvas Mode:</span>
+<div class="inline-flex bg-surface-container-low p-1 rounded-lg">
+<button class="px-space-md py-space-xs rounded font-label-md text-label-md bg-surface-container-lowest text-on-surface shadow-sm transition-all" id="view-mode-all" onclick="switchViewMode('all')">All States Grid</button>
+<button class="px-space-md py-space-xs rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" id="view-mode-tabs" onclick="switchViewMode('tabs')">Tabbed Inspector</button>
+</div>
+</div>
+<!-- State Switcher (Tab pills) -->
+<div class="flex flex-wrap items-center gap-space-xs" id="state-tab-pills">
+<button class="state-tab-btn active-tab bg-primary text-on-primary px-space-md py-space-xs rounded-lg font-label-md text-label-md transition-all" onclick="selectStateTab('s1')">1. Signed-In (Default)</button>
+<button class="state-tab-btn bg-surface-container-low text-on-surface-variant hover:text-on-surface px-space-md py-space-xs rounded-lg font-label-md text-label-md transition-all" onclick="selectStateTab('s2')">2. Signed-Out</button>
+<button class="state-tab-btn bg-surface-container-low text-on-surface-variant hover:text-on-surface px-space-md py-space-xs rounded-lg font-label-md text-label-md transition-all" onclick="selectStateTab('s3')">3. Offline &amp; Loading</button>
+<button class="state-tab-btn bg-surface-container-low text-on-surface-variant hover:text-on-surface px-space-md py-space-xs rounded-lg font-label-md text-label-md transition-all" onclick="selectStateTab('s4')">4. Expired &amp; Empty</button>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Viewport:</span>
+<span class="font-currency-body text-currency-body bg-surface-container px-space-sm py-space-xs rounded text-secondary">380px Fixed MV3 Standard</span>
+</div>
+</section>
+<!-- Showcase Canvas: Multi-State 380px Frame Matrix -->
+<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-lg mb-space-xl" id="states-container">
+<!-- STATE 1: PRIMARY SIGNED-IN (DEFAULT 380px POPUP) -->
+<div class="state-display-card flex flex-col items-center" id="state-card-s1">
+<div class="w-full flex items-center justify-between mb-space-sm px-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">State 1: Signed-In</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5 rounded">Core Ledger Mode</span>
+</div>
+<!-- Popup Physical Chassis (Exact 380px) -->
+<div class="w-[380px] bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden flex flex-col min-h-[580px]">
+<!-- Browser Extension Header Strip -->
+<div class="bg-surface-container-low px-space-md py-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-6 h-6 rounded bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm text-[12px] relative overflow-hidden">
+<span>A</span>
+<span class="absolute bottom-0 right-0 w-1.5 h-1.5 bg-secondary rounded-full"></span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-[13px] text-on-surface leading-none">AdEarn AI</span>
+<span class="font-label-sm text-label-sm text-[10px] bg-surface-container px-1 rounded text-on-surface-variant">v2.4.0 (MV3)</span>
+</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-[10px] text-on-surface-variant">Synced 14s ago</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="flex items-center gap-1 bg-surface-container-lowest px-2 py-1 rounded-full shadow-sm">
+<span class="w-4 h-4 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-sm text-[9px]">AK</span>
+<span class="font-label-sm text-label-sm text-[11px] text-on-surface">arun.k</span>
+<span class="material-symbols-outlined text-[13px] text-on-surface-variant">arrow_drop_down</span>
+</div>
+<button class="w-7 h-7 rounded-lg bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface-variant" title="Suspend Bridge">
+<span class="material-symbols-outlined text-[15px]">power_settings_new</span>
+</button>
+</div>
+</div>
+<!-- Popup Body -->
+<div class="p-space-md flex flex-col gap-space-md flex-1">
+<!-- Balance Summary Matrix -->
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Available Disbursable Balance -->
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase text-[10px]">Verified Balance</span>
+<span class="bg-secondary-container/40 text-on-secondary-container px-1 py-0.5 rounded font-label-sm text-[9px] font-semibold">Audited</span>
+</div>
+<div class="mt-space-xs">
+<span class="font-currency-display text-[22px] leading-tight text-on-surface block">₹245.00</span>
+<span class="font-label-sm text-label-sm text-secondary text-[10px]">Ready for Instant UPI</span>
+</div>
+</div>
+<!-- Pending Escrow Rewards -->
+<div class="bg-surface-container p-space-sm rounded-lg flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase text-[10px]">Escrow Webhook</span>
+<span class="material-symbols-outlined text-[13px] text-on-surface-variant">hourglass_top</span>
+</div>
+<div class="mt-space-xs">
+<span class="font-currency-display text-[22px] leading-tight text-on-surface block">₹68.00</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[10px]">2 dwell tasks syncing</span>
+</div>
+</div>
+</div>
+<!-- Campaigns Section Header -->
+<div class="flex items-center justify-between mt-space-xs">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface font-semibold text-[13px]">Active Flight Targets</span>
+<span class="bg-secondary text-on-secondary px-1.5 py-0.5 rounded-full font-label-sm text-[10px] font-semibold">3</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[11px]">DPDP Validated</span>
+</div>
+<!-- Micro Campaign Previews List -->
+<div class="flex flex-col gap-space-xs">
+<!-- Flight 1 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded bg-surface-container-lowest flex items-center justify-center text-secondary shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[18px]">query_stats</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate text-[12px]">Zerodha Advisory Dwell</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-[10px]">45s verified read • FinTech</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-currency-body text-currency-body text-secondary text-[13px]">+₹45.00</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant text-[9px]">Tier 1 Instant</span>
+</div>
+</div>
+<!-- Flight 2 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[18px]">cloud_sync</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate text-[12px]">SprintFlow SaaS Eval</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-[10px]">60s interactive dwell</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-currency-body text-currency-body text-secondary text-[13px]">+₹80.00</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant text-[9px]">Creator Boost</span>
+</div>
+</div>
+<!-- Flight 3 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded bg-surface-container-lowest flex items-center justify-center text-secondary shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[18px]">credit_card</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate text-[12px]">CrediWise India Review</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-[10px]">30s compliance view</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-currency-body text-currency-body text-secondary text-[13px]">+₹25.00</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant text-[9px]">Verified Pilot</span>
+</div>
+</div>
+</div>
+<!-- Primary Ledger Action CTA -->
+<div class="mt-auto flex flex-col gap-space-xs pt-space-xs">
+<button class="w-full bg-primary hover:bg-on-surface-variant text-on-primary py-space-sm px-space-md rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-space-xs shadow-md transition-all">
+<span>Open AdEarn AI Web App</span>
+<span class="material-symbols-outlined text-[16px]">north_east</span>
+</button>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="bg-surface-container hover:bg-surface-container-high text-on-surface py-2 px-space-sm rounded-lg font-label-sm text-label-sm flex items-center justify-center gap-1 transition-all">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>Ledger Activity</span>
+</button>
+<button class="bg-surface-container hover:bg-surface-container-high text-on-surface py-2 px-space-sm rounded-lg font-label-sm text-label-sm flex items-center justify-center gap-1 transition-all">
+<span class="material-symbols-outlined text-[14px] text-secondary">payments</span>
+<span>UPI Instant Sweep</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Popup Secure Footer -->
+<div class="bg-surface-container-low px-space-md py-space-xs flex items-center justify-between text-on-surface-variant font-label-sm text-[10px]">
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[12px]">lock</span>
+<span>Zero-DOM Sandbox</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<a class="hover:underline" href="#">Permissions</a>
+<span>•</span>
+<a class="hover:underline" href="#">Disputes</a>
+</div>
+</div>
+</div>
+</div>
+<!-- STATE 2: SIGNED-OUT STATE (380px POPUP) -->
+<div class="state-display-card flex flex-col items-center" id="state-card-s2">
+<div class="w-full flex items-center justify-between mb-space-sm px-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-outline"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">State 2: Signed-Out</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5 rounded">OAuth Handshake</span>
+</div>
+<!-- Chassis -->
+<div class="w-[380px] bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden flex flex-col min-h-[580px]">
+<!-- Browser Extension Header Strip -->
+<div class="bg-surface-container-low px-space-md py-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-6 h-6 rounded bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm text-[12px]">
+              A
+            </div>
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-[13px] text-on-surface leading-none">AdEarn AI</span>
+<span class="font-label-sm text-label-sm text-[10px] bg-surface-container px-1 rounded text-on-surface-variant">v2.4.0</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[11px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Unlinked
+          </span>
+</div>
+<!-- Body -->
+<div class="p-space-lg flex flex-col items-center justify-between flex-1 text-center">
+<div class="flex flex-col items-center mt-space-sm">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-space-md shadow-inner text-secondary">
+<span class="material-symbols-outlined text-[32px]">shield_person</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Zero-DOM Companion</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-[300px] leading-relaxed">
+              A secure browser extension designed exclusively to monitor verified sponsored task dwell times and sync platform earnings.
+            </p>
+</div>
+<!-- Plain-Language Trust Callout Card -->
+<div class="w-full bg-surface-container-low p-space-md rounded-lg text-left shadow-sm">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">verified_user</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold text-[12px]">DPDP Act 2023 Compliant</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-[11px] mt-0.5 leading-normal">
+                  AdEarn never accesses browsing history, never reads passwords, and cannot modify page DOMs. All authentication is offloaded to the web app.
+                </p>
+</div>
+</div>
+</div>
+<!-- Action Stack -->
+<div class="w-full flex flex-col gap-space-sm mt-space-md">
+<button class="w-full bg-primary hover:bg-on-surface-variant text-on-primary py-space-sm px-space-md rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-space-xs shadow-md transition-all">
+<span class="material-symbols-outlined text-[18px]">passkey</span>
+<span>Sign In to AdEarn AI</span>
+</button>
+<a class="font-label-sm text-label-sm text-secondary hover:underline flex items-center justify-center gap-1 py-1" href="#">
+<span>Read DPDP &amp; Zero-Data Commitment</span>
+<span class="material-symbols-outlined text-[13px]">launch</span>
+</a>
+</div>
+</div>
+<!-- Footer -->
+<div class="bg-surface-container-low px-space-md py-space-xs text-center text-on-surface-variant font-label-sm text-[10px]">
+          Redirects to app.adearn.ai via OAuth 2.0 PKCE • No local credentials stored
+        </div>
+</div>
+</div>
+<!-- STATE 3: OFFLINE & LOADING STATES (380px POPUP) -->
+<div class="state-display-card flex flex-col items-center" id="state-card-s3">
+<div class="w-full flex items-center justify-between mb-space-sm px-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-error"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">State 3: Offline / Loading</span>
+</div>
+<div class="flex gap-1">
+<button class="font-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded text-on-surface font-semibold" id="sub-offline-btn" onclick="toggleOfflineSubstate('offline')">Offline</button>
+<button class="font-label-sm text-label-sm bg-surface-container-low px-2 py-0.5 rounded text-on-surface-variant" id="sub-loading-btn" onclick="toggleOfflineSubstate('loading')">Loading</button>
+</div>
+</div>
+<!-- Chassis -->
+<div class="w-[380px] bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden flex flex-col min-h-[580px]">
+<!-- Offline Sub-view -->
+<div class="flex flex-col flex-1" id="substate-offline">
+<!-- Header -->
+<div class="bg-surface-container-low px-space-md py-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-6 h-6 rounded bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm text-[12px]">A</div>
+<span class="font-headline-sm text-headline-sm text-[13px] text-on-surface leading-none">AdEarn AI</span>
+</div>
+<span class="font-label-sm text-label-sm text-error bg-error-container/60 px-2 py-0.5 rounded-full flex items-center gap-1 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Offline
+            </span>
+</div>
+<!-- Offline Warning Banner -->
+<div class="bg-error-container/40 p-space-sm px-space-md flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-error text-[18px]">wifi_off</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-error font-semibold text-[11px]">Telemetry Network Link Severed</span>
+<span class="font-body-sm text-body-sm text-on-error-container text-[10px]">Verification suspended. Cached telemetry safely buffered.</span>
+</div>
+</div>
+<!-- Cached Content Area -->
+<div class="p-space-md flex flex-col gap-space-md flex-1">
+<div class="bg-surface-container-low p-space-md rounded-lg shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase text-[10px]">Cached Ledger (Last synced 2h ago)</span>
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">lock_clock</span>
+</div>
+<div class="mt-space-sm flex items-baseline gap-space-xs">
+<span class="font-currency-display text-[26px] text-on-surface">₹245.00</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Available</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-[11px] block mt-1">Pending rewards reconciliation will resume once network reattaches.</span>
+</div>
+<div class="bg-surface-container p-space-md rounded-lg flex items-center gap-space-md shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[24px]">pause_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold text-[12px]">Dwell Verification Paused</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-[11px]">Active sponsor tabs cannot record valid dwell telemetry in offline mode.</span>
+</div>
+</div>
+<div class="mt-auto">
+<button class="w-full bg-surface-container hover:bg-surface-container-high text-on-surface py-space-sm px-space-md rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-space-xs transition-all shadow-sm">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+<span>Retry Connection Bridge</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Loading / Skeleton Sub-view -->
+<div class="hidden flex flex-col flex-1" id="substate-loading">
+<!-- Header -->
+<div class="bg-surface-container-low px-space-md py-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-6 h-6 rounded bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm text-[12px]">A</div>
+<span class="font-headline-sm text-headline-sm text-[13px] text-on-surface leading-none">AdEarn AI</span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary font-label-sm text-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[14px] animate-spin">progress_activity</span>
+<span>Syncing Ledger...</span>
+</div>
+</div>
+<!-- Skeleton Body -->
+<div class="p-space-md flex flex-col gap-space-md flex-1 animate-pulse">
+<!-- Balance Skeletons -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="bg-surface-container-high/60 h-20 rounded-lg"></div>
+<div class="bg-surface-container-high/60 h-20 rounded-lg"></div>
+</div>
+<div class="h-4 w-32 bg-surface-container-high/60 rounded"></div>
+<!-- Campaign Skeletons -->
+<div class="flex flex-col gap-space-xs">
+<div class="bg-surface-container-low h-14 rounded-lg"></div>
+<div class="bg-surface-container-low h-14 rounded-lg"></div>
+<div class="bg-surface-container-low h-14 rounded-lg"></div>
+</div>
+<!-- Button Skeleton -->
+<div class="mt-auto flex flex-col gap-space-xs">
+<div class="bg-surface-container-high/60 h-10 rounded-lg"></div>
+<div class="grid grid-cols-2 gap-space-xs">
+<div class="bg-surface-container-low h-8 rounded-lg"></div>
+<div class="bg-surface-container-low h-8 rounded-lg"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="bg-surface-container-low px-space-md py-space-xs flex items-center justify-between text-on-surface-variant font-label-sm text-[10px]">
+<span>Cache Protocol: AES-GCM 256</span>
+<span class="text-secondary">MV3 Storage Isolation</span>
+</div>
+</div>
+</div>
+<!-- STATE 4: SESSION EXPIRED & EMPTY STATES (380px POPUP) -->
+<div class="state-display-card flex flex-col items-center" id="state-card-s4">
+<div class="w-full flex items-center justify-between mb-space-sm px-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-error-container"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">State 4: Expired / Empty</span>
+</div>
+<div class="flex gap-1">
+<button class="font-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded text-on-surface font-semibold" id="sub-expired-btn" onclick="toggleExpiredSubstate('expired')">Timeout</button>
+<button class="font-label-sm text-label-sm bg-surface-container-low px-2 py-0.5 rounded text-on-surface-variant" id="sub-empty-btn" onclick="toggleExpiredSubstate('empty')">No Flights</button>
+</div>
+</div>
+<!-- Chassis -->
+<div class="w-[380px] bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden flex flex-col min-h-[580px]">
+<!-- Timeout Sub-view -->
+<div class="flex flex-col flex-1" id="substate-expired">
+<!-- Header -->
+<div class="bg-surface-container-low px-space-md py-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-6 h-6 rounded bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm text-[12px]">A</div>
+<span class="font-headline-sm text-headline-sm text-[13px] text-on-surface leading-none">AdEarn AI</span>
+</div>
+<span class="font-label-sm text-label-sm bg-error-container text-on-error-container px-2 py-0.5 rounded font-semibold text-[10px]">Inactivity Lock</span>
+</div>
+<div class="p-space-lg flex flex-col items-center justify-center text-center flex-1">
+<div class="w-14 h-14 rounded-full bg-error-container/60 text-error flex items-center justify-center mb-space-md shadow-sm">
+<span class="material-symbols-outlined text-[28px]">timer_off</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Session Inactivity Timeout</h3>
+<span class="font-label-sm text-label-sm text-error bg-error-container/40 px-2 py-0.5 rounded mb-space-sm">RBI &amp; DPDP 15-Minute Rule</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-[280px] leading-relaxed mb-space-lg">
+              For your cryptographic wallet safety, local session keys have been purged. Please re-authenticate via single sign-on.
+            </p>
+<button class="w-full bg-primary hover:bg-on-surface-variant text-on-primary py-space-sm px-space-md rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-space-xs shadow-md transition-all">
+<span class="material-symbols-outlined text-[16px]">key</span>
+<span>Re-Authenticate Session</span>
+</button>
+</div>
+</div>
+<!-- Empty Sub-view -->
+<div class="hidden flex flex-col flex-1" id="substate-empty">
+<!-- Header -->
+<div class="bg-surface-container-low px-space-md py-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-6 h-6 rounded bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm text-[12px]">A</div>
+<span class="font-headline-sm text-headline-sm text-[13px] text-on-surface leading-none">AdEarn AI</span>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-lowest px-2 py-0.5 rounded-full shadow-sm">
+<span class="font-currency-body text-[11px] text-on-surface">₹245.00</span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col items-center justify-center text-center flex-1">
+<div class="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mb-space-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[28px]">hourglass_empty</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">No Active Flights Matched</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-[280px] leading-relaxed mb-space-md">
+              No sponsored dwell campaigns currently fit your verified category preference. New flights release hourly.
+            </p>
+<div class="bg-surface-container-low p-space-sm rounded-lg w-full mb-space-lg text-left">
+<div class="flex items-center justify-between text-[11px]">
+<span class="font-label-md text-label-md text-on-surface">Next Flight Slot:</span>
+<span class="font-currency-body text-secondary">12:00 PM IST (In 34m)</span>
+</div>
+</div>
+<button class="w-full bg-surface-container hover:bg-surface-container-high text-on-surface py-space-sm px-space-md rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-space-xs transition-all shadow-sm">
+<span>Explore Web Dashboard</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Footer -->
+<div class="bg-surface-container-low px-space-md py-space-xs text-center text-on-surface-variant font-label-sm text-[10px]">
+          Session Integrity Monitor • Heartbeat 8021
+        </div>
+</div>
+</div>
+</section>
+<!-- Permissions & Privacy Audit Specification Panel (Manifest V3 Compliance) -->
+<section class="bg-surface-container-lowest p-space-xl rounded-xl shadow-md mb-space-xl">
+<div class="flex flex-wrap items-center justify-between gap-space-md mb-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-md text-headline-md text-on-surface">Manifest V3 Permissions &amp; Privacy Audit Panel</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Strict compliance evaluation under Google Single Purpose Policy &amp; DPDP Act 2023</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm bg-secondary-container/40 text-on-secondary-container px-space-md py-1 rounded-full font-semibold">Zero Host Permissions</span>
+<span class="font-label-sm text-label-sm bg-surface-container px-space-md py-1 rounded-full text-on-surface font-semibold">Self-Contained MV3 Sandbox</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
+<!-- Minimal Requested Permissions -->
+<div class="flex flex-col gap-space-md bg-surface-container-low p-space-lg rounded-xl shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">fact_check</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Declared Manifest V3 Permissions</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">3 Keys Declared Only</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- activeTab -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-currency-body text-currency-body text-primary font-mono">activeTab</span>
+<span class="font-label-sm text-label-sm bg-secondary-container/40 text-on-secondary-container px-2 py-0.5 rounded font-semibold">Episodic User-Triggered</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Only invoked when the user explicitly clicks to initiate a verified dwell session. Never reads background tabs, never polls non-sponsor URLs, and clears immediately when tab loses focus.
+            </p>
+</div>
+<!-- storage -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-currency-body text-currency-body text-primary font-mono">storage</span>
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded text-on-surface font-semibold">chrome.storage.local</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Used strictly to store encrypted ephemeral session tokens, offline flight cache, and client telemetry preferences. Zero cross-device cloud synching of unencrypted tokens.
+            </p>
+</div>
+<!-- alarms -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-currency-body text-currency-body text-primary font-mono">alarms</span>
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded text-on-surface font-semibold">Periodic Heartbeat</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Maintains an energy-efficient background tick every 15 minutes to reconcile escrowed reward webhooks with the AdEarn micro-ledger without keeping background scripts persistent.
+            </p>
+</div>
+</div>
+</div>
+<!-- Explicit Negative Prohibitions (Hard Guarantees) -->
+<div class="flex flex-col gap-space-md bg-surface-container-low p-space-lg rounded-xl shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-error text-[20px]">gavel</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Explicit Negative Prohibitions</span>
+</div>
+<span class="font-label-sm text-label-sm text-error bg-error-container/40 px-2 py-0.5 rounded font-semibold">Zero-Tolerance Enforced</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Prohibition 1 -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded bg-error-container/60 text-error flex items-center justify-center shrink-0 mt-0.5 font-bold text-sm">✕</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">NO &lt;all_urls&gt; or Wildcard Host Access</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-[12px] mt-0.5 leading-normal">
+                AdEarn extension possesses zero capability to monitor general web activity, private intranets, search queries, or peripheral domain traffic.
+              </p>
+</div>
+</div>
+<!-- Prohibition 2 -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded bg-error-container/60 text-error flex items-center justify-center shrink-0 mt-0.5 font-bold text-sm">✕</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">NO Content-Script Injection or DOM Modification</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-[12px] mt-0.5 leading-normal">
+                Strict zero-DOM architecture. No scripts are injected into external web documents. No affiliate code tampering, ad alteration, or dynamic layout shifts.
+              </p>
+</div>
+</div>
+<!-- Prohibition 3 -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded bg-error-container/60 text-error flex items-center justify-center shrink-0 mt-0.5 font-bold text-sm">✕</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">NO Keystroke or Peripheral Mouse Logging</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-[12px] mt-0.5 leading-normal">
+                Telemetry is restricted to window visibility change events during voluntary sponsor campaigns. No keyboard inputs or form fields are ever inspected.
+              </p>
+</div>
+</div>
+<!-- Prohibition 4 -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded bg-error-container/60 text-error flex items-center justify-center shrink-0 mt-0.5 font-bold text-sm">✕</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">NO Synthetic Traffic or Automated Ad Clicking</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-[12px] mt-0.5 leading-normal">
+                Zero bot simulation. All verification requires authentic human viewport engagement. Fraud engines flag and permanently revoke tokens for headless execution.
+              </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Logic Script -->
+<script>
+    function switchViewMode(mode) {
+      const container = document.getElementById('states-container');
+      const allBtn = document.getElementById('view-mode-all');
+      const tabsBtn = document.getElementById('view-mode-tabs');
+      const tabPills = document.getElementById('state-tab-pills');
+
+      if (mode === 'all') {
+        container.className = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-lg mb-space-xl';
+        document.querySelectorAll('.state-display-card').forEach(el => el.classList.remove('hidden'));
+        allBtn.className = 'px-space-md py-space-xs rounded font-label-md text-label-md bg-surface-container-lowest text-on-surface shadow-sm transition-all';
+        tabsBtn.className = 'px-space-md py-space-xs rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all';
+      } else {
+        container.className = 'flex justify-center mb-space-xl';
+        allBtn.className = 'px-space-md py-space-xs rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all';
+        tabsBtn.className = 'px-space-md py-space-xs rounded font-label-md text-label-md bg-surface-container-lowest text-on-surface shadow-sm transition-all';
+        selectStateTab('s1');
+      }
+    }
+
+    function selectStateTab(tabId) {
+      // Highlight the active button
+      document.querySelectorAll('.state-tab-btn').forEach(btn => {
+        btn.className = 'state-tab-btn bg-surface-container-low text-on-surface-variant hover:text-on-surface px-space-md py-space-xs rounded-lg font-label-md text-label-md transition-all';
+      });
+      event?.currentTarget?.classList?.remove('bg-surface-container-low', 'text-on-surface-variant');
+      event?.currentTarget?.classList?.add('bg-primary', 'text-on-primary');
+
+      const container = document.getElementById('states-container');
+      // If we are in tabs mode, hide all except the chosen one
+      if (container.classList.contains('justify-center')) {
+        document.querySelectorAll('.state-display-card').forEach(el => el.classList.add('hidden'));
+        const activeCard = document.getElementById('state-card-' + tabId);
+        if (activeCard) activeCard.classList.remove('hidden');
+      } else {
+        // In all mode, scroll or highlight the card
+        const target = document.getElementById('state-card-' + tabId);
+        target?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    function toggleOfflineSubstate(type) {
+      const offlineView = document.getElementById('substate-offline');
+      const loadingView = document.getElementById('substate-loading');
+      const offlineBtn = document.getElementById('sub-offline-btn');
+      const loadingBtn = document.getElementById('sub-loading-btn');
+
+      if (type === 'offline') {
+        offlineView.classList.remove('hidden');
+        loadingView.classList.add('hidden');
+        offlineBtn.className = 'font-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded text-on-surface font-semibold';
+        loadingBtn.className = 'font-label-sm text-label-sm bg-surface-container-low px-2 py-0.5 rounded text-on-surface-variant';
+      } else {
+        offlineView.classList.add('hidden');
+        loadingView.classList.remove('hidden');
+        loadingBtn.className = 'font-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded text-on-surface font-semibold';
+        offlineBtn.className = 'font-label-sm text-label-sm bg-surface-container-low px-2 py-0.5 rounded text-on-surface-variant';
+      }
+    }
+
+    function toggleExpiredSubstate(type) {
+      const expiredView = document.getElementById('substate-expired');
+      const emptyView = document.getElementById('substate-empty');
+      const expiredBtn = document.getElementById('sub-expired-btn');
+      const emptyBtn = document.getElementById('sub-empty-btn');
+
+      if (type === 'expired') {
+        expiredView.classList.remove('hidden');
+        emptyView.classList.add('hidden');
+        expiredBtn.className = 'font-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded text-on-surface font-semibold';
+        emptyBtn.className = 'font-label-sm text-label-sm bg-surface-container-low px-2 py-0.5 rounded text-on-surface-variant';
+      } else {
+        expiredView.classList.add('hidden');
+        emptyView.classList.remove('hidden');
+        emptyBtn.className = 'font-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded text-on-surface font-semibold';
+        expiredBtn.className = 'font-label-sm text-label-sm bg-surface-container-low px-2 py-0.5 rounded text-on-surface-variant';
+      }
+    }
+  </script>
+</div></main></div></body></html>

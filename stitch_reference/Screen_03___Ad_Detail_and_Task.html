@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Screen 03 — Sponsored Campaign Detail and Task</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0f172a',
+              teal: '#0d9488',
+              'teal-dark': '#006a61',
+              'teal-light': '#e6f7f5',
+              amber: '#d97706',
+              'amber-light': '#fef3c7',
+              surface: '#f8f9ff',
+              border: '#e2e8f0',
+              card: '#ffffff'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; color: #0f172a; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; vertical-align: middle; }
+    .pill-active { background-color: #0f172a; color: #ffffff; }
+  </style>
+</head>
+<body class="min-h-screen antialiased flex flex-col">
+  <!-- Top App Shell Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur border-b border-brand-border h-16 flex items-center px-6 justify-between">
+    <div class="flex items-center gap-8">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-teal-400 font-bold font-display text-lg">A</div>
+        <span class="font-display font-bold text-lg tracking-tight text-brand-navy">AdEarn <span class="text-teal-600">AI</span></span>
+      </div>
+      <nav class="hidden lg:flex items-center gap-1 text-sm font-medium">
+        <a href="#" class="px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">Dashboard</a>
+        <a href="#" class="px-3 py-1.5 rounded-md text-brand-navy bg-slate-100 font-semibold transition-colors">Sponsored content</a>
+        <a href="#" class="px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">Rewards &amp; Wallet</a>
+        <a href="#" class="px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">Withdrawals</a>
+        <a href="#" class="px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">Help &amp; Disputes</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
+        <span class="material-symbols-outlined text-[16px] text-teal-600">public</span>
+        <span>IN · INR ₹</span>
+      </div>
+      <div class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-teal-50 text-teal-800 text-xs font-medium">
+        <span class="w-1.5 h-1.5 rounded-full bg-teal-600"></span>
+        <span>Demo Environment</span>
+      </div>
+      <button type="button" class="p-2 text-slate-500 hover:text-slate-900 rounded-lg hover:bg-slate-100 relative">
+        <span class="material-symbols-outlined text-[20px]">notifications</span>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500"></span>
+      </button>
+      <div class="flex items-center gap-2 pl-2 border-l border-brand-border">
+        <div class="w-8 h-8 rounded-full bg-teal-700 text-white flex items-center justify-center font-bold text-xs">AK</div>
+        <div class="hidden xl:flex flex-col text-left">
+          <span class="text-xs font-bold leading-tight">Arun Kumar</span>
+          <span class="text-[11px] text-teal-600 font-medium">Verified Tier 1</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex pt-16 min-h-screen">
+    <!-- Left Sidebar -->
+    <aside class="w-64 fixed left-0 top-16 bottom-0 bg-white border-r border-brand-border p-4 hidden md:flex flex-col justify-between z-40">
+      <div class="flex flex-col gap-6">
+        <div>
+          <div class="px-3 py-1 text-[11px] font-bold text-slate-400 tracking-wider uppercase">Navigation</div>
+          <div class="flex flex-col gap-1 mt-2">
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition-colors">
+              <span class="material-symbols-outlined text-[18px]">grid_view</span>
+              <span>Overview</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm bg-teal-50 text-teal-900 font-semibold transition-colors">
+              <span class="material-symbols-outlined text-[18px] text-teal-600">task_alt</span>
+              <span>Active Tasks</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition-colors">
+              <span class="material-symbols-outlined text-[18px]">receipt_long</span>
+              <span>Payout History</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition-colors">
+              <span class="material-symbols-outlined text-[18px]">shield</span>
+              <span>Privacy Settings</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-brand-border flex flex-col gap-2">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-brand-navy">
+            <span class="material-symbols-outlined text-[16px] text-teal-600">verified_user</span>
+            <span>Tier 1 Verified Creator</span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">Instant payouts and Section 194R tax compliance active.</p>
+        </div>
+      </div>
+
+      <div class="p-3 rounded-lg bg-teal-50/50 border border-teal-100 text-[11px] text-teal-900 flex items-center justify-between">
+        <span>ASCI Protocol v3.2</span>
+        <span class="w-2 h-2 rounded-full bg-teal-600"></span>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="md:pl-64 w-full flex flex-col">
+      <!-- Sandbox Protocol Bar -->
+      <div class="w-full bg-slate-100 border-b border-brand-border px-6 py-2 flex items-center justify-between text-xs">
+        <div class="flex items-center gap-2 text-slate-600">
+          <span class="material-symbols-outlined text-[16px] text-teal-700">terminal</span>
+          <span class="font-bold uppercase tracking-wider text-slate-700">Protocol Sandbox #ENV-IND-0914</span>
+          <span class="text-slate-300">•</span>
+          <span class="text-slate-500">Interactive Task Verification Container. Ledger balance simulated.</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-teal-600 animate-pulse"></span>
+          <span class="font-medium text-slate-700">Indian IT Act 2000 Conforming</span>
+        </div>
+      </div>
+
+      <div class="max-w-7xl w-full mx-auto p-6 md:p-8 flex flex-col gap-6">
+        <!-- Breadcrumbs & Utility Bar -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-2 text-xs md:text-sm text-slate-500 font-medium">
+            <a href="#" class="hover:text-brand-navy transition-colors">Dashboard</a>
+            <span>/</span>
+            <a href="#" class="hover:text-brand-navy transition-colors">Sponsored Content</a>
+            <span>/</span>
+            <span class="text-brand-navy font-semibold truncate max-w-xs md:max-w-md">Investment Readiness Questionnaire 2026</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="document.getElementById('whyModal').classList.remove('hidden')" class="px-3 py-1.5 rounded-lg border border-brand-border bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-1.5 shadow-sm transition-colors">
+              <span class="material-symbols-outlined text-[16px] text-teal-600">info</span>
+              <span>Why am I seeing this?</span>
+            </button>
+            <button class="px-3 py-1.5 rounded-lg border border-brand-border bg-white text-xs font-semibold text-slate-700 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 flex items-center gap-1.5 shadow-sm transition-colors">
+              <span class="material-symbols-outlined text-[16px]">flag</span>
+              <span>Compliance Flag</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Master Header Card -->
+        <div class="bg-white rounded-xl border border-brand-border p-6 shadow-sm flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative overflow-hidden">
+          <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-teal-600"></div>
+          <div class="flex items-start md:items-center gap-5">
+            <div class="w-16 h-16 rounded-xl bg-slate-900 text-teal-400 flex items-center justify-center shrink-0 shadow-inner">
+              <span class="material-symbols-outlined text-[32px]">query_stats</span>
+            </div>
+            <div class="flex flex-col gap-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-slate-900 text-white text-[11px] font-bold tracking-wider uppercase">Sponsored Evaluation</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 text-[11px] font-semibold">FinTech &amp; Wealth Planning</span>
+                <span class="text-slate-400 text-xs">Token: #CAMP-2026-ZR-091</span>
+              </div>
+              <h1 class="text-2xl md:text-3xl font-display font-bold text-brand-navy tracking-tight">Investment Readiness Questionnaire 2026</h1>
+              <div class="flex items-center gap-2 text-xs text-slate-500">
+                <span>Sponsor:</span>
+                <span class="font-bold text-slate-800">Zerodha Advisory Solutions India Pvt. Ltd.</span>
+                <span class="inline-flex items-center text-teal-600 font-semibold gap-0.5">
+                  <span class="material-symbols-outlined text-[14px]">verified</span>
+                  <span>SEBI Compliant Partner</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4 w-full lg:w-auto pt-2 lg:pt-0 border-t lg:border-t-0 border-brand-border justify-between lg:justify-end">
+            <div class="flex flex-col bg-slate-50 px-4 py-2 rounded-lg border border-brand-border">
+              <span class="text-[11px] font-bold uppercase text-slate-400">Compensation</span>
+              <span class="text-2xl font-display font-extrabold text-teal-600">₹45.00</span>
+            </div>
+            <div class="flex flex-col bg-slate-50 px-4 py-2 rounded-lg border border-brand-border">
+              <span class="text-[11px] font-bold uppercase text-slate-400">Duration</span>
+              <span class="text-lg font-display font-bold text-brand-navy">~8 mins</span>
+            </div>
+            <div class="flex flex-col bg-slate-50 px-4 py-2 rounded-lg border border-brand-border">
+              <span class="text-[11px] font-bold uppercase text-slate-400">Escrow State</span>
+              <span class="text-xs font-bold text-teal-700 flex items-center gap-1 mt-1">
+                <span class="w-2 h-2 rounded-full bg-teal-600"></span> Locked
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prototyping Sandbox State Controller -->
+        <div class="bg-slate-100 rounded-xl p-3 border border-brand-border flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+          <div class="flex items-center gap-2 text-xs font-bold text-slate-700">
+            <span class="material-symbols-outlined text-[18px] text-teal-600">tune</span>
+            <span>Interactive Prototyping States:</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-1.5" id="stateControls">
+            <button onclick="setScenario('briefing')" id="btn-briefing" class="px-3 py-1 rounded text-xs font-semibold pill-active transition-all">1. Briefing (Default)</button>
+            <button onclick="setScenario('progress')" id="btn-progress" class="px-3 py-1 rounded text-xs font-semibold bg-white text-slate-600 hover:text-slate-900 border border-brand-border transition-all">2. In Progress</button>
+            <button onclick="setScenario('validating')" id="btn-validating" class="px-3 py-1 rounded text-xs font-semibold bg-white text-slate-600 hover:text-slate-900 border border-brand-border transition-all">3. Validating (Amber)</button>
+            <button onclick="setScenario('approved')" id="btn-approved" class="px-3 py-1 rounded text-xs font-semibold bg-white text-slate-600 hover:text-slate-900 border border-brand-border transition-all">4. Approved (Green)</button>
+            <button onclick="setScenario('rejected')" id="btn-rejected" class="px-3 py-1 rounded text-xs font-semibold bg-white text-slate-600 hover:text-slate-900 border border-brand-border transition-all">5. Disqualified (Red)</button>
+          </div>
+        </div>
+
+        <!-- Dynamic State Banner (Triggered by scenario switcher) -->
+        <div id="statusBanner" class="hidden rounded-xl p-4 border transition-all"></div>
+
+        <!-- 2-Column Grid: Left Main (68%) / Right Rail (32%) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- LEFT DOSSIER (col-span-8) -->
+          <div class="lg:col-span-8 flex flex-col gap-6">
+            <!-- Section 01: Overview & Qualifying Action -->
+            <div class="bg-white rounded-xl border border-brand-border p-6 shadow-sm flex flex-col gap-4">
+              <div class="flex items-center justify-between border-b border-brand-border pb-3">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-6 h-6 rounded-md bg-teal-50 text-teal-700 flex items-center justify-center font-bold text-xs">01</span>
+                  <h2 class="font-display font-bold text-lg text-brand-navy">Campaign Overview &amp; Task Objective</h2>
+                </div>
+                <span class="text-xs font-semibold text-slate-500 bg-slate-50 px-2.5 py-1 rounded border border-brand-border">Telemetry: ZR-Q89</span>
+              </div>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Zerodha Advisory is conducting an anonymized academic &amp; behavioral evaluation to examine domestic retail investment confidence among salaried and self-employed creators in India. Your responses contribute directly to next-generation algorithmic risk-profiling tools.
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+                <div class="p-3.5 rounded-lg bg-slate-50 border border-brand-border flex flex-col gap-1">
+                  <span class="text-xs font-bold text-slate-500 uppercase">Scope</span>
+                  <span class="text-base font-display font-bold text-brand-navy">18 Questions</span>
+                  <span class="text-xs text-slate-500">Multiple-choice format with scenario assessment</span>
+                </div>
+                <div class="p-3.5 rounded-lg bg-slate-50 border border-brand-border flex flex-col gap-1">
+                  <span class="text-xs font-bold text-slate-500 uppercase">Pacing Control</span>
+                  <span class="text-base font-display font-bold text-brand-navy">Min. 5 Minutes</span>
+                  <span class="text-xs text-slate-500">Rapid skip clicks trigger disqualification</span>
+                </div>
+                <div class="p-3.5 rounded-lg bg-slate-50 border border-brand-border flex flex-col gap-1">
+                  <span class="text-xs font-bold text-slate-500 uppercase">Integrity Check</span>
+                  <span class="text-base font-display font-bold text-brand-navy">Attention Traps</span>
+                  <span class="text-xs text-slate-500">1 deterministic validation prompt embedded</span>
+                </div>
+              </div>
+
+              <!-- Action Steps -->
+              <div class="flex flex-col gap-2 pt-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Mandatory Qualifying Path</span>
+                <div class="p-3 rounded-lg bg-slate-50 border border-brand-border flex items-start gap-3">
+                  <span class="material-symbols-outlined text-teal-600 text-[20px] mt-0.5">check_circle</span>
+                  <div class="flex flex-col text-xs">
+                    <span class="font-bold text-slate-900">1. Authenticated Sandbox Entry</span>
+                    <span class="text-slate-500">You remain entirely within the AdEarn AI secure container. No redirection to unverified third-party ad networks.</span>
+                  </div>
+                </div>
+                <div class="p-3 rounded-lg bg-slate-50 border border-brand-border flex items-start gap-3">
+                  <span class="material-symbols-outlined text-teal-600 text-[20px] mt-0.5">check_circle</span>
+                  <div class="flex flex-col text-xs">
+                    <span class="font-bold text-slate-900">2. Honest Financial Perception Scoring</span>
+                    <span class="text-slate-500">Address retail instruments: Mutual Fund SIPs, Sovereign Gold Bonds, Sovereign debt, and Direct Equities.</span>
+                  </div>
+                </div>
+                <div class="p-3 rounded-lg bg-slate-50 border border-brand-border flex items-start gap-3">
+                  <span class="material-symbols-outlined text-teal-600 text-[20px] mt-0.5">check_circle</span>
+                  <div class="flex flex-col text-xs">
+                    <span class="font-bold text-slate-900">3. Cryptographic Submission Webhook</span>
+                    <span class="text-slate-500">The final response payload is timestamped and signed with your zero-knowledge profile hash.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 02: Eligibility & Statutory Constraints -->
+            <div class="bg-white rounded-xl border border-brand-border p-6 shadow-sm flex flex-col gap-4">
+              <div class="flex items-center gap-2.5 border-b border-brand-border pb-3">
+                <span class="w-6 h-6 rounded-md bg-teal-50 text-teal-700 flex items-center justify-center font-bold text-xs">02</span>
+                <h2 class="font-display font-bold text-lg text-brand-navy">Eligibility Criteria &amp; Indian Statutory Constraints</h2>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-lg bg-slate-50 border border-brand-border flex flex-col gap-2">
+                  <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-teal-600 text-[18px]">passkey</span>
+                    Verified Prerequisites
+                  </span>
+                  <ul class="text-xs text-slate-600 flex flex-col gap-2 pt-1">
+                    <li class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-teal-600 text-[16px]">check</span>
+                      <span>Indian Resident Individual (IT Act 1961 status)</span>
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-teal-600 text-[16px]">check</span>
+                      <span>PAN Profile Linked &amp; Active on AdEarn</span>
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-teal-600 text-[16px]">check</span>
+                      <span>Tier 1 Verified Creator status verified</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="p-4 rounded-lg bg-slate-50 border border-brand-border flex flex-col gap-2">
+                  <span class="text-xs font-bold text-rose-700 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-rose-600 text-[18px]">block</span>
+                    Disqualification Triggers
+                  </span>
+                  <ul class="text-xs text-slate-600 flex flex-col gap-2 pt-1">
+                    <li class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-rose-600 text-[16px]">close</span>
+                      <span>Completed same questionnaire within past 90 days</span>
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-rose-600 text-[16px]">close</span>
+                      <span>Use of automated headless browsers or VPN routing</span>
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-rose-600 text-[16px]">close</span>
+                      <span>Failed attention verification question (#Q11)</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="p-3 rounded-lg bg-teal-50 border border-teal-100 flex items-center gap-2.5 text-xs text-teal-900">
+                <span class="material-symbols-outlined text-teal-700 text-[20px]">account_balance</span>
+                <span><strong>TDS Notice:</strong> Income credited under Section 194R. Platform aggregates annual earnings for Form 26AS reflection.</span>
+              </div>
+            </div>
+
+            <!-- Section 03: Data Privacy Guarantee -->
+            <div class="bg-white rounded-xl border border-brand-border p-6 shadow-sm flex flex-col gap-4">
+              <div class="flex items-center justify-between border-b border-brand-border pb-3">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-6 h-6 rounded-md bg-teal-50 text-teal-700 flex items-center justify-center font-bold text-xs">03</span>
+                  <h2 class="font-display font-bold text-lg text-brand-navy">Zero-PII Data Privacy Guarantee</h2>
+                </div>
+                <span class="text-xs font-bold text-teal-700 flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[16px]">lock</span> Encrypted Tunnel
+                </span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-2">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-teal-600 text-[16px]">visibility</span>
+                    What Sponsor Receives
+                  </h4>
+                  <div class="p-2.5 rounded-lg bg-slate-50 border border-brand-border text-xs flex justify-between">
+                    <span class="text-slate-600">Demographic bracket</span>
+                    <span class="font-bold text-slate-800">Age 25-34 • Metro</span>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-slate-50 border border-brand-border text-xs flex justify-between">
+                    <span class="text-slate-600">Cryptographic Session Hash</span>
+                    <span class="font-mono font-bold text-teal-700">#AD-8842-ZR-HASH</span>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-slate-50 border border-brand-border text-xs flex justify-between">
+                    <span class="text-slate-600">Survey responses vector</span>
+                    <span class="font-bold text-slate-800">18 Anonymized Vectors</span>
+                  </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-rose-700 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-rose-600 text-[16px]">visibility_off</span>
+                    What is Strictly Shielded
+                  </h4>
+                  <div class="p-2.5 rounded-lg bg-slate-50 border border-brand-border text-xs flex justify-between">
+                    <span class="text-slate-600">Legal Name / PAN / Aadhaar</span>
+                    <span class="font-bold text-rose-600 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">shield</span> Redacted</span>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-slate-50 border border-brand-border text-xs flex justify-between">
+                    <span class="text-slate-600">Mobile, WhatsApp, Email</span>
+                    <span class="font-bold text-rose-600 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">shield</span> Redacted</span>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-slate-50 border border-brand-border text-xs flex justify-between">
+                    <span class="text-slate-600">UPI ID / Bank IFSC Account</span>
+                    <span class="font-bold text-rose-600 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">shield</span> Redacted</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 04: ASCI Compliance -->
+            <div class="bg-white rounded-xl border border-brand-border p-6 shadow-sm flex flex-col gap-3">
+              <div class="flex items-center gap-2.5 border-b border-brand-border pb-3">
+                <span class="w-6 h-6 rounded-md bg-teal-50 text-teal-700 flex items-center justify-center font-bold text-xs">04</span>
+                <h2 class="font-display font-bold text-lg text-brand-navy">Advertising Standards Council of India (ASCI) Disclosure</h2>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                This interaction constitutes a sponsored market-research questionnaire governed by ASCI digital media guidelines. Compensation of ₹45.00 is offered solely in consideration of the verified creator's time and genuine market insight. Rewards are not guaranteed simply by opening the activity. Payout triggers automatically via server webhook post verification.
+              </p>
+              <div class="flex flex-wrap items-center gap-3 pt-1 text-[11px] text-slate-500 font-medium">
+                <span>Reference: ASCI/DIGI/2024/091</span>
+                <span>•</span>
+                <span>SEBI RIA Category Exemption</span>
+                <span>•</span>
+                <a href="#" class="text-teal-600 hover:underline">View Institutional Agreement</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT STICKY TASK & COMPENSATION RAIL (col-span-4) -->
+          <div class="lg:col-span-4 flex flex-col gap-6 sticky top-20">
+            <!-- Compensation Card -->
+            <div class="bg-white rounded-xl border border-brand-border p-6 shadow-sm flex flex-col gap-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Compensation Valuation</span>
+                <span class="px-2 py-0.5 rounded bg-teal-50 text-teal-800 text-[11px] font-bold">Escrow Active</span>
+              </div>
+              <div class="flex items-baseline justify-between">
+                <div class="flex items-baseline gap-1">
+                  <span class="text-3xl font-display font-extrabold text-brand-navy">₹45.00</span>
+                  <span class="text-xs font-bold text-slate-500">INR</span>
+                </div>
+                <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">Standard Yield</span>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 border border-brand-border flex flex-col gap-2">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-slate-600 font-medium">Daily Tier 1 Cap Headroom</span>
+                  <span class="font-bold text-brand-navy">₹45.00 / ₹85.00</span>
+                </div>
+                <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-teal-600 h-full rounded-full" style="width: 53%;"></div>
+                </div>
+                <span class="text-[11px] text-slate-500">Remaining daily claimable quota post-completion: ₹40.00.</span>
+              </div>
+              <div class="flex flex-col gap-2 text-xs text-slate-600 pt-1">
+                <div class="flex items-center justify-between">
+                  <span class="flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px] text-teal-600">schedule</span>
+                    Est. Duration
+                  </span>
+                  <span class="font-bold text-slate-800">8 mins (Avg: 6m 40s)</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px] text-teal-600">bolt</span>
+                    Disbursement
+                  </span>
+                  <span class="font-bold text-teal-700">Instant upon audit</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px] text-teal-600">verified_user</span>
+                    Compliance SLA
+                  </span>
+                  <span class="font-bold text-slate-800">≤ 45 mins max</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Participation & Action Portal Card -->
+            <div class="bg-white rounded-xl border border-brand-border p-6 shadow-sm flex flex-col gap-4" id="actionPortalCard">
+              <div class="flex items-center gap-2 text-brand-navy">
+                <span class="material-symbols-outlined text-[20px] text-teal-600">task_alt</span>
+                <span class="font-display font-bold text-base">Creator Action Portal</span>
+              </div>
+
+              <!-- Consent Checkbox -->
+              <div class="p-3 rounded-lg bg-slate-50 border border-brand-border flex items-start gap-2.5">
+                <input id="creatorConsent" onchange="toggleConsent()" type="checkbox" class="mt-0.5 w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500 cursor-pointer"/>
+                <label for="creatorConsent" class="text-xs text-slate-600 cursor-pointer select-none leading-relaxed">
+                  I certify that I meet Indian domestic tax conditions under Section 194R and consent to aggregate cryptographic telemetry processing.
+                </label>
+              </div>
+
+              <!-- Action CTAs -->
+              <div class="flex flex-col gap-2.5">
+                <button id="btnStart" onclick="document.getElementById('questionnaireModal').classList.remove('hidden')" disabled class="w-full py-2.5 px-4 rounded-lg bg-slate-900 text-white font-semibold text-sm flex items-center justify-center gap-2 opacity-50 cursor-not-allowed shadow transition-all hover:bg-slate-800">
+                  <span class="material-symbols-outlined text-[18px]">lock</span>
+                  <span>Start Verified Activity</span>
+                </button>
+                <button type="button" class="w-full py-2 px-4 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium text-xs transition-colors">
+                  Save to Queue for Later
+                </button>
+                <a href="#" class="text-center text-xs text-slate-500 hover:text-slate-800 pt-1 transition-colors">
+                  Cancel &amp; Return to Sponsored Feed
+                </a>
+              </div>
+
+              <!-- Safety Guarantee -->
+              <div class="p-3 rounded-lg bg-teal-50/60 border border-teal-100 flex items-start gap-2">
+                <span class="material-symbols-outlined text-teal-700 text-[16px] mt-0.5">security</span>
+                <p class="text-[11px] text-teal-900 leading-tight">
+                  <strong>Safety Guarantee:</strong> AdEarn AI or its verified sponsors never ask for UPI PINs, banking passwords, or upfront fees.
+                </p>
+              </div>
+            </div>
+
+            <!-- Stepper SLA Pipeline -->
+            <div class="bg-white rounded-xl border border-brand-border p-6 shadow-sm flex flex-col gap-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Disbursement Lifecycle</span>
+              <div class="relative flex flex-col gap-4 pl-6 pt-1">
+                <div class="absolute left-2.5 top-2 bottom-2 w-0.5 bg-slate-200"></div>
+                <div class="relative flex items-start gap-3">
+                  <div class="absolute -left-6 top-0.5 w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center text-[10px] font-bold">1</div>
+                  <div class="flex flex-col text-xs">
+                    <span class="font-bold text-slate-900">18 Prompts Completed</span>
+                    <span class="text-[11px] text-slate-500">Attention traps validated</span>
+                  </div>
+                </div>
+                <div class="relative flex items-start gap-3">
+                  <div class="absolute -left-6 top-0.5 w-5 h-5 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px] font-bold">2</div>
+                  <div class="flex flex-col text-xs">
+                    <span class="font-bold text-slate-900">Encrypted Telemetry Dispatch</span>
+                    <span class="text-[11px] text-slate-500">Zero-PII response payload</span>
+                  </div>
+                </div>
+                <div class="relative flex items-start gap-3">
+                  <div class="absolute -left-6 top-0.5 w-5 h-5 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px] font-bold">3</div>
+                  <div class="flex flex-col text-xs">
+                    <span class="font-bold text-slate-900">Server Webhook Audit</span>
+                    <span class="text-[11px] text-slate-500">Automated check (&lt; 45m)</span>
+                  </div>
+                </div>
+                <div class="relative flex items-start gap-3">
+                  <div class="absolute -left-6 top-0.5 w-5 h-5 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px] font-bold">4</div>
+                  <div class="flex flex-col text-xs">
+                    <span class="font-bold text-slate-900">₹45.00 Credited to Ledger</span>
+                    <span class="text-[11px] text-slate-500">Instant UPI withdrawal ready</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal 1: Why Am I Seeing This -->
+  <div id="whyModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl border border-brand-border max-w-lg w-full p-6 shadow-xl flex flex-col gap-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 text-brand-navy font-display font-bold text-lg">
+          <span class="material-symbols-outlined text-teal-600">info</span>
+          <h3>Targeting &amp; Eligibility Parameters</h3>
+        </div>
+        <button onclick="document.getElementById('whyModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <p class="text-xs text-slate-600 leading-relaxed">
+        AdEarn AI matches verified creators with accredited enterprise advertisers through strict client-side attribute matching without ever leaking personal data.
+      </p>
+      <div class="flex flex-col gap-2 text-xs">
+        <div class="p-2.5 rounded bg-slate-50 border border-brand-border flex justify-between">
+          <span class="text-slate-600">Target Cohort</span>
+          <span class="font-bold text-slate-800">Indian Creator Economy • Urban Metro</span>
+        </div>
+        <div class="p-2.5 rounded bg-slate-50 border border-brand-border flex justify-between">
+          <span class="text-slate-600">KYC Status</span>
+          <span class="font-bold text-teal-700">Tier 1 Verified Creator</span>
+        </div>
+        <div class="p-2.5 rounded bg-slate-50 border border-brand-border flex justify-between">
+          <span class="text-slate-600">Prior Exposure</span>
+          <span class="font-bold text-slate-800">&gt; 90 days since Zerodha exposure</span>
+        </div>
+      </div>
+      <button onclick="document.getElementById('whyModal').classList.add('hidden')" class="w-full py-2 bg-slate-900 text-white rounded-lg font-semibold text-xs mt-2 hover:bg-slate-800">
+        Got It, Return to Briefing
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal 2: Interactive In-Container Questionnaire Engine -->
+  <div id="questionnaireModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl border border-brand-border max-w-2xl w-full shadow-2xl flex flex-col overflow-hidden max-h-[90vh]">
+      <div class="px-6 py-4 bg-slate-50 border-b border-brand-border flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-slate-900 text-teal-400 font-bold flex items-center justify-center text-xs">ZR</div>
+          <div class="flex flex-col">
+            <span class="text-sm font-bold text-slate-900">Investment Readiness Evaluation 2026</span>
+            <span class="text-[11px] text-slate-500">Question 04 of 18 • Session #AD-8842-ZR</span>
+          </div>
+        </div>
+        <button onclick="document.getElementById('questionnaireModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="p-6 overflow-y-auto flex flex-col gap-5">
+        <div class="flex flex-col gap-1.5">
+          <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+            <span>Section 2: Asset Allocation Confidence</span>
+            <span class="font-bold text-teal-700">22% Complete</span>
+          </div>
+          <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+            <div class="bg-teal-600 h-full rounded-full" style="width: 22%;"></div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="text-xs font-bold text-teal-700 uppercase tracking-wider">Question 04 of 18</span>
+          <h3 class="font-display font-bold text-lg text-brand-navy">
+            If your secondary liquid savings experienced an unexpected 12% market draw-down over a 60-day horizon, what would your primary portfolio reaction be?
+          </h3>
+          <p class="text-xs text-slate-500">Select the single response that best characterizes your realistic risk tolerance.</p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label class="p-3.5 rounded-lg border border-brand-border bg-slate-50 hover:bg-slate-100 cursor-pointer flex items-center gap-3 transition-colors">
+            <input type="radio" name="sampleRisk" class="w-4 h-4 text-teal-600 focus:ring-teal-500"/>
+            <span class="text-xs text-slate-800">Liquidate equity holdings immediately to preserve residual capital in fixed deposit.</span>
+          </label>
+          <label class="p-3.5 rounded-lg border border-teal-200 bg-teal-50/50 hover:bg-teal-50 cursor-pointer flex items-center gap-3 transition-colors">
+            <input type="radio" checked name="sampleRisk" class="w-4 h-4 text-teal-600 focus:ring-teal-500"/>
+            <span class="text-xs text-slate-900 font-medium">Maintain existing automated recurring SIP investments without reallocating holdings.</span>
+          </label>
+          <label class="p-3.5 rounded-lg border border-brand-border bg-slate-50 hover:bg-slate-100 cursor-pointer flex items-center gap-3 transition-colors">
+            <input type="radio" name="sampleRisk" class="w-4 h-4 text-teal-600 focus:ring-teal-500"/>
+            <span class="text-xs text-slate-800">Accelerate capital infusion by purchasing additional index units at perceived discounted valuations.</span>
+          </label>
+        </div>
+      </div>
+      <div class="p-4 bg-slate-50 border-t border-brand-border flex items-center justify-between">
+        <button onclick="document.getElementById('questionnaireModal').classList.add('hidden')" class="px-4 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-200">
+          Save &amp; Pause
+        </button>
+        <div class="flex items-center gap-2">
+          <button onclick="document.getElementById('questionnaireModal').classList.add('hidden'); setScenario('validating');" class="px-5 py-2 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs shadow flex items-center gap-1.5">
+            <span>Next Prompt (Q05)</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleConsent() {
+      const checkbox = document.getElementById('creatorConsent');
+      const btn = document.getElementById('btnStart');
+      if (checkbox.checked) {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        btn.classList.add('bg-teal-600', 'hover:bg-teal-700');
+        btn.classList.remove('bg-slate-900');
+        btn.querySelector('span:first-child').innerText = 'play_arrow';
+      } else {
+        btn.disabled = true;
+        btn.classList.add('opacity-50', 'cursor-not-allowed', 'bg-slate-900');
+        btn.classList.remove('bg-teal-600', 'hover:bg-teal-700');
+        btn.querySelector('span:first-child').innerText = 'lock';
+      }
+    }
+
+    function setScenario(state) {
+      const buttons = document.querySelectorAll('#stateControls button');
+      buttons.forEach(b => {
+        b.className = 'px-3 py-1 rounded text-xs font-semibold bg-white text-slate-600 hover:text-slate-900 border border-brand-border transition-all';
+      });
+      const activeBtn = document.getElementById('btn-' + state);
+      if (activeBtn) activeBtn.className = 'px-3 py-1 rounded text-xs font-semibold pill-active transition-all';
+
+      const banner = document.getElementById('statusBanner');
+      banner.classList.remove('hidden', 'bg-amber-50', 'border-amber-200', 'bg-teal-50', 'border-teal-200', 'bg-rose-50', 'border-rose-200', 'bg-slate-100', 'border-slate-300');
+
+      if (state === 'briefing') {
+        banner.classList.add('hidden');
+      } else if (state === 'progress') {
+        banner.classList.add('bg-slate-100', 'border-slate-300');
+        banner.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-teal-600 text-[24px]">timelapse</span>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-slate-900 uppercase tracking-wider">Evaluation in Progress</span>
+                <span class="text-xs text-slate-600">Questionnaire active in secure container (04/18 questions completed). Telemetry recording active.</span>
+              </div>
+            </div>
+            <button onclick="document.getElementById('questionnaireModal').classList.remove('hidden')" class="px-3 py-1.5 rounded-lg bg-teal-600 text-white font-bold text-xs shadow hover:bg-teal-700">Resume Activity</button>
+          </div>
+        `;
+      } else if (state === 'validating') {
+        banner.classList.add('bg-amber-50', 'border-amber-200');
+        banner.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-amber-600 text-[24px]">hourglass_top</span>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-amber-900 uppercase tracking-wider">Submission Awaiting Automated Webhook Validation</span>
+                <span class="text-xs text-amber-800">Survey responses ingested. ₹45.00 is currently held in escrow. Validation SLA: est. 32 minutes remaining.</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded bg-amber-200/60 text-amber-900 font-bold text-xs">Pending Validation</span>
+          </div>
+        `;
+      } else if (state === 'approved') {
+        banner.classList.add('bg-teal-50', 'border-teal-200');
+        banner.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-teal-600 text-[24px]">verified</span>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-teal-900 uppercase tracking-wider">Reward Approved &amp; Credited</span>
+                <span class="text-xs text-teal-800">Zerodha server webhook confirmed telemetry integrity. ₹45.00 credited to your Available Balance.</span>
+              </div>
+            </div>
+            <a href="#" class="px-3 py-1.5 rounded-lg bg-teal-600 text-white font-bold text-xs shadow hover:bg-teal-700">View in Wallet</a>
+          </div>
+        `;
+      } else if (state === 'rejected') {
+        banner.classList.add('bg-rose-50', 'border-rose-200');
+        banner.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-rose-600 text-[24px]">cancel</span>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-rose-900 uppercase tracking-wider">Evaluation Disqualified</span>
+                <span class="text-xs text-rose-800">Reason: Inconsistent pacing control detected (&lt; 2 minutes response threshold). Reward reversed to sponsor.</span>
+              </div>
+            </div>
+            <button class="px-3 py-1.5 rounded-lg bg-rose-600 text-white font-bold text-xs shadow hover:bg-rose-700">Submit Dispute</button>
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

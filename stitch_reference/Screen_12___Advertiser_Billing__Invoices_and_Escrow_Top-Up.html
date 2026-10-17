@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-container":"#006f66","inverse-primary":"#bec6e0","outline":"#76777d","secondary":"#006a61","on-secondary":"#ffffff","on-primary-fixed":"#131b2e","on-tertiary":"#ffffff","tertiary-fixed-dim":"#ffb77d","outline-variant":"#c6c6cd","tertiary":"#000000","on-error":"#ffffff","on-primary-fixed-variant":"#3f465c","on-secondary-fixed":"#00201d","error-container":"#ffdad6","inverse-surface":"#213145","surface-dim":"#cbdbf5","surface-container-high":"#dce9ff","on-primary":"#ffffff","on-background":"#0b1c30","on-secondary-fixed-variant":"#005049","on-primary-container":"#7c839b","on-tertiary-fixed":"#2f1500","surface-container":"#e5eeff","inverse-on-surface":"#eaf1ff","primary-fixed-dim":"#bec6e0","on-error-container":"#93000a","surface":"#f8f9ff","tertiary-container":"#2f1500","surface-container-low":"#eff4ff","surface-tint":"#565e74","tertiary-fixed":"#ffdcc3","surface-container-highest":"#d3e4fe","on-tertiary-fixed-variant":"#6e3900","secondary-fixed-dim":"#6bd8cb","secondary-container":"#86f2e4","surface-variant":"#d3e4fe","primary-fixed":"#dae2fd","primary":"#000000","on-tertiary-container":"#c76c00","error":"#ba1a1a","secondary-fixed":"#89f5e7","surface-bright":"#f8f9ff","surface-container-lowest":"#ffffff","on-surface-variant":"#45464d","on-surface":"#0b1c30","background":"#f8f9ff","primary-container":"#131b2e"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"space-xl":"2rem","space-xs":"0.25rem",margin:"2rem","space-lg":"1.5rem","margin-mobile":"1rem","space-sm":"0.5rem","space-md":"1rem","gutter-mobile":"1rem",gutter:"1.5rem"},fontFamily:{"label-md":["Inter"],"headline-sm":["Plus Jakarta Sans"],"body-lg":["Inter"],"body-md":["Inter"],"body-sm":["Inter"],"headline-lg-mobile":["Plus Jakarta Sans"],"label-sm":["Inter"],"headline-md":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"headline-xl-mobile":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"label-lg":["Inter"],"currency-display":["Plus Jakarta Sans"],"currency-body":["Inter"]},fontSize:{"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"600"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"400"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"0em",fontWeight:"400"}],"body-sm":["12px",{lineHeight:"16px",letterSpacing:"0.005em",fontWeight:"400"}],"headline-lg-mobile":["22px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}],"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-lg":["28px",{lineHeight:"36px",letterSpacing:"-0.02em",fontWeight:"600"}],"headline-xl-mobile":["28px",{lineHeight:"36px",letterSpacing:"-0.015em",fontWeight:"700"}],"headline-xl":["36px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.01em",fontWeight:"500"}],"currency-display":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"currency-body":["14px",{lineHeight:"20px",letterSpacing:"-0.01em",fontWeight:"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center gap-space-sm bg-surface-container-lowest"><div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center text-on-primary font-headline-sm text-headline-sm">A</div><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">AdEarn<span class="text-secondary">AI</span></span><span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase">Portal</span></div><span class="font-label-sm text-label-sm text-on-surface-variant">Brand Studio Escrow</span></div></div><div class="px-space-md py-space-xs"><div class="px-space-sm py-space-xs rounded bg-surface-container-low flex items-center justify-between text-on-surface-variant"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="font-label-sm text-label-sm uppercase tracking-wide">Nodal v2.4 Live</span></div><span class="material-symbols-outlined text-[14px] text-on-surface-variant">lock</span></div></div><nav class="px-space-sm py-space-sm space-y-1" data-active-classes="bg-primary-container text-on-primary font-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span>Overview</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="campaigns" href="#"><span class="material-symbols-outlined text-[20px]">campaign</span>Campaigns</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="create-campaign" href="#"><span class="material-symbols-outlined text-[20px]">add_circle</span>Create Campaign</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="creative-library" href="#"><span class="material-symbols-outlined text-[20px]">perm_media</span>Creative Library</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="analytics-and-attribution" href="#"><span class="material-symbols-outlined text-[20px]">insights</span>Analytics &amp; Attribution</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="billing-and-escrow-funding" href="#"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>Billing &amp; Escrow</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="account-and-team-settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span>Account &amp; Team</a></nav></div><div class="p-space-md space-y-space-sm"><div class="p-space-sm rounded-lg bg-surface-container-low"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Regulatory Reserve</span><span class="font-label-sm text-label-sm text-secondary font-semibold">100%</span></div><div class="w-full bg-surface-container-highest h-1 rounded-full mt-1.5 overflow-hidden"><div class="bg-secondary h-full rounded-full w-full"></div></div><p class="font-body-sm text-label-sm text-on-surface-variant mt-1.5">RBI-Compliant Nodal Ledger</p></div><div class="space-y-1"><a class="flex items-center justify-between px-space-sm py-1 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-sm text-label-sm" data-path="compliance-and-guidelines" href="#"><span>ASCI / SEBI Guidelines</span><span class="material-symbols-outlined text-[16px]">verified_user</span></a><a class="flex items-center justify-between px-space-sm py-1 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-sm text-label-sm" data-path="help-and-support" href="#"><span>Institutional Desk</span><span class="material-symbols-outlined text-[16px]">support_agent</span></a></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><button class="flex items-center gap-space-sm px-space-md py-space-xs rounded-lg bg-surface-container-lowest shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] text-left hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-secondary text-[20px]">domain</span><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-label-md text-label-md text-on-surface truncate max-w-[240px]">Zerodha Advisory Solutions India Pvt. Ltd.</span><span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span></div><span class="font-label-sm text-label-sm text-on-surface-variant">Active Tier 1 Institutional Advertiser</span></div></button></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-lowest shadow-[0_1px_3px_0_rgba(15,23,42,0.05)]"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Escrow Balance</span><span class="font-currency-body text-currency-body text-secondary">₹4,50,000.00</span><span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span></div><button class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="flex flex-col text-right hidden sm:flex"><span class="font-label-md text-label-md text-on-surface">Vikram Mehta</span><span class="font-label-sm text-label-sm text-on-surface-variant">VP Growth &amp; Attribution</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="relative pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Ensure Sidebar Navigation State is strictly set to Billing & Escrow -->
+<script>
+    (function syncActiveNav() {
+      try {
+        const navLinks = document.querySelectorAll('aside nav a');
+        navLinks.forEach(link => {
+          const path = link.getAttribute('data-path');
+          if (path === 'billing-and-escrow-funding') {
+            link.className = "flex items-center gap-space-sm px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg shadow-sm";
+            const icon = link.querySelector('.material-symbols-outlined');
+            if (icon) icon.className = "material-symbols-outlined text-[20px] text-secondary-container";
+          } else {
+            link.className = "flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg";
+          }
+        });
+      } catch (e) { /* graceful fallback */ }
+    })();
+  </script>
+<!-- Main Content Body -->
+<div class="px-space-xl py-space-lg max-w-[1440px] w-full mx-auto space-y-space-xl">
+<!-- 1. Screen Header & Quick Controls -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md bg-surface-container-lowest p-space-lg rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.05)]">
+<div class="space-y-1">
+<div class="flex items-center gap-space-sm">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wide">Statutory Reserve Desk</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">RBI Section 18 Non-Custodial Pool</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Billing, Invoices &amp; Nodal Escrow Top-Up</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+          Manage statutory non-custodial RBI nodal escrow liquidity, download GST-compliant tax invoices, and allocate dedicated budget caps per campaign flight.
+        </p>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container transition-colors font-label-lg text-label-lg shadow-sm" id="btnDownloadStatement">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">receipt_long</span>
+<span>Download Statement (CSV/PDF)</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-secondary text-on-secondary hover:bg-on-secondary-container transition-all font-label-lg text-label-lg shadow-sm hover:shadow-md" id="btnScrollTopUp">
+<span class="material-symbols-outlined text-[18px]">add_card</span>
+<span>+ Add Funds / Top-Up Escrow</span>
+</button>
+</div>
+</div>
+<!-- 2. Account Financial Summary (5 Distinct Cards) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-space-md">
+<!-- Card 1: Available Funded Escrow -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] relative overflow-hidden flex flex-col justify-between">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-secondary-container/20 pointer-events-none"></div>
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Available Funded Escrow</span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary" title="Active Liquid Nodal Reserve"></span>
+</div>
+<div class="mt-space-sm">
+<div class="font-currency-display text-currency-display text-on-surface tracking-tight">₹4,50,000<span class="text-on-surface-variant text-[20px]">.00</span></div>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs">
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Unencumbered liquidity in HDFC Institutional Nodal A/C <span class="font-label-sm text-on-surface">#***0912</span>. 100% RBI reserve backing.
+          </p>
+</div>
+</div>
+<!-- Card 2: Reserved Campaign Budget -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Reserved Campaign Budget</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">lock_clock</span>
+</div>
+<div class="mt-space-sm">
+<div class="font-currency-display text-currency-display text-on-surface tracking-tight">₹3,12,000<span class="text-on-surface-variant text-[20px]">.00</span></div>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-semibold">4 Active Flights</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Allocated Collateral</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 truncate" title="#CAMP-ZR-091, #CAMP-SF-204, #CAMP-CW-881, #CAMP-FG-440">
+            ZR-091, SF-204, CW-881, FG-440
+          </p>
+</div>
+</div>
+<!-- Card 3: Confirmed Spend L30D -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Confirmed Spend (L30D)</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">verified</span>
+</div>
+<div class="mt-space-sm">
+<div class="font-currency-display text-currency-display text-on-surface tracking-tight">₹3,45,280<span class="text-on-surface-variant text-[20px]">.00</span></div>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs">
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[16px]">fingerprint</span>
+<span class="font-label-sm text-label-sm font-semibold">HMAC Verified Debits</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+            Server-verified billable conversion postbacks.
+          </p>
+</div>
+</div>
+<!-- Card 4: Pending SLA Reconciliation -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Pending SLA Recon</span>
+<span class="px-space-xs py-0.5 rounded bg-amber-50 text-amber-700 font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>45m SLA
+            </span>
+</div>
+<div class="mt-space-sm">
+<div class="font-currency-display text-currency-display text-on-surface tracking-tight">₹18,450<span class="text-on-surface-variant text-[20px]">.00</span></div>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs">
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+<strong class="text-on-surface font-semibold">412 outcomes</strong> in webhook acknowledgement window before statutory settlement.
+          </p>
+</div>
+</div>
+<!-- Card 5: Refunds / Buffer Released -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Buffer Released</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">replay</span>
+</div>
+<div class="mt-space-sm">
+<div class="font-currency-display text-currency-display text-secondary tracking-tight">₹12,800<span class="text-secondary/70 text-[20px]">.00</span></div>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
+            IVT Neutralized &amp; Pauses
+          </span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+            Auto-recredited to active escrow pool.
+          </p>
+</div>
+</div>
+</div>
+<!-- 3. Escrow Top-Up & Funding Workspace (Split Grid: Interactive Rail vs Statutory Breakdown & Virtual Account) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] overflow-hidden" id="escrowTopUpSection">
+<div class="p-space-lg bg-surface-container-low flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[22px]">account_balance</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Institutional Escrow Replenishment Terminal</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Direct statutory credit to HDFC Non-Custodial Nodal Pool. Real-time reconciliation via automated banking hooks.
+          </p>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[16px]">lock</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Statutory PSS Act 2007 Verified</span>
+</div>
+</div>
+<div class="p-space-lg grid grid-cols-1 lg:grid-cols-12 gap-space-xl">
+<!-- Left Column: Input + Preset Chips + Funding Method (7 cols) -->
+<div class="lg:col-span-7 space-y-space-lg">
+<!-- Step 1: Deposit Principal Amount -->
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Top-Up Principal Amount</label>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Min: ₹25,000 | Max: ₹50,00,000 per RTGS batch</span>
+</div>
+<div class="relative flex items-center">
+<div class="absolute left-0 top-0 bottom-0 w-12 bg-surface-container-low rounded-l flex items-center justify-center font-currency-body text-currency-body text-on-surface">
+                ₹
+              </div>
+<input class="w-full h-12 pl-16 pr-space-md bg-surface-container-lowest text-on-surface font-currency-display text-[22px] rounded focus:outline-none focus:ring-2 focus:ring-secondary/40 shadow-sm" id="depositInput" min="25000" placeholder="100000" step="5000" type="number" value="100000"/>
+</div>
+<!-- Quick Amount Chips -->
+<div class="flex items-center gap-space-sm flex-wrap pt-1">
+<button class="quick-chip px-space-md py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors" data-val="50000" type="button">
+                +₹50,000
+              </button>
+<button class="quick-chip active px-space-md py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md shadow-sm" data-val="100000" type="button">
+                +₹1,00,000
+              </button>
+<button class="quick-chip px-space-md py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors" data-val="250000" type="button">
+                +₹2,50,000
+              </button>
+<button class="quick-chip px-space-md py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors" data-val="500000" type="button">
+                +₹5,00,000
+              </button>
+<span class="font-label-sm text-label-sm text-on-surface-variant ml-auto">Custom Amount Supported</span>
+</div>
+</div>
+<!-- Step 2: Choose Remittance Rail -->
+<div class="space-y-space-sm pt-space-xs">
+<label class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Statutory Funding Rail</label>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
+<!-- Rail 1: RTGS / NEFT (Selected) -->
+<label class="funding-rail-option relative p-space-md rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container transition-all flex flex-col justify-between">
+<input checked="" class="sr-only" name="funding_rail" type="radio" value="rtgs"/>
+<div class="flex items-start justify-between">
+<span class="material-symbols-outlined text-secondary text-[24px]">account_balance</span>
+<span class="rail-check w-4 h-4 rounded-full bg-secondary flex items-center justify-center text-on-secondary text-[10px]">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</span>
+</div>
+<div class="mt-space-md">
+<p class="font-headline-sm text-headline-sm text-on-surface">RTGS / NEFT</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Dedicated Virtual A/C</p>
+<div class="mt-2 flex items-center gap-1 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span>Recon &lt;30s</span>
+</div>
+</div>
+</label>
+<!-- Rail 2: Corporate NetBanking -->
+<label class="funding-rail-option relative p-space-md rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container transition-all flex flex-col justify-between opacity-80">
+<input class="sr-only" name="funding_rail" type="radio" value="netbanking"/>
+<div class="flex items-start justify-between">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]">devices</span>
+<span class="rail-check w-4 h-4 rounded-full bg-surface-container-highest"></span>
+</div>
+<div class="mt-space-md">
+<p class="font-headline-sm text-headline-sm text-on-surface">NetBanking</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">58 Corporate Banks</p>
+<div class="mt-2 flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Instant Credit</span>
+</div>
+</div>
+</label>
+<!-- Rail 3: eNACH Mandate -->
+<label class="funding-rail-option relative p-space-md rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container transition-all flex flex-col justify-between opacity-80">
+<input class="sr-only" name="funding_rail" type="radio" value="enach"/>
+<div class="flex items-start justify-between">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]">autorenew</span>
+<span class="rail-check w-4 h-4 rounded-full bg-surface-container-highest"></span>
+</div>
+<div class="mt-space-md">
+<p class="font-headline-sm text-headline-sm text-on-surface">Auto-Mandate</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Trigger @ ₹1,00,000</p>
+<div class="mt-2 flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+<span>NPCI Pre-Approved</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Virtual Account Details Panel -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm space-y-space-sm">
+<div class="flex items-center justify-between pb-1">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[16px]">domain_verification</span>
+                Zerodha Assigned Virtual Escrow Ledger
+              </span>
+<span class="font-label-sm text-label-sm text-secondary bg-surface-container-high px-space-xs py-0.5 rounded">HDFC Nodal Core</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Beneficiary Account Name</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">ADEARN AI NODAL - ZERODHA ADV</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Virtual A/C Number</span>
+<button class="copy-btn text-secondary hover:text-on-secondary-container transition-colors" data-copy="ADEARN-ZERODHA-NDL99" title="Copy Account Number">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold font-mono tracking-wider">ADEARN-ZERODHA-NDL99</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">IFSC Code</span>
+<button class="copy-btn text-secondary hover:text-on-secondary-container transition-colors" data-copy="HDFC0000240" title="Copy IFSC">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold font-mono">HDFC0000240</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Account Type / Branch</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Current (Nodal / CMS Escrow)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: GST & Statutory Breakdown Preview (5 cols) -->
+<div class="lg:col-span-5 bg-surface-container-low p-space-lg rounded-xl flex flex-col justify-between space-y-space-md">
+<div class="space-y-space-md">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface">Statutory Ledger Breakdown</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">SAC: 998313</span>
+</div>
+<!-- Detailed Breakdown Rows -->
+<div class="space-y-space-xs font-body-md text-body-md text-on-surface-variant">
+<div class="flex items-center justify-between py-1">
+<span>Escrow Deposit Principal (100% Retained)</span>
+<span class="font-currency-body text-currency-body text-on-surface font-semibold" id="statPrincipal">₹1,00,000.00</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="flex items-center gap-1">
+                  Platform Verification Fee Advance (10%)
+                  <span class="material-symbols-outlined text-[14px] text-on-surface-variant" title="Applied only to verified platform infrastructure handling">info</span>
+</span>
+<span class="font-currency-body text-currency-body text-on-surface" id="statFee">₹10,000.00</span>
+</div>
+<div class="flex items-center justify-between py-1 pl-space-sm text-on-surface-variant text-body-sm">
+<span>CGST (9.0% on fee)</span>
+<span class="font-mono" id="statCgst">₹900.00</span>
+</div>
+<div class="flex items-center justify-between py-1 pl-space-sm text-on-surface-variant text-body-sm">
+<span>SGST (9.0% on fee)</span>
+<span class="font-mono" id="statSgst">₹900.00</span>
+</div>
+<div class="h-px bg-surface-container-highest my-2"></div>
+<div class="flex items-center justify-between py-1 text-on-surface">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold">Total Challan Remittance</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Includes Statutory GST Cess (₹0)</span>
+</div>
+<span class="font-currency-display text-[26px] text-secondary font-bold" id="statTotal">₹1,01,800.00</span>
+</div>
+</div>
+<!-- Non-Custodial Statutory Notice Badge -->
+<div class="p-space-sm rounded-lg bg-surface-container-lowest text-on-surface-variant space-y-1">
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span class="font-label-sm text-label-sm font-semibold uppercase tracking-wider">Non-Custodial Escrow Guarantee</span>
+</div>
+<p class="font-body-sm text-body-sm leading-relaxed">
+                Funds remain non-custodial in RBI Schedule 1 Nodal Escrow until verified campaign outcome delivery. Unconsumed balances refundable within T+1 on demand.
+              </p>
+</div>
+</div>
+<div class="space-y-space-xs pt-space-sm">
+<button class="w-full py-3 px-space-md rounded-lg bg-primary text-on-primary hover:bg-inverse-surface transition-all font-label-lg text-label-lg font-semibold shadow-md flex items-center justify-center gap-space-xs" id="btnGenerateChallan">
+<span class="material-symbols-outlined text-[18px]">receipt</span>
+<span>Generate Remittance Challan &amp; Copy RTGS</span>
+</button>
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant">
+              Instant webhook callback acknowledgement sent to finance@zerodha.com
+            </p>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. Campaign Budget Caps & Escrow Allocation Table -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] overflow-hidden">
+<div class="p-space-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md bg-surface-container-low">
+<div class="space-y-0.5">
+<div class="flex items-center gap-space-xs">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Active Campaign Budget Caps &amp; Escrow Allocation</h2>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">4 Active Flights</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Granular ring-fenced escrow allocation preventing flight over-spend with real-time auto-pause thresholds.
+          </p>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors font-label-md text-label-md flex items-center gap-1 shadow-sm" id="btnRebalanceAll">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Rebalance Allocations</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/70 text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-space-md px-space-lg">Campaign Flight Details</th>
+<th class="py-space-md px-space-md text-right">Allocated Escrow Cap</th>
+<th class="py-space-md px-space-md">Current Spend &amp; Velocity</th>
+<th class="py-space-md px-space-md">Remaining Runway</th>
+<th class="py-space-md px-space-md">Threshold Safeguard</th>
+<th class="py-space-md px-space-lg text-right">Ledger Control</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-md px-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Investment Readiness Module</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-mono text-[10px]">#CAMP-ZR-091</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Performance Video Flight • Tier 1 Metro Focus</p>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right font-currency-body text-currency-body text-on-surface">
+                ₹1,50,000.00
+              </td>
+<td class="py-space-md px-space-md min-w-[200px]">
+<div class="space-y-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface font-semibold">₹1,12,450.00</span>
+<span class="text-on-surface-variant">75% Burnt</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 75%;"></div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[16px]">timelapse</span>
+<span class="font-body-sm text-body-sm font-semibold">~8 days</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">At current pacing</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 w-max">
+<span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span>
+                  Pause when &lt;10% buffer
+                </span>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<button class="px-space-sm py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold transition-colors">
+                  Adjust Cap
+                </button>
+</td>
+</tr>
+<!-- Row 2 (Warning) -->
+<tr class="hover:bg-surface-container-low/50 transition-colors bg-error-container/10">
+<td class="py-space-md px-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[20px]">speed</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md text-on-surface font-semibold">SprintFlow SaaS Attribution</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-mono text-[10px]">#CAMP-SF-204</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Targeted Interactive Quiz Campaign</p>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right font-currency-body text-currency-body text-on-surface">
+                ₹1,00,000.00
+              </td>
+<td class="py-space-md px-space-md min-w-[200px]">
+<div class="space-y-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-error font-semibold">₹86,000.00</span>
+<span class="text-error font-bold">86% Burnt (Warning)</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-error h-full rounded-full" style="width: 86%;"></div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-1.5 text-error">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span class="font-body-sm text-body-sm font-bold">~2 days</span>
+</div>
+<span class="font-label-sm text-label-sm text-error">Low Balance Warning</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-amber-50 text-amber-800 font-label-sm text-label-sm flex items-center gap-1 w-max font-semibold">
+<span class="material-symbols-outlined text-[14px] text-amber-600">notifications_active</span>
+                  Alert Sent @ 15%
+                </span>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<button class="px-space-sm py-1 rounded bg-secondary text-on-secondary hover:bg-on-secondary-container font-label-sm text-label-sm font-semibold transition-colors shadow-sm">
+                  Top-Up Flight
+                </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-md px-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">quiz</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md text-on-surface font-semibold">CrediWise Financial Literacy Quiz</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-mono text-[10px]">#CAMP-CW-881</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Educational Rewards &amp; Interactive Ledger</p>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right font-currency-body text-currency-body text-on-surface">
+                ₹1,50,000.00
+              </td>
+<td class="py-space-md px-space-md min-w-[200px]">
+<div class="space-y-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface font-semibold">₹98,230.00</span>
+<span class="text-on-surface-variant">65% Burnt</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 65%;"></div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[16px]">timelapse</span>
+<span class="font-body-sm text-body-sm font-semibold">~14 days</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Optimal velocity</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 w-max">
+<span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span>
+                  Pause when &lt;10% buffer
+                </span>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<button class="px-space-sm py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold transition-colors">
+                  Adjust Cap
+                </button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-md px-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">savings</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md text-on-surface font-semibold">FinGrow Micro-Investment Pilot</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-mono text-[10px]">#CAMP-FG-440</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Mutual Fund SIP Awareness Campaign</p>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right font-currency-body text-currency-body text-on-surface">
+                ₹1,00,000.00
+              </td>
+<td class="py-space-md px-space-md min-w-[200px]">
+<div class="space-y-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface font-semibold">₹48,600.00</span>
+<span class="text-on-surface-variant">48% Burnt</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 48%;"></div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[16px]">timelapse</span>
+<span class="font-body-sm text-body-sm font-semibold">~18 days</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Healthy runway</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 w-max">
+<span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span>
+                  Pause when &lt;10% buffer
+                </span>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<button class="px-space-sm py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold transition-colors">
+                  Adjust Cap
+                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- 5. Invoices & Nodal Settlement Ledger (Tabbed Table) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] overflow-hidden space-y-0">
+<!-- Tabs Navigation -->
+<div class="px-space-lg pt-space-md bg-surface-container-low flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md overflow-x-auto" id="ledgerTabs">
+<button class="tab-btn active py-3 px-space-xs font-label-lg text-label-lg text-on-surface border-b-2 border-secondary font-semibold transition-all" data-tab="all">
+            All Transactions (24)
+          </button>
+<button class="tab-btn py-3 px-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-all" data-tab="tax-invoices">
+            Tax Invoices (GST) (8)
+          </button>
+<button class="tab-btn py-3 px-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-all" data-tab="nodal-topups">
+            Nodal Top-Ups (10)
+          </button>
+<button class="tab-btn py-3 px-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-all" data-tab="adjustments">
+            Escrow Adjustments &amp; Refunds (6)
+          </button>
+</div>
+<div class="flex items-center gap-space-xs pb-space-sm md:pb-0">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-2.5 text-[16px] text-on-surface-variant">search</span>
+<input class="h-9 pl-8 pr-space-md bg-surface-container-lowest text-on-surface font-body-sm text-body-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-secondary w-60" id="ledgerSearchInput" placeholder="Search Invoice ID / UTR..." type="text"/>
+</div>
+<button class="p-2 rounded-lg bg-surface-container-lowest text-on-surface-variant hover:text-on-surface transition-colors shadow-sm" title="Filter Date Range">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+</button>
+</div>
+</div>
+<!-- Ledger Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse" id="ledgerTable">
+<thead>
+<tr class="bg-surface-container-low/70 text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-space-md px-space-lg">Date &amp; Timestamp</th>
+<th class="py-space-md px-space-md">Reference / Invoice ID</th>
+<th class="py-space-md px-space-md">Transaction Type</th>
+<th class="py-space-md px-space-md text-right">Gross Amount</th>
+<th class="py-space-md px-space-md">Statutory Tax Status</th>
+<th class="py-space-md px-space-md">Reconciliation State</th>
+<th class="py-space-md px-space-lg text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-sm text-body-sm">
+<!-- Row 1: Tax Invoice -->
+<tr class="hover:bg-surface-container-low/50 transition-colors" data-category="tax-invoices">
+<td class="py-space-md px-space-lg text-on-surface whitespace-nowrap">
+<div class="font-label-md text-label-md font-semibold">15 Oct 2026</div>
+<div class="text-on-surface-variant text-[11px]">11:30 AM IST</div>
+</td>
+<td class="py-space-md px-space-md whitespace-nowrap">
+<div class="font-label-md text-label-md text-on-surface font-mono font-semibold">INV-2026-ZR-089</div>
+<div class="text-on-surface-variant text-[11px] font-mono">UTR: HDFCR52026101509</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Platform Service Invoice</span>
+</div>
+<span class="text-on-surface-variant text-[11px]">B2B Tech Platform Levy</span>
+</td>
+<td class="py-space-md px-space-md text-right whitespace-nowrap">
+<span class="font-currency-body text-currency-body text-on-surface">₹1,01,800.00</span>
+<div class="text-on-surface-variant text-[11px]">GST: ₹1,800.00 (18%)</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm font-semibold flex items-center gap-1 w-max">
+<span class="material-symbols-outlined text-[13px] text-secondary">verified</span>
+                  GSTR-1 Filed (SAC 998313)
+                </span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-emerald-50 text-emerald-700 font-label-sm text-label-sm font-semibold flex items-center gap-1 w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  Verified &amp; Credited
+                </span>
+</td>
+<td class="py-space-md px-space-lg text-right whitespace-nowrap space-x-1">
+<button class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Download GST Invoice (PDF)">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="View Cryptographic UTR Trace">
+<span class="material-symbols-outlined text-[18px]">security_update_good</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Nodal Top-Up -->
+<tr class="hover:bg-surface-container-low/50 transition-colors" data-category="nodal-topups">
+<td class="py-space-md px-space-lg text-on-surface whitespace-nowrap">
+<div class="font-label-md text-label-md font-semibold">12 Oct 2026</div>
+<div class="text-on-surface-variant text-[11px]">03:45 PM IST</div>
+</td>
+<td class="py-space-md px-space-md whitespace-nowrap">
+<div class="font-label-md text-label-md text-on-surface font-mono font-semibold">TOP-2026-NDL-044</div>
+<div class="text-on-surface-variant text-[11px] font-mono">UTR: CMS99482710123</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Nodal Top-Up (RTGS)</span>
+</div>
+<span class="text-on-surface-variant text-[11px]">Direct Escrow Inflow</span>
+</td>
+<td class="py-space-md px-space-md text-right whitespace-nowrap">
+<span class="font-currency-body text-currency-body text-secondary font-bold">+₹2,50,000.00</span>
+<div class="text-on-surface-variant text-[11px]">Non-taxable principal</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 w-max">
+                  Non-Custodial Deposit
+                </span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-emerald-50 text-emerald-700 font-label-sm text-label-sm font-semibold flex items-center gap-1 w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  Settled (30s Recon)
+                </span>
+</td>
+<td class="py-space-md px-space-lg text-right whitespace-nowrap space-x-1">
+<button class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Download Receipt">
+<span class="material-symbols-outlined text-[18px]">receipt</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Cryptographic UTR Trace">
+<span class="material-symbols-outlined text-[18px]">security_update_good</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Outcome Settlement Debit -->
+<tr class="hover:bg-surface-container-low/50 transition-colors" data-category="adjustments">
+<td class="py-space-md px-space-lg text-on-surface whitespace-nowrap">
+<div class="font-label-md text-label-md font-semibold">09 Oct 2026</div>
+<div class="text-on-surface-variant text-[11px]">06:12 PM IST</div>
+</td>
+<td class="py-space-md px-space-md whitespace-nowrap">
+<div class="font-label-md text-label-md text-on-surface font-mono font-semibold">DEB-HMAC-8812</div>
+<div class="text-on-surface-variant text-[11px] font-mono">Flight: #CAMP-ZR-091</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-on-surface-variant"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Outcome Settlement Debit</span>
+</div>
+<span class="text-on-surface-variant text-[11px]">840 Verified Video Completions</span>
+</td>
+<td class="py-space-md px-space-md text-right whitespace-nowrap">
+<span class="font-currency-body text-currency-body text-on-surface font-semibold">-₹42,000.00</span>
+<div class="text-on-surface-variant text-[11px]">Disbursed to Creators</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 w-max">
+                  194R Compliant Ledger
+                </span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-semibold flex items-center gap-1 w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Completed Ledger
+                </span>
+</td>
+<td class="py-space-md px-space-lg text-right whitespace-nowrap space-x-1">
+<button class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Audit Hash Trace">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: IVT Reserve Refund -->
+<tr class="hover:bg-surface-container-low/50 transition-colors" data-category="adjustments">
+<td class="py-space-md px-space-lg text-on-surface whitespace-nowrap">
+<div class="font-label-md text-label-md font-semibold">04 Oct 2026</div>
+<div class="text-on-surface-variant text-[11px]">02:20 PM IST</div>
+</td>
+<td class="py-space-md px-space-md whitespace-nowrap">
+<div class="font-label-md text-label-md text-on-surface font-mono font-semibold">REF-IVT-7701</div>
+<div class="text-on-surface-variant text-[11px] font-mono">SecAudit Block Ref: #401</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md text-secondary font-semibold">IVT Reserve Refund</span>
+</div>
+<span class="text-on-surface-variant text-[11px]">Invalid Traffic Block Credit</span>
+</td>
+<td class="py-space-md px-space-md text-right whitespace-nowrap">
+<span class="font-currency-body text-currency-body text-secondary font-bold">+₹12,800.00</span>
+<div class="text-on-surface-variant text-[11px]">Reinstated Principal</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 w-max">
+                  Tax Neutral Re-credit
+                </span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-emerald-50 text-emerald-700 font-label-sm text-label-sm font-semibold flex items-center gap-1 w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  Reconciled
+                </span>
+</td>
+<td class="py-space-md px-space-lg text-right whitespace-nowrap space-x-1">
+<button class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Download Credit Note">
+<span class="material-symbols-outlined text-[18px]">description</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Under Recon -->
+<tr class="hover:bg-surface-container-low/50 transition-colors" data-category="adjustments">
+<td class="py-space-md px-space-lg text-on-surface whitespace-nowrap">
+<div class="font-label-md text-label-md font-semibold">Today</div>
+<div class="text-on-surface-variant text-[11px]">10:04 AM IST</div>
+</td>
+<td class="py-space-md px-space-md whitespace-nowrap">
+<div class="font-label-md text-label-md text-on-surface font-mono font-semibold">ACK-SLA-9021</div>
+<div class="text-on-surface-variant text-[11px] font-mono">Flight: #CAMP-SF-204</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Batch Webhook Processing</span>
+</div>
+<span class="text-on-surface-variant text-[11px]">412 In-Flight Conversions</span>
+</td>
+<td class="py-space-md px-space-md text-right whitespace-nowrap">
+<span class="font-currency-body text-currency-body text-on-surface">₹18,450.00</span>
+<div class="text-amber-600 text-[11px]">Pending window acknowledgement</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 w-max">
+                  Provisional
+                </span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-amber-50 text-amber-800 font-label-sm text-label-sm font-semibold flex items-center gap-1 w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                  Under Settlement Recon
+                </span>
+</td>
+<td class="py-space-md px-space-lg text-right whitespace-nowrap space-x-1">
+<button class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="View Webhook Log">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination / Footer -->
+<div class="p-space-md bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm text-on-surface-variant">
+<span>Showing 5 of 24 Audited Ledger Entries</span>
+<div class="flex items-center gap-1">
+<button class="px-3 py-1 rounded bg-surface-container-lowest text-on-surface-variant hover:text-on-surface disabled:opacity-50" disabled="">Previous</button>
+<button class="px-3 py-1 rounded bg-secondary text-on-secondary font-semibold">1</button>
+<button class="px-3 py-1 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors">2</button>
+<button class="px-3 py-1 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors">3</button>
+<button class="px-3 py-1 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors">Next</button>
+</div>
+</div>
+</div>
+<!-- 6. Regulatory Mandate & Compliance Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Statutory Reserve Mandate -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[24px]">account_balance</span>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">RBI Circular on Nodal Escrow Accounts</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Statutory compliance pursuant to <strong>Section 18 of the Payment and Settlement Systems Act, 2007</strong>. AdEarn AI operates non-custodial nodal pooling with Scheduled Commercial Bank partners. Funds remain unencumbered property of the institutional advertiser until cryptographically validated performance conditions are satisfied.
+          </p>
+</div>
+</div>
+<!-- Section 194R Indian Income Tax Compliance -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[24px]">policy</span>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Section 194R Indian IT Act Guarantee</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Automatic withholding and TDS ledger synchronization directly linked with TRACES and NSDL portals. Every creator benefit and reward disbursement carries an immutable digital certificate satisfying all Indian Finance Act 2022 benefit/perquisite tax obligations with zero manual filing overhead.
+          </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Client-side Interactive Functionality -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Interactive Calculations for Top-Up
+      const depositInput = document.getElementById('depositInput');
+      const quickChips = document.querySelectorAll('.quick-chip');
+      const statPrincipal = document.getElementById('statPrincipal');
+      const statFee = document.getElementById('statFee');
+      const statCgst = document.getElementById('statCgst');
+      const statSgst = document.getElementById('statSgst');
+      const statTotal = document.getElementById('statTotal');
+
+      function formatINR(val) {
+        return '₹' + Number(val).toLocaleString('en-IN', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+      }
+
+      function updateStatutoryCalculations(amount) {
+        const principal = Math.max(0, Number(amount) || 0);
+        const fee = principal * 0.10; // 10% platform fee
+        const cgst = fee * 0.09;      // 9% CGST
+        const sgst = fee * 0.09;      // 9% SGST
+        const total = principal + cgst + sgst; // Escrow is non-custodial, fee handles platform levy
+
+        statPrincipal.textContent = formatINR(principal);
+        statFee.textContent = formatINR(fee);
+        statCgst.textContent = formatINR(cgst);
+        statSgst.textContent = formatINR(sgst);
+        statTotal.textContent = formatINR(total);
+      }
+
+      if (depositInput) {
+        depositInput.addEventListener('input', (e) => {
+          updateStatutoryCalculations(e.target.value);
+          quickChips.forEach(chip => {
+            chip.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-sm', 'active');
+            chip.classList.add('bg-surface-container-low', 'text-on-surface');
+          });
+        });
+      }
+
+      quickChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const val = chip.getAttribute('data-val');
+          if (depositInput && val) {
+            depositInput.value = val;
+            updateStatutoryCalculations(val);
+            quickChips.forEach(c => {
+              c.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-sm', 'active');
+              c.classList.add('bg-surface-container-low', 'text-on-surface');
+            });
+            chip.classList.add('bg-primary-container', 'text-on-primary', 'shadow-sm', 'active');
+            chip.classList.remove('bg-surface-container-low', 'text-on-surface');
+          }
+        });
+      });
+
+      // 2. Smooth Scroll to Top-Up Section
+      const btnScrollTopUp = document.getElementById('btnScrollTopUp');
+      const escrowTopUpSection = document.getElementById('escrowTopUpSection');
+      if (btnScrollTopUp && escrowTopUpSection) {
+        btnScrollTopUp.addEventListener('click', () => {
+          escrowTopUpSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
+
+      // 3. Copy Details Buttons
+      const copyBtns = document.querySelectorAll('.copy-btn');
+      copyBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const text = btn.getAttribute('data-copy');
+          if (text) {
+            navigator.clipboard.writeText(text).then(() => {
+              const icon = btn.querySelector('.material-symbols-outlined');
+              if (icon) {
+                const original = icon.textContent;
+                icon.textContent = 'check';
+                setTimeout(() => { icon.textContent = original; }, 1500);
+              }
+            });
+          }
+        });
+      });
+
+      // 4. Generate Challan Toast Notification Simulation
+      const btnGenerateChallan = document.getElementById('btnGenerateChallan');
+      if (btnGenerateChallan) {
+        btnGenerateChallan.addEventListener('click', () => {
+          const originalText = btnGenerateChallan.innerHTML;
+          btnGenerateChallan.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span> <span>Generating Signed Statutory Challan...</span>';
+          btnGenerateChallan.disabled = true;
+          setTimeout(() => {
+            btnGenerateChallan.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified</span> <span>Challan Ready (Downloaded &amp; Virtual A/C Locked)</span>';
+            setTimeout(() => {
+              btnGenerateChallan.innerHTML = originalText;
+              btnGenerateChallan.disabled = false;
+            }, 3000);
+          }, 1200);
+        });
+      }
+
+      // 5. Tabs for Ledger
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const tableRows = document.querySelectorAll('#ledgerTable tbody tr');
+
+      tabBtns.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabBtns.forEach(t => {
+            t.classList.remove('active', 'border-secondary', 'text-on-surface', 'font-semibold');
+            t.classList.add('border-transparent', 'text-on-surface-variant');
+          });
+          tab.classList.add('active', 'border-secondary', 'text-on-surface', 'font-semibold');
+          tab.classList.remove('border-transparent', 'text-on-surface-variant');
+
+          const category = tab.getAttribute('data-tab');
+          tableRows.forEach(row => {
+            if (category === 'all') {
+              row.style.display = '';
+            } else {
+              const rowCat = row.getAttribute('data-category');
+              if (rowCat === category) {
+                row.style.display = '';
+              } else {
+                row.style.display = 'none';
+              }
+            }
+          });
+        });
+      });
+
+      // 6. Search Ledger Filtering
+      const ledgerSearchInput = document.getElementById('ledgerSearchInput');
+      if (ledgerSearchInput) {
+        ledgerSearchInput.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          tableRows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            if (text.includes(query)) {
+              row.style.display = '';
+            } else {
+              row.style.display = 'none';
+            }
+          });
+        });
+      }
+    });
+  </script>
+</div></main></div></body></html>

@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"inverse-primary":"#bec6e0","on-primary":"#ffffff","on-error":"#ffffff","on-tertiary-fixed-variant":"#6e3900","surface-dim":"#cbdbf5","on-surface":"#0b1c30","secondary-fixed-dim":"#6bd8cb","surface-container-lowest":"#ffffff","surface-tint":"#565e74","on-tertiary":"#ffffff","on-secondary-fixed":"#00201d","on-surface-variant":"#45464d","on-error-container":"#93000a","tertiary-container":"#2f1500","tertiary":"#000000","tertiary-fixed-dim":"#ffb77d","on-tertiary-fixed":"#2f1500","outline-variant":"#c6c6cd","inverse-surface":"#213145","outline":"#76777d","surface-container-high":"#dce9ff","on-background":"#0b1c30","on-primary-fixed":"#131b2e","primary-container":"#131b2e","surface-container":"#e5eeff","surface":"#f8f9ff","error":"#ba1a1a","on-secondary-fixed-variant":"#005049","tertiary-fixed":"#ffdcc3","secondary":"#006a61","error-container":"#ffdad6","background":"#f8f9ff","on-primary-fixed-variant":"#3f465c","surface-bright":"#f8f9ff","on-secondary-container":"#006f66","secondary-fixed":"#89f5e7","on-tertiary-container":"#c76c00","surface-variant":"#d3e4fe","primary-fixed":"#dae2fd","primary-fixed-dim":"#bec6e0","on-primary-container":"#7c839b","surface-container-low":"#eff4ff","secondary-container":"#86f2e4","on-secondary":"#ffffff","primary":"#000000","inverse-on-surface":"#eaf1ff","surface-container-highest":"#d3e4fe"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"space-lg":"1.5rem","margin-mobile":"1rem",gutter:"1.5rem","gutter-mobile":"1rem","space-md":"1rem","space-sm":"0.5rem","space-xl":"2rem","space-xs":"0.25rem",margin:"2rem"},fontFamily:{"body-sm":["Inter"],"body-md":["Inter"],"headline-sm":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"label-lg":["Inter"],"label-md":["Inter"],"body-lg":["Inter"],"currency-body":["Inter"],"headline-md":["Plus Jakarta Sans"],"headline-xl-mobile":["Plus Jakarta Sans"],"currency-display":["Plus Jakarta Sans"],"label-sm":["Inter"]},fontSize:{"body-sm":["12px",{lineHeight:"16px",letterSpacing:"0.005em",fontWeight:"400"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"0em",fontWeight:"400"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"600"}],"headline-lg":["28px",{lineHeight:"36px",letterSpacing:"-0.02em",fontWeight:"600"}],"headline-lg-mobile":["22px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-xl":["36px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.01em",fontWeight:"500"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"400"}],"currency-body":["14px",{lineHeight:"20px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-xl-mobile":["28px",{lineHeight:"36px",letterSpacing:"-0.015em",fontWeight:"700"}],"currency-display":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center justify-between bg-surface-container-lowest"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[22px]">shield_locked</span><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface">AdEarn AI</span></div><span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant uppercase tracking-wider">v4.2</span></div><div class="px-space-md py-space-xs"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-1 rounded"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Node Clearance</span><span class="font-label-sm text-label-sm text-on-secondary-fixed-variant font-bold">SEC-L4 OPS</span></div></div><nav class="flex flex-col gap-1 px-space-md py-space-xs" data-active-classes="bg-primary text-on-primary font-medium shadow-[0_1px_3px_rgba(15,23,42,0.08)]"><a class="flex items-center justify-between px-space-md py-2.5 rounded text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="operations-hub" href="#"><span class="font-label-lg text-label-lg">Operations Hub</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="moderation-and-ad-approval" href="#"><span class="font-label-lg text-label-lg">Moderation &amp; Approval</span><span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface px-1.5 py-0.5 rounded font-bold tabular-nums">18</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded bg-primary text-on-primary font-medium shadow-[0_1px_3px_rgba(15,23,42,0.08)]" data-path="fraud-and-kinematics-engine" href="#"><span class="font-label-lg text-label-lg">Fraud &amp; Kinematics</span><span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-secondary-fixed animate-pulse"></span><span class="font-label-sm text-[10px] uppercase font-bold tracking-wider text-secondary-fixed">Live</span></span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="payout-clearing-and-nodal-pool" href="#"><span class="font-label-lg text-label-lg">Payout Clearing</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="audit-trails-and-logs" href="#"><span class="font-label-lg text-label-lg">Audit Trails &amp; Logs</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="platform-settings-and-rules" href="#"><span class="font-label-lg text-label-lg">Settings &amp; Rules</span></a></nav></div><div class="p-space-md bg-surface-container-lowest"><div class="bg-surface-container-low p-space-sm rounded mb-space-sm"><div class="flex items-center justify-between mb-space-xs"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">System Telemetry</span><span class="font-label-sm text-label-sm text-secondary font-bold">NOMINAL</span></div><div class="flex flex-col gap-1"><div class="flex justify-between font-body-sm text-body-sm"><span class="text-on-surface-variant">API SLA</span><span class="font-medium text-on-surface tabular-nums">99.98%</span></div><div class="flex justify-between font-body-sm text-body-sm"><span class="text-on-surface-variant">Node Latency</span><span class="font-medium text-on-surface tabular-nums">24ms</span></div><div class="flex justify-between font-body-sm text-body-sm"><span class="text-on-surface-variant">Write Queue</span><span class="font-medium text-on-surface">Normal (0)</span></div></div></div><div class="flex items-center justify-between px-1"><span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Security Tier</span><span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-error-container text-on-error-container font-bold uppercase">RESTRICTED L4</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-space-md flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low"><span class="material-symbols-outlined text-secondary text-[14px]">terminal</span><span class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wider">COMMAND CONSOLE</span></div><div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="h-2 w-2 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">PROD-CLUSTER-BLR-01 (ACTIVE)</span></div><div class="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded bg-secondary-container/40 text-on-secondary-container"><span class="material-symbols-outlined text-[14px]">verified</span><span class="font-label-sm text-label-sm font-medium tracking-wide">NODAL GATEWAY: HDFC / ICICI 100% HEALTH</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex flex-col text-right"><span class="font-body-sm text-body-sm font-semibold text-on-surface tabular-nums">11:42:09 IST</span><span class="font-label-sm text-label-sm text-on-surface-variant tabular-nums">06:12:09 UTC</span></div><div class="relative flex items-center justify-center"><button aria-label="Alerts" class="relative p-1.5 rounded hover:bg-surface-container-high transition-colors text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-error text-on-error font-label-sm text-[10px] font-bold">7</span></button></div><button class="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-error-container text-on-error-container hover:bg-error hover:text-on-error transition-colors"><span class="material-symbols-outlined text-[16px]">lock_reset</span><span class="font-label-sm text-label-sm font-bold uppercase tracking-wider">Emergency Freeze</span></button><div class="flex items-center gap-2.5 pl-2"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface leading-tight">Dr. Rajeshwari Sen</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">Tier 4 Cleared</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Forensic Breadcrumb & Live Threat Alert Banner -->
+<div class="bg-surface-container-lowest px-space-md py-space-sm border-b border-surface-container flex flex-wrap items-center justify-between gap-y-2">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">OPERATIONS CORE</span>
+<span class="text-outline-variant font-label-sm text-[10px]">▸</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">THREAT INTELLIGENCE &amp; TELEMETRY</span>
+<span class="text-outline-variant font-label-sm text-[10px]">▸</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">FRAUD &amp; KINEMATICS LAB</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Real-time biometric trajectory inspection, heuristic dwell entropy scores, synthetic bot farm clustering, and IVT model enforcement.
+      </p>
+</div>
+<!-- Live Telemetry State & Global Heuristic Sensitivity -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded bg-error-container/50 text-error">
+<span class="h-2 w-2 rounded-full bg-error animate-ping"></span>
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-wider">THREAT LEVEL: ELEVATED (Cluster 103.21.0.0/16 Active Surge)</span>
+</div>
+<div class="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded bg-surface-container text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">tune</span>
+<span class="font-label-sm text-label-sm font-semibold">Heuristic Sensitivity: <strong class="text-primary font-bold">99.8% High</strong></span>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-error text-on-error font-label-sm text-label-sm font-semibold hover:opacity-95 transition-opacity shadow-sm" id="btnQuarantineSubnet">
+<span class="material-symbols-outlined text-[15px]">block</span>
+<span>Quarantine Active Subnet</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold hover:bg-surface-container-highest transition-colors" id="btnExportForensic">
+<span class="material-symbols-outlined text-[15px]">download</span>
+<span>Export NDJSON</span>
+</button>
+</div>
+</div>
+</div>
+<div class="p-space-md space-y-space-md max-w-[1600px] mx-auto w-full">
+<!-- Forensics KPI Ribbon (5 High-Density Cards) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-sm">
+<!-- Metric 1: Ingestion -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Scanned Ingestion (24h)</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">csv</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight tabular-nums">482,900</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Dwells</span>
+</div>
+<div class="mt-2 pt-2 bg-surface-container-low px-2 py-1 rounded flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-secondary font-semibold">98.2% Human Classified</span>
+<span class="text-error font-semibold">1.8% Intercepted</span>
+</div>
+</div>
+<!-- Metric 2: IVT Interception -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">IVT Interception Rate</span>
+<span class="material-symbols-outlined text-error text-[18px]">security_update_warning</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-error tracking-tight tabular-nums">14.2%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold">BLOCKED</span>
+</div>
+<div class="mt-2 pt-2 bg-error-container/30 px-2 py-1 rounded flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-error-container font-semibold">Escrow Leakage Voided:</span>
+<span class="font-currency-body text-currency-body text-on-error-container tabular-nums font-bold">₹1,96,400</span>
+</div>
+</div>
+<!-- Metric 3: Shannon Mouse Entropy -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Mean Mouse Entropy</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">query_stats</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight tabular-nums">0.892</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">H(x)</span>
+</div>
+<div class="mt-2 pt-2 bg-surface-container-low px-2 py-1 rounded flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Baseline &gt;0.750</span>
+<span class="text-on-surface-variant">Bot Avg &lt;0.210</span>
+</div>
+</div>
+<!-- Metric 4: Honey-Trap Tripped -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Honey-Trap Intercepts</span>
+<span class="material-symbols-outlined text-error text-[18px]">pest_control</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight tabular-nums">148</span>
+<span class="font-label-sm text-label-sm text-error font-bold">Tripped</span>
+</div>
+<div class="mt-2 pt-2 bg-surface-container-low px-2 py-1 rounded flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Puppeteer: 42</span>
+<span class="text-on-surface-variant">Synthetic: 84</span>
+<span class="text-on-surface-variant">Canvas: 22</span>
+</div>
+</div>
+<!-- Metric 5: Quarantined Subnets -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Quarantined Subnets</span>
+<span class="material-symbols-outlined text-primary text-[18px]">hub</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight tabular-nums">19</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">CIDR Active</span>
+</div>
+<div class="mt-2 pt-2 bg-secondary-container/30 px-2 py-1 rounded flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-secondary-container font-semibold">Sybil Guard Active</span>
+<span class="text-on-secondary-container font-bold">0 FP Freeze</span>
+</div>
+</div>
+</div>
+<!-- Diagnostic & Forensic Workbench -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- Left Column: 60% (7 cols on 12-col grid) -->
+<div class="lg:col-span-7 space-y-space-md">
+<!-- Interactive Kinematic Sandbox -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm">
+<div class="flex flex-wrap items-center justify-between gap-2 mb-space-sm pb-2 border-b border-surface-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">gesture</span>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Kinematic Vector &amp; Trajectory Sandbox</h2>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-on-surface-variant uppercase">Biometric Sampling 120Hz</span>
+</div>
+<!-- Mode Switcher -->
+<div class="flex items-center gap-1 bg-surface-container p-0.5 rounded">
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest font-label-sm text-label-sm font-bold text-on-surface shadow-xs transition-colors" id="viewDualComparison">
+                Dual Comparison
+              </button>
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-colors" id="viewHumanOnly">
+                Human Trajectory
+              </button>
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium transition-colors" id="viewBotOnly">
+                Synthetic Bot
+              </button>
+</div>
+</div>
+<!-- Sandbox Visualizer Panels (Side by Side) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm mb-space-sm">
+<!-- Sample 1: Human Trajectory -->
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1.5">
+<span class="h-2 w-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm font-bold text-secondary uppercase tracking-wider">SAMPLE #EVT-90412</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-bold">HUMAN (99.4%)</span>
+</div>
+<!-- Trajectory Canvas Simulation (Inline Vector SVG) -->
+<div class="relative bg-surface-container-lowest rounded h-56 overflow-hidden flex items-center justify-center p-2">
+<!-- Background Coordinate Grid -->
+<svg class="absolute inset-0 w-full h-full opacity-10 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="20" id="gridHuman" patternunits="userSpaceOnUse" width="20">
+<path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" stroke-width="0.5"></path>
+</pattern>
+</defs>
+<rect fill="url(#gridHuman)" height="100%" width="100%"></rect>
+</svg>
+<!-- Natural Human Curved Trajectory with Micro-Tremors & Checkpoints -->
+<svg class="w-full h-full text-secondary" viewbox="0 0 400 220">
+<!-- Start & Target Ad Zones -->
+<rect fill="currentColor" fill-opacity="0.1" height="36" rx="4" stroke="currentColor" stroke-dasharray="2,2" stroke-width="1" width="60" x="25" y="160"></rect>
+<text class="font-label-sm text-[9px] font-bold" fill="currentColor" x="35" y="182">INITIAL</text>
+<rect fill="currentColor" fill-opacity="0.15" height="42" rx="4" stroke="currentColor" stroke-width="1.5" width="75" x="300" y="30"></rect>
+<text class="font-label-sm text-[10px] font-bold" fill="currentColor" x="312" y="55">AD TARGET</text>
+<!-- Path with organic curvature, jitter, deceleration loops -->
+<path d="M 55,178 Q 78,145 105,150 T 140,110 T 172,125 T 215,85 T 255,90 T 290,60 T 335,52" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<!-- Micro tremor noise overlay segment -->
+<path d="M 172,125 q 2,-1 4,1 t 3,-2 t 3,1 t 4,-1 t 5,2" fill="none" stroke="currentColor" stroke-dasharray="1,1" stroke-width="1"></path>
+<path d="M 290,60 q 2,2 5,-1 t 4,2 t 6,-1" fill="none" stroke="currentColor" stroke-dasharray="1,1" stroke-width="1"></path>
+<!-- Checkpoint Nodes (Variable Pauses) -->
+<circle cx="55" cy="178" fill="#006a61" r="3.5"></circle>
+<circle cx="105" cy="150" fill="#006a61" fill-opacity="0.7" r="3"></circle>
+<circle cx="172" cy="125" fill="#006a61" r="4.5"></circle>
+<circle cx="255" cy="90" fill="#006a61" fill-opacity="0.7" r="3"></circle>
+<circle cx="335" cy="52" fill="#006a61" r="5"></circle>
+<!-- Dwell pause indicator -->
+<text class="font-label-sm text-[8px] font-semibold" fill="currentColor" x="180" y="138">Pause: 1.84s (Fitts' Law)</text>
+<text class="font-label-sm text-[8px] font-semibold" fill="currentColor" x="260" y="80">Natural Tremor 9.2Hz</text>
+</svg>
+<div class="absolute bottom-2 left-2 bg-surface-container-lowest/80 backdrop-blur-xs px-2 py-0.5 rounded text-[10px] text-on-surface-variant font-mono">
+                  XY-DENSITY: ORGANIC BEZIER (12 NODES)
+                </div>
+</div>
+<!-- Metrics sub-table -->
+<div class="mt-2 grid grid-cols-2 gap-2 text-body-sm font-body-sm bg-surface-container-lowest p-2 rounded">
+<div>
+<span class="text-on-surface-variant text-[11px] block">Shannon Entropy:</span>
+<span class="font-semibold text-secondary tabular-nums">0.942 H(x) [High]</span>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] block">Ad Dwell Time:</span>
+<span class="font-semibold text-on-surface tabular-nums">76.40s (Legitimate)</span>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] block">Curvature Deriv (dθ/dt):</span>
+<span class="font-semibold text-on-surface tabular-nums">Variable (σ=0.48)</span>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] block">Micro-Tremor FFT:</span>
+<span class="font-semibold text-secondary tabular-nums">10.4 Hz Detected</span>
+</div>
+</div>
+</div>
+<!-- Sample 2: Synthetic Bot Trajectory -->
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1.5">
+<span class="h-2 w-2 rounded-full bg-error"></span>
+<span class="font-label-sm text-label-sm font-bold text-error uppercase tracking-wider">SAMPLE #EVT-90411</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-error-container text-on-error-container font-bold">SYNTHETIC BOT (100%)</span>
+</div>
+<!-- Trajectory Canvas Simulation (Straight Line Bot Vector) -->
+<div class="relative bg-surface-container-lowest rounded h-56 overflow-hidden flex items-center justify-center p-2">
+<!-- Background Coordinate Grid -->
+<svg class="absolute inset-0 w-full h-full opacity-10 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="20" id="gridBot" patternunits="userSpaceOnUse" width="20">
+<path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" stroke-width="0.5"></path>
+</pattern>
+</defs>
+<rect fill="url(#gridBot)" height="100%" width="100%"></rect>
+</svg>
+<!-- Perfectly Linear Bot Interpolation (Zero Jitter) -->
+<svg class="w-full h-full text-error" viewbox="0 0 400 220">
+<!-- Start & Target Ad Zones -->
+<rect fill="currentColor" fill-opacity="0.1" height="36" rx="4" stroke="currentColor" stroke-dasharray="2,2" stroke-width="1" width="60" x="25" y="160"></rect>
+<text class="font-label-sm text-[9px] font-bold" fill="currentColor" x="35" y="182">SPAWN</text>
+<rect fill="currentColor" fill-opacity="0.15" height="42" rx="4" stroke="currentColor" stroke-width="1.5" width="75" x="300" y="30"></rect>
+<text class="font-label-sm text-[10px] font-bold" fill="currentColor" x="312" y="55">CLICK SPOOF</text>
+<!-- Perfectly straight machine line -->
+<line stroke="currentColor" stroke-dasharray="4,2" stroke-width="2.5" x1="55" x2="335" y1="178" y2="52"></line>
+<!-- Uniformly spaced tick marks illustrating exact 16.66ms frame execution -->
+<circle cx="55" cy="178" fill="#ba1a1a" r="3.5"></circle>
+<circle cx="111" cy="153" fill="#ba1a1a" r="2.5"></circle>
+<circle cx="167" cy="127" fill="#ba1a1a" r="2.5"></circle>
+<circle cx="223" cy="102" fill="#ba1a1a" r="2.5"></circle>
+<circle cx="279" cy="77" fill="#ba1a1a" r="2.5"></circle>
+<circle cx="335" cy="52" fill="#ba1a1a" r="5"></circle>
+<!-- Linear Callout Warning -->
+<text class="font-label-sm text-[8px] font-bold tracking-wider" fill="currentColor" x="130" y="115">PUPPETEER MOUSE.MOVE(335, 52)</text>
+<text class="font-label-sm text-[8px] font-semibold" fill="currentColor" x="145" y="130">Δt: 16.66ms (Zero Jitter / Constant v)</text>
+</svg>
+<div class="absolute bottom-2 left-2 bg-error-container/80 backdrop-blur-xs px-2 py-0.5 rounded text-[10px] text-on-error-container font-mono font-bold">
+                  FLAG: ZERO-ENTROPY LINEAR INTERPOLATION
+                </div>
+</div>
+<!-- Metrics sub-table -->
+<div class="mt-2 grid grid-cols-2 gap-2 text-body-sm font-body-sm bg-surface-container-lowest p-2 rounded">
+<div>
+<span class="text-on-surface-variant text-[11px] block">Shannon Entropy:</span>
+<span class="font-semibold text-error tabular-nums">0.081 H(x) [CRITICAL]</span>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] block">Ad Dwell Time:</span>
+<span class="font-semibold text-error tabular-nums">12.10s (&lt; 60s Gate)</span>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] block">Curvature Deriv (dθ/dt):</span>
+<span class="font-semibold text-error tabular-nums">Zero (σ=0.000)</span>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] block">WebDriver Leak:</span>
+<span class="font-semibold text-error tabular-nums">navigator.webdriver=1</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature Breakdown Diagnostic Strip -->
+<div class="p-space-sm bg-surface-container-low rounded-lg">
+<span class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wider block mb-2">Kinematic Feature Deep-Dive Vectors</span>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+<div class="bg-surface-container-lowest p-2.5 rounded">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">FFT Micro-Tremor Band</span>
+<span class="font-bold text-secondary">PASS</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 82%;"></div>
+</div>
+<span class="font-label-sm text-[10px] text-on-surface-variant mt-1 block">8Hz - 12Hz physiological tremor present</span>
+</div>
+<div class="bg-surface-container-lowest p-2.5 rounded">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Fitts' Law Deceleration</span>
+<span class="font-bold text-error">FAIL (0.02)</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-error h-full rounded-full" style="width: 14%;"></div>
+</div>
+<span class="font-label-sm text-[10px] text-on-surface-variant mt-1 block">Zero target acquisition slowdown detected</span>
+</div>
+<div class="bg-surface-container-lowest p-2.5 rounded">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Window Defocus / Blur</span>
+<span class="font-bold text-secondary">0 Loss Events</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 100%;"></div>
+</div>
+<span class="font-label-sm text-[10px] text-on-surface-variant mt-1 block">Tab retained continuous DOM active state</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Clustered Honey-Trap & Bot Syndicate Interceptions Table -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-sm pb-2 border-b border-surface-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-[20px]">radar</span>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Live Quarantined Incidents &amp; Honey-Traps</h2>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-error-container text-on-error-container font-bold">14 Active Intercepts</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-2.5 px-3 rounded-l">Incident / Subnet</th>
+<th class="py-2.5 px-3">Fingerprint / Signature</th>
+<th class="py-2.5 px-3">Anomalous Vector</th>
+<th class="py-2.5 px-3">Volume</th>
+<th class="py-2.5 px-3">Escrow Status</th>
+<th class="py-2.5 px-3 rounded-r text-right">Audit Trigger</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<!-- Incident 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-3">
+<div class="font-bold text-on-surface">#HT-8821</div>
+<div class="font-mono text-body-sm text-on-surface-variant">103.21.44.0/24 (ASN 13335)</div>
+</td>
+<td class="py-3 px-3">
+<span class="font-mono text-body-sm text-error bg-error-container/40 px-1.5 py-0.5 rounded">fp_89ba2... (Cloud Hosting)</span>
+</td>
+<td class="py-3 px-3">
+<div class="text-on-surface font-medium">Synthetic Bézier curves</div>
+<div class="text-[11px] text-on-surface-variant">Uniform Δt (16ms) interpolation</div>
+</td>
+<td class="py-3 px-3 font-semibold text-on-surface tabular-nums">84 att.</td>
+<td class="py-3 px-3">
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-bold uppercase">Escrow Frozen</span>
+</td>
+<td class="py-3 px-3 text-right">
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold transition-colors">Inspect</button>
+</td>
+</tr>
+<!-- Incident 2 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-3">
+<div class="font-bold text-on-surface">#HT-8820</div>
+<div class="font-mono text-body-sm text-on-surface-variant">45.112.88.19 (Mumbai Proxy)</div>
+</td>
+<td class="py-3 px-3">
+<span class="font-mono text-body-sm text-error bg-error-container/40 px-1.5 py-0.5 rounded">fp_9a8c2... (Sybil Cluster)</span>
+</td>
+<td class="py-3 px-3">
+<div class="text-on-surface font-medium">Canvas Hash 100% Collision</div>
+<div class="text-[11px] text-on-surface-variant">410 creator tokens shared device</div>
+</td>
+<td class="py-3 px-3 font-semibold text-on-surface tabular-nums">410 claims</td>
+<td class="py-3 px-3">
+<span class="px-2 py-0.5 rounded bg-error text-on-error font-label-sm text-label-sm font-bold uppercase">Sybil Void</span>
+</td>
+<td class="py-3 px-3 text-right">
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold transition-colors">Inspect</button>
+</td>
+</tr>
+<!-- Incident 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-3">
+<div class="font-bold text-on-surface">#HT-8819</div>
+<div class="font-mono text-body-sm text-on-surface-variant">157.240.199.35 (Delhi Pop)</div>
+</td>
+<td class="py-3 px-3">
+<span class="font-mono text-body-sm text-error bg-error-container/40 px-1.5 py-0.5 rounded">fp_webdriver_true</span>
+</td>
+<td class="py-3 px-3">
+<div class="text-on-surface font-medium">Selenium WebDriver Leak</div>
+<div class="text-[11px] text-on-surface-variant">navigator.webdriver flag exposed</div>
+</td>
+<td class="py-3 px-3 font-semibold text-on-surface tabular-nums">28 att.</td>
+<td class="py-3 px-3">
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-bold uppercase">Nodal Void</span>
+</td>
+<td class="py-3 px-3 text-right">
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold transition-colors">Inspect</button>
+</td>
+</tr>
+<!-- Incident 4 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-3">
+<div class="font-bold text-on-surface">#HT-8818</div>
+<div class="font-mono text-body-sm text-on-surface-variant">49.207.214.10 (Bengaluru)</div>
+</td>
+<td class="py-3 px-3">
+<span class="font-mono text-body-sm text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded">fp_touch_spoof_x8</span>
+</td>
+<td class="py-3 px-3">
+<div class="text-on-surface font-medium">Fixed Pixel Coordinates</div>
+<div class="text-[11px] text-on-surface-variant">Mobile touch target exact 120,450px</div>
+</td>
+<td class="py-3 px-3 font-semibold text-on-surface tabular-nums">19 att.</td>
+<td class="py-3 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm font-bold uppercase">Under Audit</span>
+</td>
+<td class="py-3 px-3 text-right">
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold transition-colors">Inspect</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Column: 40% (5 cols on 12-col grid) -->
+<div class="lg:col-span-5 space-y-space-md">
+<!-- Live Subnet & Honey-Trap Threat Radar -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-sm pb-2 border-b border-surface-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">satellite_alt</span>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Syndicate Hotspots &amp; Origin Radar</h2>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">BGP / ASN FEED</span>
+</div>
+<!-- Geographical Vector Distribution Bar Chart -->
+<div class="space-y-2 mb-space-sm">
+<div>
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface font-medium">Bengaluru VPN &amp; Datacenter Nodes (ASN 13335)</span>
+<span class="font-bold text-on-surface tabular-nums">42% (352 Intercepts)</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-error h-full rounded-full" style="width: 42%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface font-medium">Mumbai Commercial Proxy Pools</span>
+<span class="font-bold text-on-surface tabular-nums">28% (235 Intercepts)</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-error-container h-full rounded-full" style="width: 28%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface font-medium">Delhi Residential IP Spoofs</span>
+<span class="font-bold text-on-surface tabular-nums">18% (151 Intercepts)</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 18%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface font-medium">International Residential Socks5</span>
+<span class="font-bold text-on-surface tabular-nums">12% (101 Intercepts)</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-surface-tint h-full rounded-full" style="width: 12%;"></div>
+</div>
+</div>
+</div>
+<!-- Honey-Trap Vector Probes Status -->
+<div class="bg-surface-container-low p-space-sm rounded-lg">
+<span class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wider block mb-2">Honey-Trap Vector Effectiveness</span>
+<div class="grid grid-cols-2 gap-2 text-body-sm font-body-sm">
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col justify-between">
+<span class="text-on-surface-variant text-[11px]">0-Pixel Hidden Input</span>
+<span class="font-semibold text-error tabular-nums">84 Bots Trapped</span>
+</div>
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col justify-between">
+<span class="text-on-surface-variant text-[11px]">Honeypot Checkbox</span>
+<span class="font-semibold text-error tabular-nums">42 Automated Clicks</span>
+</div>
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col justify-between">
+<span class="text-on-surface-variant text-[11px]">CSS Render Probe</span>
+<span class="font-semibold text-secondary tabular-nums">100% Latency Catch</span>
+</div>
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col justify-between">
+<span class="text-on-surface-variant text-[11px]">WebGL Shader Timing</span>
+<span class="font-semibold text-secondary tabular-nums">22 Spoofs Blocked</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Machine Learning Model Weights & Threshold Controls -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-sm pb-2 border-b border-surface-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">model_training</span>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">ML Kinematics Engine Configuration</h2>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-bold">XGBoost v4.8</span>
+</div>
+<div class="space-y-space-sm">
+<!-- Parameter 1 -->
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Trajectory Entropy Threshold</span>
+<span class="font-mono text-label-sm text-primary font-bold" id="entropyVal">0.70 H(x)</span>
+</div>
+<input class="w-full accent-primary h-1.5 bg-surface-container rounded-lg cursor-pointer" id="sliderEntropy" max="95" min="50" type="range" value="70"/>
+<div class="flex justify-between text-[10px] text-on-surface-variant font-mono mt-0.5">
+<span>0.50 (Permissive)</span>
+<span>0.70 (Strict Production)</span>
+<span>0.95 (Paranoid)</span>
+</div>
+</div>
+<!-- Parameter 2 -->
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Statutory Minimum Dwell Gate</span>
+<span class="font-mono text-label-sm text-primary font-bold">60.0 Seconds</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-low px-3 py-2 rounded">
+<span class="text-body-sm font-body-sm text-on-surface">Hard gate payout clearance</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary text-on-secondary font-bold">ENFORCED</span>
+</div>
+</div>
+<!-- Parameter 3 -->
+<div class="flex items-center justify-between bg-surface-container-low p-2.5 rounded">
+<div>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface block">AudioContext &amp; Canvas Hash Gate</span>
+<span class="text-body-sm text-[11px] text-on-surface-variant">Block duplicate GPU rendered audio noise fingerprints</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-surface-container after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<!-- Model Version Badge -->
+<div class="p-2.5 bg-surface-container rounded text-body-sm font-body-sm text-on-surface-variant">
+<div class="flex items-center justify-between text-on-surface font-semibold mb-1">
+<span>Kinematics-XGBoost-v4.8.2</span>
+<span class="text-secondary font-bold">F1-Score: 0.9981</span>
+</div>
+<span class="text-[11px] text-on-surface-variant block">Trained on 14.8M verified human gestures vs. 2.1M synthetic Puppeteer/Playwright headless traces.</span>
+</div>
+</div>
+</div>
+<!-- Incident Escalation & Action Console -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-sm pb-2 border-b border-surface-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">terminal</span>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Forensic Inspection Console</h2>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container font-mono text-on-surface font-bold">INCIDENT #HT-8821</span>
+</div>
+<!-- Raw Telemetry Payload Viewer -->
+<div class="bg-primary text-on-primary p-3 rounded font-mono text-[11px] space-y-1 overflow-x-auto max-h-44">
+<div class="text-secondary-fixed">{</div>
+<div class="pl-3"><span class="text-on-primary-container">"timestamp":</span> "2025-02-14T06:12:08.412Z",</div>
+<div class="pl-3"><span class="text-on-primary-container">"client_ip":</span> "103.21.44.18",</div>
+<div class="pl-3"><span class="text-on-primary-container">"asn":</span> "13335 (Cloudflare DC Node)",</div>
+<div class="pl-3"><span class="text-on-primary-container">"user_agent":</span> "Mozilla/5.0 (X11; Linux x86_64) HeadlessChrome/122.0.0.0",</div>
+<div class="pl-3"><span class="text-on-primary-container">"kinematics":</span> { <span class="text-error">"entropy": 0.081</span>, "jitter_hz": 0.0, "is_bezier_perfect": true },</div>
+<div class="pl-3"><span class="text-on-primary-container">"target_ad":</span> "CAMP-ZR-091 (₹45.00 Escrow Hold)",</div>
+<div class="pl-3"><span class="text-on-primary-container">"rule_tripped":</span> "RULE_BOT_NO_JITTER_SELENIUM_004"</div>
+<div class="text-secondary-fixed">}</div>
+</div>
+<!-- Operator Action Controls -->
+<div class="mt-space-sm space-y-2">
+<button class="w-full flex items-center justify-center gap-2 py-2 px-3 rounded bg-error text-on-error font-label-md text-label-md font-bold hover:opacity-90 transition-opacity" id="btnNullRoute">
+<span class="material-symbols-outlined text-[16px]">do_not_disturb_on</span>
+<span>Apply CIDR Null-Route (103.21.44.0/24)</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex items-center justify-center gap-1.5 py-1.5 px-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold transition-colors" id="btnWhitelist">
+<span class="material-symbols-outlined text-[15px] text-secondary">verified</span>
+<span>Whitelist FP</span>
+</button>
+<button class="flex items-center justify-center gap-1.5 py-1.5 px-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold transition-colors" id="btnTier3Audit">
+<span class="material-symbols-outlined text-[15px] text-primary">forward_to_inbox</span>
+<span>Tier 3 Escalation</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Notification Toast Container for Interactive Micro-actions -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="toastNotification">
+<div class="bg-on-surface text-surface px-4 py-3 rounded-lg shadow-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]" id="toastIcon">check_circle</span>
+<span class="font-body-sm text-body-sm font-medium" id="toastMessage">Action executed successfully</span>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    // Interactive Toast Notification
+    const toast = document.getElementById('toastNotification');
+    const toastMsg = document.getElementById('toastMessage');
+    const toastIcon = document.getElementById('toastIcon');
+
+    function showNotification(message, iconName = 'check_circle', isError = false) {
+      if (!toast) return;
+      toastMsg.textContent = message;
+      toastIcon.textContent = iconName;
+      if (isError) {
+        toastIcon.className = "material-symbols-outlined text-error text-[20px]";
+      } else {
+        toastIcon.className = "material-symbols-outlined text-secondary text-[20px]";
+      }
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 3500);
+    }
+
+    // Kinematics Sensitivity Slider Interactivity
+    const slider = document.getElementById('sliderEntropy');
+    const entropyVal = document.getElementById('entropyVal');
+    if (slider && entropyVal) {
+      slider.addEventListener('input', function(e) {
+        const val = (e.target.value / 100).toFixed(2);
+        entropyVal.textContent = val + ' H(x)';
+      });
+    }
+
+    // Action button listeners
+    const btnQuarantine = document.getElementById('btnQuarantineSubnet');
+    if (btnQuarantine) {
+      btnQuarantine.addEventListener('click', function() {
+        showNotification('Subnet 103.21.0.0/16 pushed to Global Edge Quarantine.', 'security', true);
+      });
+    }
+
+    const btnExport = document.getElementById('btnExportForensic');
+    if (btnExport) {
+      btnExport.addEventListener('click', function() {
+        showNotification('Exporting 482,900 Kinematic events as forensic NDJSON package.', 'download');
+      });
+    }
+
+    const btnNullRoute = document.getElementById('btnNullRoute');
+    if (btnNullRoute) {
+      btnNullRoute.addEventListener('click', function() {
+        showNotification('Null-route applied at BGP border routers for 103.21.44.0/24.', 'block', true);
+      });
+    }
+
+    const btnWhitelist = document.getElementById('btnWhitelist');
+    if (btnWhitelist) {
+      btnWhitelist.addEventListener('click', function() {
+        showNotification('False-positive override logged. Token approved for single release.', 'verified');
+      });
+    }
+
+    const btnTier3Audit = document.getElementById('btnTier3Audit');
+    if (btnTier3Audit) {
+      btnTier3Audit.addEventListener('click', function() {
+        showNotification('Forensic envelope dispatched to Dr. Rajeshwari Sen (Tier 4 Clearance).', 'forward_to_inbox');
+      });
+    }
+  })();
+</script></main></div></body></html>

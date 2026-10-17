@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AdEarn AI - Withdrawals &amp; Payout Settlement History</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Plus Jakarta Sans & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-container": "#2f1500",
+            "secondary-container": "#86f2e4",
+            "outline": "#76777d",
+            "surface-container-highest": "#d3e4fe",
+            "primary-container": "#131b2e",
+            "on-background": "#0b1c30",
+            "tertiary": "#000000",
+            "surface-tint": "#565e74",
+            "outline-variant": "#c6c6cd",
+            "surface": "#f8f9ff",
+            "surface-container-low": "#eff4ff",
+            "surface-variant": "#d3e4fe",
+            "on-surface-variant": "#45464d",
+            "inverse-primary": "#bec6e0",
+            "on-secondary-container": "#006f66",
+            "secondary-fixed-dim": "#6bd8cb",
+            "on-tertiary": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "surface-container": "#e5eeff",
+            "on-surface": "#0b1c30",
+            "on-secondary-fixed-variant": "#005049",
+            "secondary": "#006a61",
+            "on-primary-container": "#7c839b",
+            "on-error-container": "#93000a",
+            "on-tertiary-container": "#c76c00",
+            "primary-fixed-dim": "#bec6e0",
+            "inverse-on-surface": "#eaf1ff",
+            "background": "#f8f9ff",
+            "on-primary-fixed-variant": "#3f465c",
+            "secondary-fixed": "#89f5e7",
+            "primary-fixed": "#dae2fd",
+            "on-primary-fixed": "#131b2e",
+            "tertiary-fixed-dim": "#ffb77d",
+            "on-secondary-fixed": "#00201d",
+            "inverse-surface": "#213145",
+            "surface-container-high": "#dce9ff",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6",
+            "on-primary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#6e3900",
+            "surface-dim": "#cbdbf5",
+            "tertiary-fixed": "#ffdcc3",
+            "on-tertiary-fixed": "#2f1500",
+            "primary": "#000000",
+            "on-secondary": "#ffffff",
+            "on-error": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Inter"],
+            "currency-body": ["Inter"],
+            "label-md": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "currency-display": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#f8f9ff] text-[#0b1c30] antialiased min-h-screen">
+<!-- Read-Only Shared Top Navigation & Sidebar Shell -->
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-gray-50 group/design-root overflow-x-hidden" style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'>
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<!-- Immutable Header from Shared Library -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#eaecf1] px-10 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-[#111318]">
+<div class="size-4">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_535)">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clippath id="clip0_6_535"><rect fill="white" height="48" width="48"></rect></clippath>
+</defs>
+</svg>
+</div>
+<h2 class="text-[#111318] text-lg font-bold leading-tight tracking-[-0.015em]">AdEarn AI</h2>
+</div>
+<div class="flex items-center gap-9">
+<a class="text-[#111318] text-sm font-medium leading-normal" href="#">Dashboard</a>
+<a class="text-[#111318] text-sm font-medium leading-normal" href="#">Tasks</a>
+<a class="text-[#111318] text-sm font-medium leading-normal" href="#">Payouts</a>
+<a class="text-[#111318] text-sm font-medium leading-normal" href="#">Analytics</a>
+<a class="text-[#111318] text-sm font-medium leading-normal" href="#">Support</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<label class="flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded h-full">
+<div class="text-[#5d6a89] flex border-none bg-[#eaecf1] items-center justify-center pl-4 rounded-l border-r-0" data-icon="MagnifyingGlass" data-size="24px" data-weight="regular">
+<svg fill="currentColor" height="24px" viewbox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+</svg>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded text-[#111318] focus:outline-0 focus:ring-0 border-none bg-[#eaecf1] focus:border-none h-full placeholder:text-[#5d6a89] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Search" value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-4 bg-slate-900 text-gray-50 text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Instant Withdraw</span>
+</button>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-4 bg-[#eaecf1] text-[#111318] text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Help Desk</span>
+</button>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 bg-[#eaecf1] text-[#111318] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+<div class="text-[#111318]" data-icon="Bell" data-size="20px" data-weight="regular">
+<svg fill="currentColor" height="20px" viewbox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+<path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"></path>
+</svg>
+</div>
+</button>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 bg-[#eaecf1] text-[#111318] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+<div class="text-[#111318]" data-icon="ShieldCheck" data-size="20px" data-weight="regular">
+<svg fill="currentColor" height="20px" viewbox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+<path d="M208,40H48A16,16,0,0,0,32,56v58.78c0,89.61,75.82,119.34,91,124.39a15.53,15.53,0,0,0,10,0c15.2-5.05,91-34.78,91-124.39V56A16,16,0,0,0,208,40Zm0,74.79c0,78.42-66.35,104.62-80,109.18-13.53-4.51-80-30.69-80-109.18V56H208ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.68l50.34-50.34a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"></path>
+</svg>
+</div>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Official round user profile picture depicting Arun Kumar, an Indian financial professional wearing modern smart attire against a soft neutral studio background." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAmzxk_sc3hqibfDiXGRFulSUKIe7VOA55ti51_TtYp59YNTuZH7GF32g4X5JqeFO3iK_GY7tvqHWbqlwWTZX4x5gVxsgHQ2pdHfZl1Jby_88f0uDERUJNxBs0ZSGM22CvQzqkrYcq7vt5SYBbFwB_Hhsbt4HeCraZ4iSUOH4UTHFU_rJhwLOdKy7PBLoR0aDguE_2NC4rzNlmQK0U9I-ecezFhLDZr5-efr3pWlvQk4mDpVYcls0SR3Q");'></div>
+</div>
+</header>
+<!-- Immutable Sidebar / User Context from Shared Library -->
+<div class="flex h-full min-h-[700px] flex-col justify-between bg-gray-50 p-4">
+<div class="flex flex-col gap-4">
+<div class="flex gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="High quality user avatar photo of an authenticated male product tester with short black hair and subtle studio lighting against an enterprise slate gradient background." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZJK5cxLc1QAThu_XR8gHhsJAa7SDmA-oyEsSpLzOE-MEZ5sA5hsYJxjiIlwXwFoX1AWYhp_yk504bTaO-9ss5dzwjG8WHJpgzkEX_llzY0UzdBfMxs6Q9iHhD_eaEMIEKDcR-z7piJEl5j1UbnjlwDo73rFh2Wy1K4xmqGb-dD0SFEAaYoOlhsX2ZkiHFybffPPv88tn7o38KQttwwbL3spWGCHStWfWnl5M3o-51Zva8QGkletCiNw");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#111318] text-base font-medium leading-normal">AdEarn AI</h1>
+<p class="text-[#5d6a89] text-sm font-normal leading-normal">Enterprise ID: ADE-84920</p>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="text-[#111318]" data-icon="MusicNotesSimple" data-size="24px" data-weight="regular">
+<svg fill="currentColor" height="24px" viewbox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M212.92,25.69a8,8,0,0,0-6.86-1.45l-128,32A8,8,0,0,0,72,64V174.08A36,36,0,1,0,88,204V70.25l112-28v99.83A36,36,0,1,0,216,172V32A8,8,0,0,0,212.92,25.69ZM52,224a20,20,0,1,1,20-20A20,20,0,0,1,52,224Zm128-32a20,20,0,1,1,20-20A20,20,0,0,1,180,192Z"></path>
+</svg>
+</div>
+<p class="text-[#111318] text-sm font-medium leading-normal">Overview</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="text-[#111318]" data-icon="CheckSquare" data-size="24px" data-weight="regular">
+<svg fill="currentColor" height="24px" viewbox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM224,48V208a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32H208A16,16,0,0,1,224,48ZM208,208V48H48V208H208Z"></path>
+</svg>
+</div>
+<p class="text-[#111318] text-sm font-medium leading-normal">Active Tasks</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded bg-[#eaecf1]">
+<div class="text-[#111318]" data-icon="Wallet" data-size="24px" data-weight="fill">
+<svg fill="currentColor" height="24px" viewbox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M216,72H56a8,8,0,0,1,0-16H192a8,8,0,0,0,0-16H56A24,24,0,0,0,32,64V192a24,24,0,0,0,24,24H216a16,16,0,0,0,16-16V88A16,16,0,0,0,216,72Zm-36,80a12,12,0,1,1,12-12A12,12,0,0,1,180,152Z"></path>
+</svg>
+</div>
+<p class="text-[#111318] text-sm font-medium leading-normal">Payout History</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="text-[#111318]" data-icon="Coins" data-size="24px" data-weight="regular">
+<svg fill="currentColor" height="24px" viewbox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M184,89.57V84c0-25.08-37.83-44-88-44S8,58.92,8,84v40c0,20.89,26.25,37.49,64,42.46V172c0,25.08,37.83,44,88,44s88-18.92,88-44V132C248,111.3,222.58,94.68,184,89.57ZM232,132c0,13.22-30.79,28-72,28-3.73,0-7.43-.13-11.08-.37C170.49,151.77,184,139,184,124V105.74C213.87,110.19,232,122.27,232,132ZM72,150.25V126.46A183.74,183.74,0,0,0,96,128a183.74,183.74,0,0,0,24-1.54v23.79A163,163,0,0,1,96,152,163,163,0,0,1,72,150.25Zm96-40.32V124c0,8.39-12.41,17.4-32,22.87V123.5C148.91,120.37,159.84,115.71,168,109.93ZM96,56c41.21,0,72,14.78,72,28s-30.79,28-72,28S24,97.22,24,84,54.79,56,96,56ZM24,124V109.93c8.16,5.78,19.09,10.44,32,13.57v23.37C36.41,141.4,24,132.39,24,124Zm64,48v-4.17c2.63.1,5.29.17,8,.17,3.88,0,7.67-.13,11.39-.35A121.92,121.92,0,0,0,120,171.41v23.46C100.41,189.4,88,180.39,88,172Zm48,26.25V174.4a179.48,179.48,0,0,0,24,1.6,183.74,183.74,0,0,0,24-1.54v23.79a165.45,165.45,0,0,1-48,0Zm64-3.38V171.5c12.91-3.13,23.84-7.79,32-13.57V172C232,180.39,219.59,189.4,200,194.87Z"></path>
+</svg>
+</div>
+<p class="text-[#111318] text-sm font-medium leading-normal">Rewards &amp; Wallet</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="text-[#111318]" data-icon="Mountains" data-size="24px" data-weight="regular">
+<svg fill="currentColor" height="24px" viewbox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M164,80a28,28,0,1,0-28-28A28,28,0,0,0,164,80Zm0-40a12,12,0,1,1-12,12A12,12,0,0,1,164,40Zm90.88,155.92-54.56-92.08A15.87,15.87,0,0,0,186.55,96h0a15.85,15.85,0,0,0-13.76,7.84L146.63,148l-44.84-76.1a16,16,0,0,0-27.58,0L1.11,195.94A8,8,0,0,0,8,208H248a8,8,0,0,0,6.88-12.08ZM88,80l23.57,40H64.43ZM22,192l33-56h66l18.74,31.8,0,0L154,192Zm150.57,0-16.66-28.28L186.55,112,234,192Z"></path>
+</svg>
+</div>
+<p class="text-[#111318] text-sm font-medium leading-normal">Privacy Settings</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-4 bg-slate-900 text-gray-50 text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Tier 1 Verified</span>
+</button>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="text-[#111318]" data-icon="FileText" data-size="24px" data-weight="regular">
+<svg fill="currentColor" height="24px" viewbox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"></path>
+</svg>
+</div>
+<p class="text-[#111318] text-sm font-medium leading-normal">Documentation</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="text-[#111318]" data-icon="SignOut" data-size="24px" data-weight="regular">
+<svg fill="currentColor" height="24px" viewbox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M112,216a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h56a8,8,0,0,1,0,16H48V208h56A8,8,0,0,1,112,216Zm109.66-93.66-40-40a8,8,0,0,0-11.32,11.32L196.69,120H104a8,8,0,0,0,0,16h92.69l-26.35,26.34a8,8,0,0,0,11.32,11.32l40-40A8,8,0,0,0,221.66,122.34Z"></path>
+</svg>
+</div>
+<p class="text-[#111318] text-sm font-medium leading-normal">Log Out</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 p-4">
+<a class="text-[#5d6a89] text-base font-medium leading-normal" href="#">Dashboard</a>
+<span class="text-[#5d6a89] text-base font-medium leading-normal">/</span>
+<a class="text-[#5d6a89] text-base font-medium leading-normal" href="#">Rewards &amp; Wallet</a>
+<span class="text-[#5d6a89] text-base font-medium leading-normal">/</span>
+<span class="text-[#111318] text-base font-medium leading-normal">Withdrawals &amp; Payout History</span>
+</div>
+<!-- Title & Subtitle Section -->
+<div class="flex flex-wrap justify-between gap-3 p-4">
+<div class="flex min-w-72 flex-col gap-3">
+<p class="text-[#111318] text-4xl font-black leading-tight tracking-[-0.033em]">Withdrawals &amp; Payout Settlement History</p>
+<p class="text-[#5d6a89] text-base font-normal leading-normal">
+              Request immediate NPCI UPI disbursement of approved reward balances, manage verified settlement rails, and audit statutory disbursement lifecycles.
+            </p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-4 bg-[#eaecf1] text-[#111318] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-slate-200 transition-colors">
+<span class="truncate">Download Payout Slips (CSV/PDF)</span>
+</button>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-4 bg-[#eaecf1] text-[#111318] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-slate-200 transition-colors">
+<span class="truncate">Disbursement Guidelines &amp; Tax FAQs</span>
+</button>
+</div>
+</div>
+<!-- Interactive State Bar / Sandbox Switcher -->
+<div class="pb-3">
+<div class="flex border-b border-[#d5d9e2] px-4 gap-8 overflow-x-auto">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-slate-900 text-[#111318] pb-[13px] pt-4 whitespace-nowrap" href="#">
+<p class="text-[#111318] text-sm font-bold leading-normal tracking-[0.015em]">Default Form &amp; History</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#5d6a89] pb-[13px] pt-4 whitespace-nowrap hover:text-[#111318]" href="#modal-preview">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Confirmation Modal (Preview)</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#5d6a89] pb-[13px] pt-4 whitespace-nowrap hover:text-[#111318]" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Below-Threshold State</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#5d6a89] pb-[13px] pt-4 whitespace-nowrap hover:text-[#111318]" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Processing / Under Review</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#5d6a89] pb-[13px] pt-4 whitespace-nowrap hover:text-[#111318]" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Failed Payout &amp; Safe Retry</p>
+</a>
+</div>
+</div>
+<!-- MAIN FINANCIAL CONTENT -->
+<main class="flex flex-col gap-6 p-4">
+<!-- 1. TOP FINANCIAL SUMMARY CARDS -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Card 1: Available to Withdraw -->
+<div class="bg-white border border-[#e2e8f0] rounded-xl p-5 shadow-sm relative flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold uppercase tracking-wider text-[#5d6a89]">Available to Withdraw</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#e6f4ea] text-[#0d9488]">
+<span class="size-1.5 rounded-full bg-[#0d9488]"></span>
+                    Instant UPI Transfer Ready
+                  </span>
+</div>
+<div class="flex items-baseline gap-2 mb-2">
+<h3 class="text-3xl font-extrabold text-[#0f172a] font-['Plus_Jakarta_Sans']">₹245.00</h3>
+<span class="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">₹100.00 min met</span>
+</div>
+</div>
+<div class="pt-3 border-t border-[#f1f5f9] mt-2">
+<div class="flex justify-between text-xs text-[#5d6a89] mb-1.5">
+<span>Daily limit remaining</span>
+<span class="font-semibold text-[#0f172a]">₹9,755.00 / ₹10,000.00</span>
+</div>
+<div class="w-full bg-[#eaecf1] h-1.5 rounded-full overflow-hidden">
+<div class="bg-slate-900 h-1.5 rounded-full" style="width: 2.45%;"></div>
+</div>
+</div>
+</div>
+<!-- Card 2: Pending Validation -->
+<div class="bg-white border border-[#e2e8f0] rounded-xl p-5 shadow-sm relative flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold uppercase tracking-wider text-[#5d6a89]">Pending Validation</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+<span class="material-symbols-outlined text-[14px]">lock_clock</span>
+                    Advertiser Escrow
+                  </span>
+</div>
+<div class="flex items-baseline gap-2 mb-2">
+<h3 class="text-3xl font-extrabold text-[#0f172a] font-['Plus_Jakarta_Sans']">₹68.00</h3>
+<span class="text-xs text-amber-700 bg-amber-50 px-2 py-0.5 rounded">2 tasks syncing</span>
+</div>
+</div>
+<div class="pt-3 border-t border-[#f1f5f9] mt-2 text-xs text-[#5d6a89] leading-relaxed flex items-start gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-amber-600 flex-shrink-0">info</span>
+<span>In escrow until advertiser webhook confirmation SLA (&lt;45m). Cannot be withdrawn yet.</span>
+</div>
+</div>
+<!-- Card 3: Settled Payouts (Lifetime) -->
+<div class="bg-white border border-[#e2e8f0] rounded-xl p-5 shadow-sm relative flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold uppercase tracking-wider text-[#5d6a89]">Settled Payouts (Lifetime)</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                    100% Success Rate
+                  </span>
+</div>
+<div class="flex items-baseline gap-2 mb-2">
+<h3 class="text-3xl font-extrabold text-[#0f172a] font-['Plus_Jakarta_Sans']">₹1,235.00</h3>
+<span class="text-xs font-medium text-[#5d6a89]">3 completed transfers</span>
+</div>
+</div>
+<div class="pt-3 border-t border-[#f1f5f9] mt-2 flex justify-between items-center text-xs text-[#5d6a89]">
+<span>Platform fees deducted</span>
+<span class="font-bold text-[#0d9488]">₹0.00 (Zero Fees)</span>
+</div>
+</div>
+</section>
+<!-- 2. WITHDRAWAL & PAYOUT METHOD SPLIT SECTION -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Panel: Request Payout (7 cols) -->
+<div class="lg:col-span-7 bg-white border border-[#e2e8f0] rounded-xl p-6 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-[#f1f5f9]">
+<div class="flex items-center gap-2">
+<div class="p-2 rounded bg-slate-900 text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">payments</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-[#0f172a]">Request Immediate Payout</h3>
+<p class="text-xs text-[#5d6a89]">Disbursed instantly via NPCI 24x7 IMPS/UPI Rails</p>
+</div>
+</div>
+<span class="text-xs bg-slate-100 text-[#0f172a] font-mono px-2 py-1 rounded">SLA: ~30 Seconds</span>
+</div>
+<!-- Amount Selection & Custom Input -->
+<div class="mt-5">
+<label class="block text-xs font-bold uppercase tracking-wider text-[#5d6a89] mb-2">Withdrawal Amount (INR)</label>
+<div class="relative flex items-center mb-3">
+<span class="absolute left-4 text-xl font-bold text-[#0f172a]">₹</span>
+<input class="w-full pl-9 pr-32 py-3 bg-[#f8fafc] border border-[#cbd5e1] rounded-lg text-xl font-extrabold text-[#0f172a] focus:ring-2 focus:ring-slate-900 focus:border-slate-900" type="text" value="200.00"/>
+<div class="absolute right-3 flex items-center gap-1.5 bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-1 rounded">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                      Valid
+                    </div>
+</div>
+<!-- Quick Preset Pills -->
+<div class="flex gap-2">
+<button class="px-3 py-1.5 text-xs font-bold rounded border border-slate-300 bg-white text-[#0f172a] hover:bg-slate-100 transition-colors" type="button">+ ₹100</button>
+<button class="px-3 py-1.5 text-xs font-bold rounded border border-slate-900 bg-slate-900 text-white shadow-sm" type="button">+ ₹200</button>
+<button class="px-3 py-1.5 text-xs font-bold rounded border border-slate-300 bg-white text-[#0f172a] hover:bg-slate-100 transition-colors" type="button">Max (₹245.00)</button>
+</div>
+</div>
+<!-- Destination Selector -->
+<div class="mt-6">
+<label class="block text-xs font-bold uppercase tracking-wider text-[#5d6a89] mb-2">Select Destination Rail</label>
+<div class="space-y-2">
+<!-- UPI Radio Option (Default) -->
+<label class="flex items-center justify-between p-3.5 border-2 border-slate-900 bg-[#f8fafc] rounded-lg cursor-pointer">
+<div class="flex items-center gap-3">
+<input checked="" class="text-slate-900 focus:ring-slate-900" name="payout_destination" type="radio"/>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-sm text-[#0f172a]">NPCI UPI VPA</span>
+<span class="px-1.5 py-0.5 text-[10px] font-bold bg-emerald-100 text-[#0d9488] rounded">Verified Primary</span>
+</div>
+<p class="text-xs text-[#5d6a89] font-mono">arun***@okhdfcbank</p>
+</div>
+</div>
+<span class="text-xs font-semibold text-[#0d9488] bg-white px-2 py-1 rounded border border-emerald-200">Instant (&lt;45s)</span>
+</label>
+<!-- Bank Account Option -->
+<label class="flex items-center justify-between p-3.5 border border-[#e2e8f0] bg-white rounded-lg cursor-pointer hover:border-slate-300 transition-colors">
+<div class="flex items-center gap-3">
+<input class="text-slate-900 focus:ring-slate-900" name="payout_destination" type="radio"/>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-sm text-[#0f172a]">HDFC Bank Ltd</span>
+<span class="px-1.5 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-700 rounded">NEFT/IMPS</span>
+</div>
+<p class="text-xs text-[#5d6a89] font-mono">A/C ••••••••4912 • IFSC HDFC0000240</p>
+</div>
+</div>
+<span class="text-xs text-[#5d6a89]">2-4 hours</span>
+</label>
+</div>
+</div>
+<!-- Breakdown Accordion / Calculations -->
+<div class="mt-6 p-4 rounded-lg bg-[#f8fafc] border border-[#e2e8f0] space-y-2.5">
+<div class="flex justify-between text-xs text-[#5d6a89]">
+<span>Minimum payout threshold</span>
+<span class="font-mono text-[#0f172a]">₹100.00 (Configured)</span>
+</div>
+<div class="flex justify-between text-xs text-[#5d6a89]">
+<span>Platform processing fee (IMPS/UPI)</span>
+<span class="font-mono text-[#0d9488] font-bold">₹0.00 (Zero Fee)</span>
+</div>
+<div class="flex justify-between text-xs text-[#5d6a89]">
+<div class="flex items-center gap-1">
+<span>Section 194R TDS withholding</span>
+<span class="material-symbols-outlined text-[13px] text-slate-400">help</span>
+</div>
+<span class="font-mono text-[#0f172a]">₹0.00 <span class="text-[10px] text-slate-500">(Yield ₹1,480 / ₹20,000 threshold)</span></span>
+</div>
+<div class="pt-2.5 border-t border-[#e2e8f0] flex justify-between items-center text-sm">
+<span class="font-bold text-[#0f172a]">Net Disbursement Estimate</span>
+<span class="font-extrabold text-lg text-[#0f172a] font-mono">₹200.00</span>
+</div>
+</div>
+<!-- Security Disclaimer Box -->
+<div class="mt-5 p-3.5 bg-blue-50/70 border border-blue-200 rounded-lg flex items-start gap-2.5">
+<span class="material-symbols-outlined text-blue-600 text-lg flex-shrink-0 mt-0.5">shield</span>
+<p class="text-xs text-blue-900 leading-relaxed">
+<strong class="font-semibold">Security Guarantee:</strong> AdEarn AI utilizes direct NPCI instant rails and will <strong>NEVER</strong> ask for your UPI PIN, banking passwords, OTPs, or upfront processing fees.
+                  </p>
+</div>
+</div>
+<!-- Button Actions -->
+<div class="flex gap-3 mt-6 pt-4 border-t border-[#f1f5f9]">
+<button class="flex-1 flex items-center justify-center gap-2 bg-slate-900 text-white font-bold py-3 px-4 rounded-lg text-sm hover:bg-slate-800 transition-colors shadow" type="button">
+<span class="material-symbols-outlined text-base">bolt</span>
+<span>Confirm &amp; Withdraw ₹200.00 to UPI</span>
+</button>
+<button class="px-4 py-3 bg-[#eaecf1] text-[#111318] text-sm font-semibold rounded-lg hover:bg-slate-200 transition-colors" type="button">
+                  Clear / Reset
+                </button>
+</div>
+</div>
+<!-- Right Panel: Verified Settlement Rails (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-4">
+<div class="bg-white border border-[#e2e8f0] rounded-xl p-5 shadow-sm flex flex-col justify-between flex-1">
+<div>
+<div class="flex items-center justify-between pb-3 border-b border-[#f1f5f9]">
+<h3 class="text-base font-bold text-[#0f172a]">Verified Settlement Rails</h3>
+<span class="text-xs text-[#0d9488] font-bold bg-emerald-50 px-2 py-0.5 rounded">2 Active</span>
+</div>
+<!-- Primary Rail Card -->
+<div class="mt-4 p-4 border border-[#e2e8f0] rounded-lg bg-white relative">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-[#0d9488]">
+<span class="material-symbols-outlined text-xl">qr_code_2</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-[#0f172a]">NPCI UPI VPA</span>
+<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-600 text-white">Default</span>
+</div>
+<p class="font-mono text-sm font-semibold text-[#0f172a] mt-0.5">arun***@okhdfcbank</p>
+</div>
+</div>
+</div>
+<div class="mt-3 pt-3 border-t border-[#f1f5f9] grid grid-cols-2 gap-2 text-[11px] text-[#5d6a89]">
+<div>
+<span>Verification SLA:</span>
+<p class="font-medium text-[#0f172a]">Verified on 02 Oct 2026</p>
+</div>
+<div>
+<span>Transfer Window:</span>
+<p class="font-medium text-[#0d9488]">Instant 24x7 (~30s)</p>
+</div>
+</div>
+<div class="mt-3 flex gap-2">
+<button class="text-xs font-semibold text-slate-700 hover:text-slate-900 border border-slate-200 rounded px-2.5 py-1 hover:bg-slate-50 transition-colors">Edit / Change UPI</button>
+<button class="text-xs font-semibold text-slate-700 hover:text-slate-900 border border-slate-200 rounded px-2.5 py-1 hover:bg-slate-50 transition-colors">Test Micro-deposit</button>
+</div>
+</div>
+<!-- Secondary Bank Rail Card -->
+<div class="mt-3 p-4 border border-[#e2e8f0] rounded-lg bg-white">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700">
+<span class="material-symbols-outlined text-xl">account_balance</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-[#0f172a]">Direct Bank NEFT/RTGS</span>
+<span class="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 text-slate-700">Active Backup</span>
+</div>
+<p class="font-mono text-xs text-[#0f172a] mt-0.5">HDFC Bank ••••••••4912</p>
+</div>
+</div>
+<div class="mt-2 text-[11px] text-[#5d6a89] space-y-0.5">
+<p>Beneficiary: <strong class="text-slate-800">Arun K****</strong> (PAN Linked)</p>
+<p>IFSC: <span class="font-mono text-slate-800">HDFC0000240</span></p>
+</div>
+</div>
+<!-- Add New Method -->
+<button class="w-full mt-3 border-2 border-dashed border-[#cbd5e1] rounded-lg p-3 text-center text-xs font-bold text-slate-700 hover:border-slate-400 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-sm">add_circle</span>
+<span>+ Add New Payout Method</span>
+</button>
+</div>
+<!-- Regulatory Compliance Badge -->
+<div class="mt-4 p-3 bg-[#f8fafc] border border-[#e2e8f0] rounded-lg text-[11px] text-[#5d6a89] leading-normal flex items-start gap-2">
+<span class="material-symbols-outlined text-xs text-slate-500 mt-0.5">verified_user</span>
+<span>Indian IT Act &amp; NPCI guidelines require recipient bank account or UPI VPA to match the verified PAN holder's name.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. CONFIRMATION MODAL PREVIEW (SANDBOX / AUDIT COMPONENT) -->
+<section class="bg-white border-2 border-slate-900/20 rounded-xl p-5 shadow-sm relative overflow-hidden" id="modal-preview">
+<div class="flex items-center justify-between pb-3 border-b border-[#e2e8f0]">
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-xs font-bold uppercase tracking-wider text-slate-700">Confirmation Modal Preview (State 02)</span>
+</div>
+<span class="text-xs font-mono bg-slate-100 text-slate-700 px-2 py-0.5 rounded">Mock Interactive State</span>
+</div>
+<div class="mt-4 max-w-xl mx-auto bg-[#f8fafc] border border-slate-200 rounded-xl p-5 shadow-inner">
+<div class="text-center pb-4 border-b border-slate-200">
+<div class="size-12 mx-auto rounded-full bg-emerald-100 text-[#0d9488] flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-2xl">lock_open</span>
+</div>
+<h4 class="text-lg font-extrabold text-[#0f172a]">Withdrawal Confirmation Summary</h4>
+<p class="text-xs text-[#5d6a89] mt-0.5">Review destination and tax compliance before authorization</p>
+</div>
+<div class="py-4 space-y-2 text-xs">
+<div class="flex justify-between py-1 border-b border-dashed border-slate-200">
+<span class="text-slate-600">Disbursement Amount</span>
+<span class="font-bold font-mono text-[#0f172a] text-sm">₹200.00</span>
+</div>
+<div class="flex justify-between py-1 border-b border-dashed border-slate-200">
+<span class="text-slate-600">Disbursement Rail</span>
+<span class="font-semibold text-slate-800">NPCI Immediate UPI</span>
+</div>
+<div class="flex justify-between py-1 border-b border-dashed border-slate-200">
+<span class="text-slate-600">Beneficiary VPA</span>
+<span class="font-mono font-bold text-slate-900">arun***@okhdfcbank</span>
+</div>
+<div class="flex justify-between py-1 border-b border-dashed border-slate-200">
+<span class="text-slate-600">Estimated Turnaround</span>
+<span class="text-[#0d9488] font-bold">Instant (&lt; 60 seconds)</span>
+</div>
+<div class="flex justify-between py-1 text-slate-700 font-bold">
+<span>Net Credited to Bank</span>
+<span class="font-mono text-emerald-700 text-base">₹200.00</span>
+</div>
+</div>
+<div class="mt-3 flex items-start gap-2 bg-white p-3 rounded border border-slate-200 text-xs">
+<input checked="" class="rounded text-slate-900 focus:ring-slate-900 mt-0.5" type="checkbox"/>
+<span class="text-slate-700">I confirm that this recipient UPI account belongs solely to me and matches my registered PAN verification profile.</span>
+</div>
+<div class="mt-4 flex gap-3">
+<button class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded text-xs transition-colors flex items-center justify-center gap-1.5 shadow" type="button">
+<span class="material-symbols-outlined text-sm">verified</span>
+<span>Authorize Disbursement</span>
+</button>
+<button class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold rounded text-xs transition-colors" type="button">
+                  Cancel
+                </button>
+</div>
+</div>
+</section>
+<!-- 4. PAYOUT SETTLEMENT HISTORY TABLE -->
+<section class="bg-white border border-[#e2e8f0] rounded-xl shadow-sm overflow-hidden">
+<!-- Table Header Filter Toolbar -->
+<div class="p-4 border-b border-[#f1f5f9] flex flex-wrap items-center justify-between gap-3">
+<div>
+<h3 class="text-base font-bold text-[#0f172a]">Settlement Audit Ledger</h3>
+<p class="text-xs text-[#5d6a89]">Real-time synchronization with NPCI clearinghouse switch</p>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<!-- Status Filter Pills -->
+<div class="flex items-center gap-1 bg-slate-100 p-1 rounded-lg text-xs font-semibold">
+<button class="px-2.5 py-1 bg-white text-slate-900 rounded shadow-xs">All (4)</button>
+<button class="px-2.5 py-1 text-slate-600 hover:text-slate-900">Paid (3)</button>
+<button class="px-2.5 py-1 text-slate-600 hover:text-slate-900">Processing (0)</button>
+<button class="px-2.5 py-1 text-slate-600 hover:text-slate-900">Failed (1)</button>
+</div>
+<!-- Date Range Selector -->
+<div class="flex items-center gap-1 border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white text-xs text-slate-700 font-medium">
+<span class="material-symbols-outlined text-sm text-slate-500">calendar_today</span>
+<span>Last 90 Days</span>
+</div>
+</div>
+</div>
+<!-- Table Responsive Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-xs">
+<thead>
+<tr class="bg-[#f8fafc] border-b border-[#e2e8f0] text-[#5d6a89] font-bold uppercase tracking-wider text-[11px]">
+<th class="py-3 px-4">Date &amp; Time</th>
+<th class="py-3 px-4">Transaction Ref / RRN</th>
+<th class="py-3 px-4">Destination Rail</th>
+<th class="py-3 px-4">Gross &amp; Deductions</th>
+<th class="py-3 px-4">Settlement Status</th>
+<th class="py-3 px-4">Audit SLA / ACK</th>
+<th class="py-3 px-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#f1f5f9] text-[#0f172a]">
+<!-- Row 1: Paid -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-3.5 px-4 whitespace-nowrap">
+<p class="font-semibold text-slate-900">12 Oct 2026</p>
+<p class="text-[11px] text-slate-500">02:10 PM IST</p>
+</td>
+<td class="py-3.5 px-4 font-mono whitespace-nowrap">
+<span class="font-bold text-slate-900">#PO-9921-UPI</span>
+<p class="text-[10px] text-slate-500">RRN: 628619204412</p>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-emerald-600">account_balance_wallet</span>
+<span class="font-mono text-slate-800">arun***@okhdfcbank</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="font-bold font-mono text-slate-900">₹500.00</span>
+<p class="text-[10px] text-slate-500">Fee: ₹0 | TDS: ₹0</p>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#e6f4ea] text-[#0d9488]">
+<span class="size-1.5 rounded-full bg-[#0d9488]"></span>
+                        Paid
+                      </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap font-mono text-[11px] text-slate-600">
+<span>NPCI 200 OK (0.4s)</span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<button class="inline-flex items-center gap-1 font-semibold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded transition-colors text-xs">
+<span class="material-symbols-outlined text-sm">receipt_long</span>
+<span>Receipt</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Paid -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-3.5 px-4 whitespace-nowrap">
+<p class="font-semibold text-slate-900">28 Sep 2026</p>
+<p class="text-[11px] text-slate-500">11:30 AM IST</p>
+</td>
+<td class="py-3.5 px-4 font-mono whitespace-nowrap">
+<span class="font-bold text-slate-900">#PO-8840-UPI</span>
+<p class="text-[10px] text-slate-500">RRN: 519283746190</p>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-emerald-600">account_balance_wallet</span>
+<span class="font-mono text-slate-800">arun***@okhdfcbank</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="font-bold font-mono text-slate-900">₹400.00</span>
+<p class="text-[10px] text-slate-500">Fee: ₹0 | TDS: ₹0</p>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#e6f4ea] text-[#0d9488]">
+<span class="size-1.5 rounded-full bg-[#0d9488]"></span>
+                        Paid
+                      </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap font-mono text-[11px] text-slate-600">
+<span>NPCI 200 OK (0.6s)</span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<button class="inline-flex items-center gap-1 font-semibold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded transition-colors text-xs">
+<span class="material-symbols-outlined text-sm">receipt_long</span>
+<span>Receipt</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Paid (Bank NEFT) -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-3.5 px-4 whitespace-nowrap">
+<p class="font-semibold text-slate-900">14 Sep 2026</p>
+<p class="text-[11px] text-slate-500">04:15 PM IST</p>
+</td>
+<td class="py-3.5 px-4 font-mono whitespace-nowrap">
+<span class="font-bold text-slate-900">#PO-7712-BNK</span>
+<p class="text-[10px] text-slate-500">IMPS: 491827361920</p>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-blue-600">account_balance</span>
+<span class="font-mono text-slate-800">HDFC ••••4912</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="font-bold font-mono text-slate-900">₹335.00</span>
+<p class="text-[10px] text-slate-500">Fee: ₹0 | TDS: ₹0</p>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#e6f4ea] text-[#0d9488]">
+<span class="size-1.5 rounded-full bg-[#0d9488]"></span>
+                        Paid
+                      </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap font-mono text-[11px] text-slate-600">
+<span>IMPS Settled (2.1s)</span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<button class="inline-flex items-center gap-1 font-semibold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded transition-colors text-xs">
+<span class="material-symbols-outlined text-sm">receipt_long</span>
+<span>Receipt</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Failed with Safe Retry Action -->
+<tr class="bg-red-50/40 hover:bg-red-50/70 transition-colors">
+<td class="py-3.5 px-4 whitespace-nowrap">
+<p class="font-semibold text-slate-900">02 Sep 2026</p>
+<p class="text-[11px] text-slate-500">09:45 AM IST</p>
+</td>
+<td class="py-3.5 px-4 font-mono whitespace-nowrap">
+<span class="font-bold text-red-700">#PO-6510-UPI</span>
+<p class="text-[10px] text-red-500">Err Code: NPCI-U91</p>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-slate-400">cancel</span>
+<span class="font-mono text-slate-500 line-through">arun***@okaxis</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="font-bold font-mono text-slate-900">₹250.00</span>
+<p class="text-[10px] text-emerald-600 font-semibold">Funds Auto-Returned</p>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-100 text-red-700 border border-red-200">
+<span class="size-1.5 rounded-full bg-red-600"></span>
+                        Beneficiary Offline (NPCI 91)
+                      </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap text-[11px] text-slate-600">
+<span>Axis Switch Timed Out (30s)</span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap space-x-1">
+<button class="inline-flex items-center gap-1 font-bold text-white bg-slate-900 hover:bg-slate-800 px-2.5 py-1 rounded transition-colors text-xs shadow-xs">
+<span class="material-symbols-outlined text-xs">restart_alt</span>
+<span>Retry to HDFC</span>
+</button>
+<button class="inline-flex items-center gap-1 font-medium text-slate-600 hover:text-slate-900 px-1.5 py-1 text-xs">
+                        Report
+                      </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer Pagination -->
+<div class="p-3.5 bg-[#f8fafc] border-t border-[#e2e8f0] flex flex-wrap items-center justify-between text-xs text-[#5d6a89]">
+<span>Showing 4 of 4 total disbursements recorded under PAN •••••8921J</span>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 rounded border border-slate-200 bg-white text-slate-400 cursor-not-allowed">Previous</button>
+<button class="px-2.5 py-1 rounded border border-slate-900 bg-slate-900 text-white font-bold">1</button>
+<button class="px-2.5 py-1 rounded border border-slate-200 bg-white text-slate-400 cursor-not-allowed">Next</button>
+</div>
+</div>
+</section>
+<!-- 5. TRUST & STATUTORY ESCROW FOOTER -->
+<footer class="mt-4 p-5 rounded-xl bg-white border border-[#e2e8f0] text-xs text-[#5d6a89] space-y-3">
+<div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#f1f5f9] pb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-700 text-lg">assured_workload</span>
+<span class="font-bold text-slate-900">RBI Regulated Payout Facilitator Mandate</span>
+</div>
+<span class="text-[11px] font-mono text-slate-500">Idempotency Protocol: v2.4-AES256-DEBOUNCE</span>
+</div>
+<p class="leading-relaxed">
+<strong>Reserve Bank of India (RBI) Payout Guidelines &amp; Section 194R Statutory Escrow Mandate:</strong> All reward disbursements originate from a non-interest-bearing escrow nodal account held with a scheduled commercial bank (HDFC Bank Ltd). Funds are disbursed strictly in compliance with Section 194R of the Income Tax Act, 1961. Submissions are cryptographically protected against duplicate trigger requests.
+            </p>
+<div class="flex flex-wrap items-center gap-6 pt-1 text-[11px] text-slate-500">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-emerald-600">lock</span> 256-bit TLS Encrypted
+              </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-emerald-600">verified</span> NPCI UPI 2.0 Certified
+              </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-emerald-600">policy</span> Zero Deductions on Legitimate Rewards
+              </span>
+</div>
+</footer>
+</main>
+</div>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-primary-container":"#7c839b","primary-container":"#131b2e","outline":"#76777d","secondary":"#006a61","on-tertiary":"#ffffff","secondary-fixed":"#89f5e7","surface-bright":"#f8f9ff","tertiary-fixed-dim":"#ffb77d","on-surface":"#0b1c30","inverse-surface":"#213145","tertiary-fixed":"#ffdcc3","surface-container-low":"#eff4ff","on-surface-variant":"#45464d","surface-variant":"#d3e4fe","primary":"#000000","on-primary-fixed":"#131b2e","on-background":"#0b1c30","on-secondary-container":"#006f66","on-primary":"#ffffff","surface-tint":"#565e74","on-error-container":"#93000a","error":"#ba1a1a","on-secondary-fixed-variant":"#005049","secondary-container":"#86f2e4","on-tertiary-container":"#c76c00","surface-dim":"#cbdbf5","outline-variant":"#c6c6cd","on-primary-fixed-variant":"#3f465c","tertiary-container":"#2f1500","surface-container-highest":"#d3e4fe","on-secondary":"#ffffff","surface-container-lowest":"#ffffff","primary-fixed":"#dae2fd","on-secondary-fixed":"#00201d","inverse-primary":"#bec6e0","tertiary":"#000000","primary-fixed-dim":"#bec6e0","on-error":"#ffffff","surface":"#f8f9ff","surface-container":"#e5eeff","background":"#f8f9ff","error-container":"#ffdad6","on-tertiary-fixed":"#2f1500","surface-container-high":"#dce9ff","on-tertiary-fixed-variant":"#6e3900","secondary-fixed-dim":"#6bd8cb","inverse-on-surface":"#eaf1ff"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"space-xl":"2rem","space-md":"1rem","space-xs":"0.25rem","space-lg":"1.5rem","gutter-mobile":"1rem","margin-mobile":"1rem","space-sm":"0.5rem","gutter":"1.5rem","margin":"2rem"},fontFamily:{"body-md":["Inter"],"currency-body":["Inter"],"headline-lg-mobile":["Plus Jakarta Sans"],"currency-display":["Plus Jakarta Sans"],"label-lg":["Inter"],"headline-md":["Plus Jakarta Sans"],"label-md":["Inter"],"headline-sm":["Plus Jakarta Sans"],"body-sm":["Inter"],"headline-lg":["Plus Jakarta Sans"],"body-lg":["Inter"],"headline-xl":["Plus Jakarta Sans"],"headline-xl-mobile":["Plus Jakarta Sans"],"label-sm":["Inter"]},fontSize:{"body-md":["14px",{lineHeight:"20px",letterSpacing:"0em",fontWeight:"400"}],"currency-body":["14px",{lineHeight:"20px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-lg-mobile":["22px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"currency-display":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.01em",fontWeight:"500"}],"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"600"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"600"}],"body-sm":["12px",{lineHeight:"16px",letterSpacing:"0.005em",fontWeight:"400"}],"headline-lg":["28px",{lineHeight:"36px",letterSpacing:"-0.02em",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"400"}],"headline-xl":["36px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-xl-mobile":["28px",{lineHeight:"36px",letterSpacing:"-0.015em",fontWeight:"700"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center justify-between bg-surface-container-lowest"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[22px]">shield_locked</span><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface">AdEarn AI</span></div><span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant uppercase tracking-wider">v4.2</span></div><div class="px-space-md py-space-xs"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-1 rounded"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Node Clearance</span><span class="font-label-sm text-label-sm text-on-secondary-fixed-variant font-bold">SEC-L4 OPS</span></div></div><nav class="flex flex-col gap-1 px-space-md py-space-xs" data-active-classes="bg-primary text-on-primary font-medium shadow-[0_1px_3px_rgba(15,23,42,0.08)]"><a class="flex items-center justify-between px-space-md py-2.5 rounded text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="screen-13-admin-operations-dashboard" href="#"><span class="font-label-lg text-label-lg">Operations Hub</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="screen-14-moderation-and-ad-approval" href="#"><span class="font-label-lg text-label-lg">Moderation &amp; Approval</span><span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-semibold tabular-nums">18 pending</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="fraud-and-kinematics-engine" href="#"><span class="font-label-lg text-label-lg">Fraud &amp; Kinematics</span><span class="flex h-2 w-2 rounded-full bg-secondary"></span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="payout-clearing-and-nodal-pool" href="#"><span class="font-label-lg text-label-lg">Payout Clearing</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="audit-trails-and-logs" href="#"><span class="font-label-lg text-label-lg">Audit Trails &amp; Logs</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="platform-settings-and-rules" href="#"><span class="font-label-lg text-label-lg">Settings &amp; Rules</span></a></nav></div><div class="p-space-md bg-surface-container-lowest"><div class="bg-surface-container-low p-space-sm rounded mb-space-sm"><div class="flex items-center justify-between mb-space-xs"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">System Telemetry</span><span class="font-label-sm text-label-sm text-secondary font-bold">NOMINAL</span></div><div class="flex flex-col gap-1"><div class="flex justify-between font-body-sm text-body-sm"><span class="text-on-surface-variant">API SLA</span><span class="font-medium text-on-surface tabular-nums">99.98%</span></div><div class="flex justify-between font-body-sm text-body-sm"><span class="text-on-surface-variant">Node Latency</span><span class="font-medium text-on-surface tabular-nums">24ms</span></div><div class="flex justify-between font-body-sm text-body-sm"><span class="text-on-surface-variant">Write Queue</span><span class="font-medium text-on-surface">Normal (0)</span></div></div></div><div class="flex items-center justify-between px-1"><span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Security Tier</span><span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-error-container text-on-error-container font-bold uppercase">RESTRICTED L4</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-space-md flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low"><span class="material-symbols-outlined text-secondary text-[14px]">terminal</span><span class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wider">COMMAND CONSOLE</span></div><div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="h-2 w-2 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">PROD-CLUSTER-BLR-01 (ACTIVE)</span></div><div class="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded bg-secondary-container/40 text-on-secondary-container"><span class="material-symbols-outlined text-[14px]">verified</span><span class="font-label-sm text-label-sm font-medium tracking-wide">NODAL GATEWAY: HDFC / ICICI 100% HEALTH</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex flex-col text-right"><span class="font-body-sm text-body-sm font-semibold text-on-surface tabular-nums">11:42:09 IST</span><span class="font-label-sm text-label-sm text-on-surface-variant tabular-nums">06:12:09 UTC</span></div><div class="relative flex items-center justify-center"><button aria-label="Alerts" class="relative p-1.5 rounded hover:bg-surface-container-high transition-colors text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-error text-on-error font-label-sm text-[10px] font-bold">7</span></button></div><button class="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-error-container text-on-error-container hover:bg-error hover:text-on-error transition-colors"><span class="material-symbols-outlined text-[16px]">lock_reset</span><span class="font-label-sm text-label-sm font-bold uppercase tracking-wider">Emergency Freeze</span></button><div class="flex items-center gap-2.5 pl-2"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface leading-tight">Dr. Rajeshwari Sen</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">Principal Ops &amp; Compliance (Tier 4)</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Operational Sub-Header & Global Breadcrumb Bar -->
+<section class="bg-surface-container-lowest px-space-md py-space-sm shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-space-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Operations Core</span>
+<span class="material-symbols-outlined text-outline text-[13px]">chevron_right</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Regulatory Moderation Desk</span>
+<span class="material-symbols-outlined text-outline text-[13px]">chevron_right</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Campaign &amp; Ad Approval Queue</span>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">flag</span>
+<span>18 Flights Pending Review</span>
+</div>
+<div class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-outline text-[14px]">timer</span>
+<span>SLA Target: &lt; 45m</span>
+</div>
+<div class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
+<span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
+<span>4 Reviewers Active (SEC-L3/L4)</span>
+</div>
+</div>
+</div>
+<!-- Global Action Bar -->
+<div class="flex items-center gap-2 flex-wrap">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container-low text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+<span>Policy Rulebook V4.2</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container-low text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Download NDJSON</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-error-container text-on-error-container hover:bg-error hover:text-on-error font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">gavel</span>
+<span>Escalate to Legal (Tier 3)</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-primary text-on-primary hover:bg-primary-container font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-secondary-fixed text-[16px]">done_all</span>
+<span>Batch Approve Pre-Checked (4)</span>
+</button>
+</div>
+</section>
+<!-- Metric KPI Bar -->
+<section class="p-space-md grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-sm">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-space-md rounded shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Queue Inventory</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">pending_actions</span>
+</div>
+<div class="my-2">
+<div class="flex items-baseline gap-2">
+<span class="font-currency-display text-headline-lg font-bold text-on-surface tabular-nums">18</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Flights</span>
+</div>
+<p class="font-body-sm text-body-sm text-error font-semibold flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+          7 with SLA &lt; 30m expiring
+        </p>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-1 overflow-hidden">
+<div class="bg-error h-1 rounded-full" style="width: 38.8%"></div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-space-md rounded shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Collateral Staged</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">account_balance</span>
+</div>
+<div class="my-2">
+<div class="flex items-baseline gap-1">
+<span class="font-currency-body text-headline-lg font-bold text-on-surface tabular-nums">₹48,60,000</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary font-medium flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+          100% Locked in Nodal Escrow
+        </p>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>HDFC / ICICI Pool</span>
+<span class="font-semibold text-secondary">Verified</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-space-md rounded shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">AI Policy Pre-Screen</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">smart_toy</span>
+</div>
+<div class="my-2">
+<div class="flex items-baseline gap-2">
+<span class="font-currency-display text-headline-lg font-bold text-on-surface tabular-nums">88.4%</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-secondary font-bold">CLEAN</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          ASCI / OCR / Hate NLP pass rate
+        </p>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-1 overflow-hidden">
+<div class="bg-secondary h-1 rounded-full" style="width: 88.4%"></div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest p-space-md rounded shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Statutory Violations</span>
+<span class="material-symbols-outlined text-error text-[18px]">gavel</span>
+</div>
+<div class="my-2">
+<div class="flex items-baseline gap-2">
+<span class="font-currency-display text-headline-lg font-bold text-error tabular-nums">3</span>
+<span class="font-label-sm text-label-sm text-error font-bold">CRITICAL</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          SEBI PFUTP &amp; CDSCO Breaches
+        </p>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Action: Auto-Quarantined</span>
+<span class="text-error font-semibold">Sec. 12A</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface-container-lowest p-space-md rounded shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Avg Time-To-Review</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">speed</span>
+</div>
+<div class="my-2">
+<div class="flex items-baseline gap-2">
+<span class="font-currency-display text-headline-lg font-bold text-on-surface tabular-nums">4m 12s</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">-72% vs SLA</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          Internal standard: 15m 00s
+        </p>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Desk Throughput</span>
+<span class="text-secondary font-semibold">Nominal Velocity</span>
+</div>
+</div>
+</section>
+<!-- Master Review Console (Two-Column Institutional Grid) -->
+<section class="px-space-md pb-space-xl grid grid-cols-1 xl:grid-cols-12 gap-space-md">
+<!-- LEFT COLUMN: Moderation Queue Pipeline (~35% width -> 4 cols out of 12) -->
+<div class="xl:col-span-4 flex flex-col gap-space-sm">
+<!-- Filter & Search Controls -->
+<div class="bg-surface-container-lowest p-space-md rounded shadow-sm flex flex-col gap-space-sm">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full h-10 pl-9 pr-3 rounded bg-surface text-on-surface placeholder:text-outline text-body-md focus:bg-surface-container-lowest outline-none shadow-sm transition-all" placeholder="Search by Flight ID, Brand, GSTIN..." type="text" value="#CAMP-ZR-092"/>
+</div>
+<!-- Category Filter Tabs -->
+<div class="flex items-center gap-1 overflow-x-auto pb-1">
+<button class="px-2.5 py-1 rounded font-label-sm text-label-sm bg-primary text-on-primary font-semibold whitespace-nowrap">All (18)</button>
+<button class="px-2.5 py-1 rounded font-label-sm text-label-sm bg-surface-container text-on-surface-variant hover:text-on-surface whitespace-nowrap">BFSI &amp; FinTech (5)</button>
+<button class="px-2.5 py-1 rounded font-label-sm text-label-sm bg-surface-container text-on-surface-variant hover:text-on-surface whitespace-nowrap">SaaS (6)</button>
+<button class="px-2.5 py-1 rounded font-label-sm text-label-sm bg-surface-container text-on-surface-variant hover:text-on-surface whitespace-nowrap">Health (3)</button>
+</div>
+<!-- Filter Sub-Row -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Risk Tier:</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">All Levels</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sort: <strong class="text-on-surface">SLA Urgent</strong></span>
+</div>
+</div>
+<!-- Queue Flight Cards Scrollable Container -->
+<div class="flex flex-col gap-space-sm">
+<!-- CARD 1 (Active Selected) -->
+<div class="p-space-md rounded bg-surface-container-lowest shadow-md relative cursor-pointer overflow-hidden transition-all">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary"></div>
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface font-bold uppercase tracking-wider">#CAMP-ZR-092</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-container/40 text-on-secondary-container font-semibold">Tier 1 Institutional</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">Sovereign Gold Bonds 2026 Series III</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Zerodha Advisory Solutions India Pvt. Ltd.</span>
+</div>
+<div class="text-right">
+<span class="font-currency-body text-currency-body text-on-surface font-bold tabular-nums">₹3,50,000</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Collateral Locked</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-sm bg-surface-container-low p-2 rounded flex items-center justify-between">
+<div class="flex items-center gap-1 text-secondary font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[15px]">verified_user</span>
+<span>AI Pre-Scan: 98% Clean</span>
+</div>
+<div class="flex items-center gap-1 text-error font-label-sm text-label-sm font-semibold tabular-nums">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>18m SLA remaining</span>
+</div>
+</div>
+</div>
+<!-- CARD 2 (Critical Violation) -->
+<div class="p-space-md rounded bg-surface-container-lowest shadow-sm hover:shadow-md cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface font-bold uppercase tracking-wider">#CAMP-FG-441</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-error-container text-on-error-container font-bold">CRITICAL VIOLATION</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">Guaranteed 24% Fixed Return SIP</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">FinGrow Capital Ltd.</span>
+</div>
+<div class="text-right">
+<span class="font-currency-body text-currency-body text-on-surface font-bold tabular-nums">₹1,80,000</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Collateral Staged</span>
+</div>
+</div>
+<div class="mt-space-sm p-2 rounded bg-error-container/30 text-on-error-container flex flex-col gap-1">
+<div class="flex items-center gap-1 font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[15px]">dangerous</span>
+<span>SEBI PFUTP Regulation 4(2) Breach</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-error-container">Promising guaranteed market yields on equity instruments.</p>
+</div>
+</div>
+<!-- CARD 3 (ASCI / AYUSH Flag) -->
+<div class="p-space-md rounded bg-surface-container-lowest shadow-sm hover:shadow-md cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface font-bold uppercase tracking-wider">#CAMP-VP-702</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-bold">ASCI / AYUSH FLAG</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">7-Day Rapid Herbal Detox &amp; Fat Burner</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">VedaPure Health Labs</span>
+</div>
+<div class="text-right">
+<span class="font-currency-body text-currency-body text-on-surface font-bold tabular-nums">₹95,000</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Collateral Staged</span>
+</div>
+</div>
+<div class="mt-space-sm p-2 rounded bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-1 text-on-tertiary-container font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[15px]">report_problem</span>
+<span>Unsubstantiated weight loss claims</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant tabular-nums">45m SLA</span>
+</div>
+</div>
+<!-- CARD 4 (Pre-Cleared SaaS) -->
+<div class="p-space-md rounded bg-surface-container-lowest shadow-sm hover:shadow-md cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface font-bold uppercase tracking-wider">#CAMP-SF-205</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-container/50 text-on-secondary-container font-bold">PRE-CLEARED</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">Automated DevOps CI/CD Pipeline Trial</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">SprintFlow SaaS Technologies</span>
+</div>
+<div class="text-right">
+<span class="font-currency-body text-currency-body text-on-surface font-bold tabular-nums">₹1,20,000</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Escrow Confirmed</span>
+</div>
+</div>
+<div class="mt-space-sm p-2 rounded bg-surface-container-low flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary font-medium">100% OCR Match • B2B Clean</span>
+<button class="font-label-sm text-label-sm text-secondary font-bold hover:underline">Quick Sign-Off →</button>
+</div>
+</div>
+<!-- CARD 5 (Standard Review) -->
+<div class="p-space-md rounded bg-surface-container-lowest shadow-sm hover:shadow-md cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface font-bold uppercase tracking-wider">#CAMP-CW-882</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-semibold">Standard Review</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">Credit Score Optimization &amp; CIBIL Literacy</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">CrediWise Financial Technologies</span>
+</div>
+<div class="text-right">
+<span class="font-currency-body text-currency-body text-on-surface font-bold tabular-nums">₹2,10,000</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Collateral Staged</span>
+</div>
+</div>
+<div class="mt-space-sm p-2 rounded bg-surface-container-low flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>OCR Match 94% ��� RBI CIC Rules</span>
+<span class="tabular-nums">58m SLA</span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Deep Inspection & Verification Dossier (~65% width -> 8 cols out of 12) -->
+<div class="xl:col-span-8 flex flex-col gap-space-md">
+<!-- Dossier Header & Advertiser Credential Strip -->
+<div class="bg-surface-container-lowest p-space-md rounded shadow-sm flex flex-col gap-space-sm">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm pb-space-sm">
+<div>
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">#CAMP-ZR-092</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-container/60 text-on-secondary-container font-bold uppercase">SEC-TIER 1 ENTERPRISE</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant">Category: BFSI / Sovereign Bonds</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface mt-1">Sovereign Gold Bonds 2026 Series III — Investor Education &amp; Subscription</h2>
+</div>
+<div class="flex flex-col items-start lg:items-end bg-surface-container-low p-space-sm rounded">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">HDFC Escrow Reservation UTR</span>
+<span class="font-body-md text-body-md font-bold text-on-surface font-mono tabular-nums">HDFC520261016781-INR</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Collateral Staged: ₹3,50,000.00 (100%)</span>
+</div>
+</div>
+<!-- Entity Verification Meta Pill -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-2 pt-2">
+<div class="p-2 rounded bg-surface-container-low flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">verified</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Legal Entity</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface truncate">Zerodha Advisory Solutions India Pvt Ltd</span>
+</div>
+</div>
+<div class="p-2 rounded bg-surface-container-low flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">badge</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">SEBI Registration</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface font-mono">INA000000000 (Active)</span>
+</div>
+</div>
+<div class="p-2 rounded bg-surface-container-low flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">receipt_long</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">GSTIN &amp; PAN</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface font-mono">29AAAAZ0000A1Z5</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Creative Sandbox & Interactive Task Inspection -->
+<div class="bg-surface-container-lowest p-space-md rounded shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface text-[20px]">ad_units</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Creative Sandbox &amp; Interactive Flow Simulator</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant">Format: 60s Verified Micro-Task</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-container/40 text-on-secondary-container font-semibold">OCR Confidence: 99.2%</span>
+</div>
+</div>
+<!-- Task Preview Container (Split Preview) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-sm bg-surface-container-low p-space-md rounded">
+<!-- Visual Creative Banner Mockup (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-2">
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>Display Asset: 1080x1080px Master</span>
+<span class="text-secondary font-semibold">ASCI Tag Conspicuous</span>
+</div>
+<div class="relative rounded overflow-hidden shadow-sm bg-surface-container-lowest">
+<!-- Placeholder banner image -->
+<img class="w-full h-56 object-cover" data-alt="A clean corporate financial education ad banner for Sovereign Gold Bonds by Zerodha, featuring deep navy and slate accents, elegant 2.5 percent annual interest badge, clean sans-serif typography, Reserve Bank of India institutional endorsement badge, and a prominent yellow hashtag SPONSORED badge in the top right corner." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE5GmRYBmrv5HupWX9hM-aSqGvpu2QRKO8WAOqa_lvvuOK7JLDZz9pO-ZcSUr7ZMLovkqcvgxoBbvcJf9Bh7A6pHmxyJRIMhH3bvIfepxzTJ8Ebm7DciR2BI9lh_uvcY8MH_LYU6HtougjcaTenmuW6ntBuRqwPHuqL-xWSuGudRe1ENrBG9E7gwHjNRi_ADoGPh-nJz1EbwHS9HVFF-uJvZogLnuAryJ9KaZ7v0wc"/>
+<!-- Simulated Overlay Badges detected by OCR -->
+<div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface font-label-sm text-[10px] font-bold shadow-sm flex items-center gap-1">
+<span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
+<span>#SPONSORED (ASCI compliant)</span>
+</div>
+<div class="absolute bottom-2 left-2 right-2 p-1.5 rounded bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface font-body-sm text-[10px] leading-tight">
+<strong>Statutory Notice:</strong> Government of India Sovereign Gold Bonds 2026. 2.50% p.a. payable semi-annually.
+              </div>
+</div>
+<!-- OCR Inspection Chips -->
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col gap-1 font-body-sm text-[11px]">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant">Detected Text Blocks:</span>
+<span class="font-bold text-on-surface">14 tokens verified</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant">Luminance Contrast Ratio:</span>
+<span class="font-bold text-secondary">7.8:1 (AAA Pass)</span>
+</div>
+</div>
+</div>
+<!-- Interactive User Journey Simulation (7 cols) -->
+<div class="lg:col-span-7 flex flex-col justify-between gap-space-sm bg-surface-container-lowest p-space-md rounded">
+<div>
+<div class="flex items-center justify-between pb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">Interactive Task Mechanics</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-mono">Dwell: 60s Lock</span>
+</div>
+<!-- 3-Step Flow Visualizer -->
+<div class="flex flex-col gap-2 mt-1">
+<div class="p-2 rounded bg-surface-container-low flex items-start gap-2.5">
+<div class="w-5 h-5 rounded-full bg-primary text-on-primary font-label-sm text-[11px] flex items-center justify-center font-bold">1</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">60-Second Institutional Education Audio/Video Brief</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Explains tax exemption on redemption under Section 47(viic) of IT Act. Tab blur stops playback immediately.</span>
+</div>
+</div>
+<div class="p-2 rounded bg-surface-container-low flex items-start gap-2.5">
+<div class="w-5 h-5 rounded-full bg-primary text-on-primary font-label-sm text-[11px] flex items-center justify-center font-bold">2</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">3-Question Regulatory Knowledge Quiz</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Users must demonstrate comprehension of the 8-year sovereign lock-in and interest payout frequency.</span>
+</div>
+</div>
+<div class="p-2 rounded bg-surface-container-low flex items-start gap-2.5">
+<div class="w-5 h-5 rounded-full bg-primary text-on-primary font-label-sm text-[11px] flex items-center justify-center font-bold">3</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">Mandatory Disclaimers &amp; Ledger Settlement CTA</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Full broker registration citation, Section 194R TDS withholding disclosure, and final payout trigger.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Kinematics Trap Integrity Parameters -->
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between font-label-sm text-label-sm">
+<span class="flex items-center gap-1 text-on-surface font-semibold">
+<span class="material-symbols-outlined text-secondary text-[16px]">touch_app</span>
+                Bézier Mouse Entropy Trap: Enabled
+              </span>
+<span class="text-secondary font-bold">Anti-Bot v4.2 Nominal</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Statutory Regulatory Compliance Checklist (SEBI, ASCI & IT Act) -->
+<div class="bg-surface-container-lowest p-space-md rounded shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface text-[20px]">fact_check</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Statutory &amp; Regulatory Verification Audit</h3>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">4 Passed / 1 Notice Resolved</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Item 1: ASCI -->
+<div class="p-space-sm rounded bg-surface-container-low flex items-center justify-between gap-space-sm">
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">ASCI Guidelines for Influencer &amp; Digital Advertising (2023 Revision)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Super-imposed #Sponsored tag conforms to position, contrast, and font size specifications.</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-container/50 text-on-secondary-container font-bold whitespace-nowrap">AUDIT PASSED</span>
+</div>
+<!-- Item 2: SEBI RIA -->
+<div class="p-space-sm rounded bg-surface-container-low flex items-center justify-between gap-space-sm">
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">SEBI (Research Analysts) Regulations &amp; Broker Conduct Rules</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">SEBI Registration ID #INA000000000 verified against SEBI live intermediary directory.</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-container/50 text-on-secondary-container font-bold whitespace-nowrap">AUDIT PASSED</span>
+</div>
+<!-- Item 3: Market Risk -->
+<div class="p-space-sm rounded bg-surface-container-low flex items-center justify-between gap-space-sm">
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">SEBI Standard Market Risk Disclaimer</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Disclaimer present for standard 5-second minimum reading duration before CTA unlock.</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-container/50 text-on-secondary-container font-bold whitespace-nowrap">AUDIT PASSED</span>
+</div>
+<!-- Item 4: Notice Item -->
+<div class="p-space-sm rounded bg-tertiary-fixed/30 flex items-center justify-between gap-space-sm">
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-on-tertiary-container text-[20px] mt-0.5">info</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">Income Tax Act Footnote — Section 47(viic) Capital Gains Exemption</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Footnote 2 updated in revision #2 to link directly to CBDT circular on sovereign redemption exemption.</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-bold whitespace-nowrap">CORRECTED &amp; VERIFIED</span>
+</div>
+<!-- Item 5: TDS Section 194R -->
+<div class="p-space-sm rounded bg-surface-container-low flex items-center justify-between gap-space-sm">
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">Section 194R TDS Notice (Reward Withholding Disclosure)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Audience compensation disclosure informs creators of mandatory PAN-linked TDS deduction.</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-container/50 text-on-secondary-container font-bold whitespace-nowrap">AUDIT PASSED</span>
+</div>
+</div>
+</div>
+<!-- Escrow Financial Allocation Breakdown -->
+<div class="bg-surface-container-lowest p-space-md rounded shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface text-[20px]">payments</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Escrow Financial Liquidity &amp; Payout Release Schedule</h3>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">Ledger Pool: HDFC-ESCROW-002</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-4 gap-space-sm pt-1">
+<div class="p-2.5 rounded bg-surface-container-low flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Target Completions</span>
+<span class="font-currency-body text-headline-sm font-bold text-on-surface tabular-nums mt-0.5">7,777 Users</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Verified unique KYC</span>
+</div>
+<div class="p-2.5 rounded bg-surface-container-low flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Base Reward / Completion</span>
+<span class="font-currency-body text-headline-sm font-bold text-secondary tabular-nums mt-0.5">₹45.00</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Paid via UPI / Nodal</span>
+</div>
+<div class="p-2.5 rounded bg-surface-container-low flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Platform Audit Fee</span>
+<span class="font-currency-body text-headline-sm font-bold text-on-surface tabular-nums mt-0.5">₹0.00 (Tier 1 Free)</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Annual Institutional Pass</span>
+</div>
+<div class="p-2.5 rounded bg-secondary-container/30 flex flex-col">
+<span class="font-label-sm text-label-sm text-on-secondary-container font-semibold">Total Escrow To Unlock</span>
+<span class="font-currency-body text-headline-sm font-bold text-on-secondary-container tabular-nums mt-0.5">₹3,50,000.00</span>
+<span class="font-label-sm text-label-sm text-on-secondary-container">100% Guaranteed</span>
+</div>
+</div>
+</div>
+<!-- Compliance Officer Decision & Cryptographic Signing Terminal -->
+<div class="bg-surface-container-lowest p-space-md rounded shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">key</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Officer Decision &amp; Dual-Auth Signing Terminal</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Approval generates an immutable audit hash and executes the smart clearing trigger.</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-high font-mono text-label-sm text-on-surface font-semibold">
+<span class="h-2 w-2 rounded-full bg-secondary"></span>
+<span>SEC-L4 AUTHORIZED: DR. RAJESHWARI SEN</span>
+</div>
+</div>
+<!-- Compliance Audit Notes Input Area -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Mandatory Statutory Audit Log &amp; Regulatory Notes</label>
+<textarea class="w-full p-2.5 rounded bg-surface text-on-surface font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest shadow-sm resize-none font-mono" rows="2">Verified SEBI registration on NSE directory. Verified Section 47 IT Act footnote updated in slide 2. HDFC Nodal collateral lock confirmed. Flight meets all criteria for automated smart escrow release.</textarea>
+</div>
+<!-- Operational Clearance Actions -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-2">
+<div class="flex items-center gap-2 w-full sm:w-auto">
+<button class="w-full sm:w-auto flex items-center justify-center gap-1.5 px-3.5 py-2 rounded bg-error-container text-on-error-container hover:bg-error hover:text-on-error font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+<span>Reject &amp; Nullify Flight</span>
+</button>
+<button class="w-full sm:w-auto flex items-center justify-center gap-1.5 px-3.5 py-2 rounded bg-surface-container-high text-on-surface hover:bg-surface-container-highest font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">edit_note</span>
+<span>Request Revisions</span>
+</button>
+</div>
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded bg-secondary text-on-secondary hover:bg-secondary/90 font-label-lg text-label-lg font-bold transition-all shadow-md" id="approveFlightBtn">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Approve Flight &amp; Unlock Escrow</span>
+<span class="font-mono text-label-sm opacity-80 pl-1">(HMAC-SHA256)</span>
+</button>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant pt-1">
+<span>Cryptographic Hash: <code class="font-mono text-on-surface">e7f9a201...b841e2</code></span>
+<span class="flex items-center gap-1 text-secondary font-semibold">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+            Tier 4 Ledger Multi-Sig Lock Active
+          </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive script for client-side feedback micro-interaction -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const approveBtn = document.getElementById('approveFlightBtn');
+      if (approveBtn) {
+        approveBtn.addEventListener('click', () => {
+          approveBtn.innerHTML = `
+            <span class="material-symbols-outlined text-[18px] animate-spin">refresh</span>
+            <span>Unlocking HDFC Escrow...</span>
+          `;
+          approveBtn.classList.remove('bg-secondary');
+          approveBtn.classList.add('bg-primary');
+          
+          setTimeout(() => {
+            approveBtn.innerHTML = `
+              <span class="material-symbols-outlined text-[18px]">check_circle</span>
+              <span>Flight Approved &amp; Liquidity Dispatched!</span>
+            `;
+            approveBtn.classList.remove('bg-primary');
+            approveBtn.classList.add('bg-secondary-container', 'text-on-secondary-container');
+          }, 1000);
+        });
+      }
+    });
+  </script>
+</div></main></div></body></html>

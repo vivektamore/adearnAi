@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-fixed": "#ffdcc3", "secondary": "#006a61", "surface-dim": "#cbdbf5", "on-secondary-fixed-variant": "#005049", "on-error-container": "#93000a", "surface-tint": "#565e74", "on-surface-variant": "#45464d", "primary-fixed": "#dae2fd", "inverse-on-surface": "#eaf1ff", "on-secondary-container": "#006f66", "tertiary": "#000000", "error-container": "#ffdad6", "on-tertiary": "#ffffff", "background": "#f8f9ff", "surface-container-highest": "#d3e4fe", "on-primary-container": "#7c839b", "tertiary-container": "#2f1500", "surface-container-low": "#eff4ff", "surface-variant": "#d3e4fe", "on-tertiary-fixed": "#2f1500", "error": "#ba1a1a", "inverse-primary": "#bec6e0", "secondary-fixed": "#89f5e7", "on-surface": "#0b1c30", "outline": "#76777d", "on-error": "#ffffff", "on-secondary": "#ffffff", "on-background": "#0b1c30", "on-primary": "#ffffff", "on-primary-fixed-variant": "#3f465c", "secondary-fixed-dim": "#6bd8cb", "on-primary-fixed": "#131b2e", "surface-container-lowest": "#ffffff", "on-tertiary-container": "#c76c00", "on-secondary-fixed": "#00201d", "outline-variant": "#c6c6cd", "primary-fixed-dim": "#bec6e0", "secondary-container": "#86f2e4", "surface-container-high": "#dce9ff", "primary-container": "#131b2e", "surface-container": "#e5eeff", "primary": "#000000", "surface": "#f8f9ff", "surface-bright": "#f8f9ff", "on-tertiary-fixed-variant": "#6e3900", "tertiary-fixed-dim": "#ffb77d", "inverse-surface": "#213145" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "gutter-mobile": "1rem", "space-xl": "2rem", "gutter": "1.5rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "margin": "2rem", "space-lg": "1.5rem", "margin-mobile": "1rem", "space-md": "1rem" }, "fontFamily": { "label-lg": ["Inter"], "headline-lg": ["Plus Jakarta Sans"], "currency-body": ["Inter"], "label-sm": ["Inter"], "currency-display": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "body-lg": ["Inter"], "headline-sm": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "label-md": ["Inter"], "body-md": ["Inter"], "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"] }, "fontSize": { "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "currency-body": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "currency-display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.005em", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }], "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg-mobile": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-xl-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="w-full px-space-lg flex items-center justify-between h-16"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="AdEarn AI Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VmwWH_7MbEii-nVL6ENPqCrz1JNvI30bV7IKDuvDdCk5p9dG4aCkX7CdFblqIafNY56wzQM58OOFzNgPTgDE6GtN9xdhN6pb1qKzlwHV2qs0RjriwHwAy9F9cmxBaJF9G5VeLY0Et5RBlOdZ30v9Fvzq8wQABUxlw7WqvbtJizrAAx1ILg7pk3Qs7ZTQz9ScKRjkiBTQQ6QSCDfCLZBvsRUMvmuqHZUq7a2LzK_eep8-iM9Cqe2icGeU4"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-semibold">AdEarn AI</span></div><nav class="hidden xl:flex items-center gap-space-xs" data-active-classes="text-on-surface font-bold bg-surface-container-high rounded-lg"><a class="px-space-md py-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="dashboard" href="#">Dashboard</a><a class="px-space-md py-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="sponsored-content" href="#">Sponsored content</a><a class="px-space-md py-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="rewards-and-wallet" href="#">Rewards &amp; Wallet</a><a class="px-space-md py-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="withdrawals" href="#">Withdrawals</a><a class="px-space-md py-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="help-and-disputes" href="#">Help &amp; Disputes</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden sm:inline-flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px] text-secondary">public</span><span>IN · INR ₹</span></div><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span><span>Demonstration Environment · All metrics are illustrative</span></div><button aria-label="Notifications" class="relative p-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button><div class="flex items-center gap-space-sm pl-space-xs cursor-pointer group"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-surface-container-high" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjx4Wlo1rfFVpwXsGuC6ofci_ncb5NwdfcyEX_VAei-8cfNicyTwAvT10KSQDuDIEo9nnnvcxhk4cfNCGDYmE5ALdXgJFQ5wVTjxYhtEqCPslpPeV3tOh-WeY15ZEw1vZ-YIJIOW9aWwlAVph5yZXFaw04hN9hhEMuNitY6WwThjwbrfJZAS0G8qmGJYsMfZnLqEQxjIdpCms37GfSCDqHRpYs89PZYsGYncmNtazddOr1vit29l8npg"/><div class="hidden md:flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface leading-tight font-semibold">Arun Kumar</span><span class="font-label-sm text-label-sm text-secondary font-medium leading-tight">Verified Tier 1</span></div><span class="material-symbols-outlined text-on-surface-variant text-[18px] group-hover:text-on-surface transition-colors">expand_more</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex flex-col justify-between py-space-md"><div class="px-space-md flex flex-col gap-space-sm"><div class="px-space-sm py-space-xs font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase font-semibold">Quick Navigation</div><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-high text-on-surface font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span>Overview</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="active-tasks" href="#"><span class="material-symbols-outlined text-[18px]">task_alt</span><span>Active Tasks</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="payout-history" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Payout History</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="privacy-settings" href="#"><span class="material-symbols-outlined text-[18px]">shield</span><span>Privacy Settings</span></a></nav></div><div class="px-space-md"><div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-space-xs"><div class="flex items-center gap-space-xs text-on-surface"><span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span><span class="font-label-md text-label-md font-semibold">Tier 1 Creator</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">Instant payouts &amp; standard Indian tax compliance active.</p></div></div></aside><div class="pl-64"><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Interactive View State Sandbox Controller (Prototype Bar) -->
+<div class="w-full bg-surface-container-high px-space-lg py-space-sm shadow-sm">
+<div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-secondary">tune</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold">Interactive Sandbox View State:</span>
+</div>
+<div class="flex items-center gap-space-xs overflow-x-auto py-0.5" id="viewStateTabs">
+<button class="state-pill px-space-md py-1 rounded-full font-label-sm text-label-sm bg-primary text-on-primary shadow-sm transition-all flex items-center gap-1.5" id="btn-state-active" onclick="switchState('active')" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
+<span>Active Tickets (Default)</span>
+</button>
+<button class="state-pill px-space-md py-1 rounded-full font-label-sm text-label-sm bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-1.5" id="btn-state-modal" onclick="switchState('modal')" type="button">
+<span>File Dispute Modal Open</span>
+</button>
+<button class="state-pill px-space-md py-1 rounded-full font-label-sm text-label-sm bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-1.5" id="btn-state-report" onclick="switchState('report')" type="button">
+<span>Campaign Violation Report Flow</span>
+</button>
+<button class="state-pill px-space-md py-1 rounded-full font-label-sm text-label-sm bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-1.5" id="btn-state-faq" onclick="switchState('faq')" type="button">
+<span>Knowledge Base &amp; FAQ Search</span>
+</button>
+<button class="state-pill px-space-md py-1 rounded-full font-label-sm text-label-sm bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-1.5" id="btn-state-approved" onclick="switchState('approved')" type="button">
+<span>Dispute Approved State</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-[1440px] w-full mx-auto px-space-lg py-space-xl flex flex-col gap-space-xl">
+<!-- Top Breadcrumbs & Institutional Header -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant">
+<span class="hover:text-on-surface cursor-pointer">Dashboard</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="hover:text-on-surface cursor-pointer">Help &amp; Disputes</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface font-semibold">Dispute Resolution &amp; Support Hub</span>
+</div>
+<div class="flex items-baseline gap-space-sm mt-1">
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">Help Centre, Reward Disputes &amp; Reports</h1>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-4xl">
+          Search audited resolution guides, file evidence-backed reward dispute appeals under our statutory 14-day SLA, track cryptographic ticket lifecycles, and report suspicious or non-compliant sponsored brand campaigns under Indian ASCI &amp; IT rules.
+        </p>
+</div>
+<!-- Quick Header Actions -->
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-lg text-label-lg shadow-sm hover:bg-surface-container-low transition-colors flex items-center gap-space-xs" onclick="downloadGuide()" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">download</span>
+<span>Download SLA Guide (PDF)</span>
+</button>
+<button class="px-space-md py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg shadow-md hover:bg-primary-container transition-all flex items-center gap-space-xs" onclick="openDisputeModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>+ File New Dispute / Appeal</span>
+</button>
+</div>
+</div>
+<!-- 4 Structured Key Telemetry Metrics Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Metric 1: Open Tickets -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between text-on-surface-variant mb-space-sm">
+<span class="font-label-md text-label-md uppercase tracking-wider font-semibold">Open Disputes</span>
+<span class="p-1.5 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">pending_actions</span>
+</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-currency-display text-currency-display text-on-surface tracking-tight">2</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">in active audit</span>
+</div>
+<div class="mt-space-xs pt-space-xs flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>1 Task Telemetry • 1 Payment Inquiry</span>
+</div>
+</div>
+</div>
+<!-- Metric 2: Resolution SLA -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between text-on-surface-variant mb-space-sm">
+<span class="font-label-md text-label-md uppercase tracking-wider font-semibold">Resolution SLA Benchmark</span>
+<span class="p-1.5 rounded-lg bg-surface-container text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-currency-display text-currency-display text-on-surface tracking-tight">&lt; 24h</span>
+<span class="font-label-md text-label-md text-secondary font-medium">Statutory SLA</span>
+</div>
+<div class="mt-space-xs pt-space-xs flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[14px] text-secondary">bolt</span>
+<span>Current Avg: <strong class="text-on-surface font-semibold">8h 45m</strong> (Automated)</span>
+</div>
+</div>
+</div>
+<!-- Metric 3: Dispute Success Rate -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between text-on-surface-variant mb-space-sm">
+<span class="font-label-md text-label-md uppercase tracking-wider font-semibold">Dispute Success Rate</span>
+<span class="p-1.5 rounded-lg bg-surface-container-high text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-currency-display text-currency-display text-secondary tracking-tight">88.4%</span>
+<span class="font-label-md text-label-md text-secondary font-semibold">↑ +2.1%</span>
+</div>
+<div class="mt-space-xs pt-space-xs flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span>Restored upon advertiser trace audit</span>
+</div>
+</div>
+</div>
+<!-- Metric 4: Protection Window -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between text-on-surface-variant mb-space-sm">
+<span class="font-label-md text-label-md uppercase tracking-wider font-semibold">Arbitration Window</span>
+<span class="p-1.5 rounded-lg bg-surface-container-high text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-currency-display text-currency-display text-on-surface tracking-tight">14 Days</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Guaranteed</span>
+</div>
+<div class="mt-space-xs pt-space-xs flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[14px] text-secondary">security</span>
+<span>Indian ASCI &amp; IT Rules Compliant</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Workspace (70% Primary / 30% Secondary) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl">
+<!-- Primary Left Column (8 cols ~ 67-70%) -->
+<div class="lg:col-span-8 flex flex-col gap-space-xl min-w-0">
+<!-- SECTION A: Interactive Ticket & Dispute Tracking Center -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md" id="section-tickets">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Creator Dispute Ledgers &amp; Appeals</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Real-time cryptographic status of advertiser claims, telemetry audits, and manual escalation states.</p>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">sync</span>
+<span>Updated 3m ago</span>
+</div>
+</div>
+<!-- Filter Pills & Search Bar -->
+<div class="flex flex-col md:flex-row gap-space-sm items-stretch md:items-center justify-between">
+<div class="flex items-center gap-space-xs overflow-x-auto py-1 text-nowrap" id="ticketFilterPills">
+<button class="px-space-sm py-1 rounded-md bg-primary text-on-primary font-label-md text-label-md font-semibold transition-colors" type="button">
+                All Disputes (4)
+              </button>
+<button class="px-space-sm py-1 rounded-md bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium transition-colors" type="button">
+                Under Telemetry (1)
+              </button>
+<button class="px-space-sm py-1 rounded-md bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium transition-colors" type="button">
+                Resolved &amp; Credited (2)
+              </button>
+<button class="px-space-sm py-1 rounded-md bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium transition-colors" type="button">
+                Escalated (0)
+              </button>
+</div>
+<div class="relative shrink-0 w-full md:w-64">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-[18px] text-on-surface-variant">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 bg-surface-container-lowest text-on-surface placeholder:text-on-surface-variant font-body-sm text-body-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-secondary shadow-inner" placeholder="Search Ticket ID or Task..." type="text"/>
+</div>
+</div>
+<!-- Dispute Cards List -->
+<div class="flex flex-col gap-space-md mt-space-xs">
+<!-- TICKET 1: In Telemetry Review (Amber) -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex flex-col gap-space-sm hover:shadow-md transition-shadow">
+<div class="flex flex-wrap items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-semibold tracking-wider">#DSP-2026-904</span>
+<div class="flex items-center gap-1.5 px-space-xs py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container animate-pulse"></span>
+<span>Under Telemetry Review (Auditor Assigned)</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-currency-body text-currency-body text-on-surface tabular-nums">Claim Amount: ₹80.00</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">SprintFlow SaaS • Team Workflow Onboarding Trial</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Category: <span class="text-on-surface font-medium">Advertiser Webhook Timeout / Missing Callback SLA</span></p>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container">hourglass_top</span>
+<span class="font-medium text-tertiary-container">15h 15m SLA Remaining</span>
+</div>
+</div>
+<!-- Collapsible telemetry evidence breakdown -->
+<div class="p-space-sm rounded-lg bg-surface-container-lowest flex flex-col gap-space-xs">
+<div class="flex flex-wrap items-center justify-between text-on-surface-variant font-label-sm text-label-sm gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[14px] text-secondary">fingerprint</span>
+<span>SHA-256 Session Trace: <code class="text-on-surface font-mono">e3b0c442...98b2</code></span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">image</span> 2 Proof Screenshots</span>
+<span class="text-on-surface-variant">•</span>
+<span>Filed 16 Oct 2026, 11:30 AM IST</span>
+</div>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface bg-surface-container-low p-space-xs rounded">
+<strong class="font-medium">System Telemetry Note:</strong> Creator session was validated at 100% video milestone (284s duration). The advertiser's conversion endpoint failed with HTTP 504 Gateway Timeout. Automated recovery probe scheduled.
+                </div>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<button class="text-secondary hover:text-on-secondary-container font-label-md text-label-md font-semibold flex items-center gap-1" onclick="showTimelineModal('#DSP-2026-904')" type="button">
+<span>View Telemetry Audit Log &amp; Timeline</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+<button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors" type="button">
+                  Upload Additional Log
+                </button>
+</div>
+</div>
+<!-- TICKET 2: Resolved & Credited (Emerald) -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex flex-col gap-space-sm hover:shadow-md transition-shadow">
+<div class="flex flex-wrap items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-semibold tracking-wider">#DSP-2026-881</span>
+<div class="flex items-center gap-1.5 px-space-xs py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Resolved &amp; Credited (+₹35.00)</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-currency-body text-currency-body text-secondary tabular-nums font-bold">Credited to Wallet</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">VedaPure Ayurveda • Consumer Sentiment Poll</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Category: <span class="text-on-surface font-medium">Attention Trap Disqualification Appeal (Question #ZR-Q11)</span></p>
+</div>
+<div class="text-on-surface-variant font-body-sm text-body-sm">
+<span>Resolved: 15 Oct 2026 • Ref #TXN-6521-VP</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-lowest flex flex-col gap-space-xs">
+<div class="font-body-sm text-body-sm text-on-surface">
+<span class="font-semibold text-secondary">Arbitration Verdict:</span> Advertiser acknowledged ambiguous phrasing in Question 11 where negative syntax confused non-English responses. Platform overturned disqualification and triggered instant wallet payout.
+                </div>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<button class="text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium flex items-center gap-1" onclick="downloadResolutionCert('#DSP-2026-881')" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
+<span>Download Audit Resolution Certificate</span>
+</button>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Ledger Closed</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION B: Structured 3-Step Dispute Filing Wizard -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md" id="section-file-dispute">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-headline-sm text-headline-sm">1</span>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Statutory Dispute Filing Wizard</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Formal appeal for missing or disqualified compensation within 14-day statutory arbitration.</p>
+</div>
+</div>
+<span class="hidden sm:inline-flex px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+              ASCI Code of Conduct Protected
+            </span>
+</div>
+<!-- Stepper Progress Bar -->
+<div class="grid grid-cols-3 gap-space-xs py-space-xs">
+<div class="flex flex-col gap-1">
+<div class="h-1.5 w-full bg-secondary rounded-full"></div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">1. Select Disqualified Task</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="h-1.5 w-full bg-secondary rounded-full"></div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">2. Ground &amp; Specifics</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="h-1.5 w-full bg-surface-container-high rounded-full"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">3. Telemetry &amp; Evidence</span>
+</div>
+</div>
+<form class="flex flex-col gap-space-md mt-space-sm" id="disputeForm" onsubmit="event.preventDefault(); submitDispute();">
+<!-- Step 1 Fields -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface font-semibold">
+                  Select Disqualified or Missing Transaction <span class="text-error">*</span>
+</label>
+<select class="w-full px-space-md py-2 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-secondary" id="taskSelect">
+<option value="task-1">Zerodha Advisory • Demat Onboarding Quiz (₹65.00) • Rejected 16 Oct</option>
+<option value="task-2">SprintFlow SaaS • Team Workflow Trial (₹80.00) • Missing Callback</option>
+<option value="task-3">Tata Neu • Consumer Retail Survey (₹45.00) • Attention Trap</option>
+<option value="custom">Other Campaign (Enter Ref Hash)</option>
+</select>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Only interactions within the 14-day statutory arbitration window are selectable.</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface font-semibold">
+                  Dispute Reason &amp; Legal Ground <span class="text-error">*</span>
+</label>
+<select class="w-full px-space-md py-2 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-secondary" id="reasonSelect">
+<option value="trap">Ambiguous or Contradictory Attention Trap Question</option>
+<option value="webhook">Webhook Failure after 100% Completion Proof</option>
+<option value="pacing">Pacing Mismatch (Platform flagged normal fast reading)</option>
+<option value="telemetry">Browser Sandbox Glitch / Premature Tab Close Prompt</option>
+<option value="other">Advertiser Terms Altered Mid-Interaction</option>
+</select>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Governed by AdEarn Rule 4.3 (Advertiser telemetry burden of proof).</span>
+</div>
+</div>
+<!-- Detailed Statement -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface font-semibold">
+                  Creator Factual Statement <span class="text-error">*</span>
+</label>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Min. 50 characters</span>
+</div>
+<textarea class="w-full p-space-md bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-secondary" placeholder="Explain the discrepancy factually. For trap questions, cite the ambiguous question number. For webhook delays, describe the confirmation screen reached..." rows="3"></textarea>
+</div>
+<!-- Evidence Upload & Auto Telemetry Hash Attachment -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md items-center">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface font-semibold">
+                  Upload Evidence (Screenshots / Screen Recording)
+                </label>
+<div class="p-space-md rounded-lg bg-surface-container-low text-center flex flex-col items-center justify-center gap-1 cursor-pointer hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[24px] text-secondary">cloud_upload</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Click to upload or drag files</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">PNG, JPG, MP4 or HAR logs up to 25MB</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs p-space-md rounded-lg bg-surface-container">
+<div class="flex items-center gap-space-xs text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-secondary">verified</span>
+<span class="font-label-md text-label-md font-semibold">Automatic Telemetry Trace Attached</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Your encrypted client-side DOM interaction log, timestamp hash, and scroll depth telemetry will be linked securely.
+                </p>
+<div class="font-mono text-[11px] text-on-surface-variant bg-surface-container-lowest p-space-xs rounded overflow-hidden text-ellipsis">
+                  SESSION_TRACE_SHA: 9fa87c10b42d76a91e5...c78d
+                </div>
+</div>
+</div>
+<!-- Statutory Declaration Checkbox -->
+<label class="flex items-start gap-space-sm cursor-pointer p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<input checked="" class="mt-1 w-4 h-4 rounded text-secondary focus:ring-secondary" required="" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">
+                  Statutory Creator Verification Declaration
+                </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+                  I declare under penalty of platform de-tiering and wallet clawback that this sponsored interaction was completed authentically without automated bots, headless scripts, or commercial proxies.
+                </span>
+</div>
+</label>
+<!-- Action Buttons -->
+<div class="flex flex-wrap items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg transition-colors" type="button">
+                Save as Draft
+              </button>
+<button class="px-space-lg py-2 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg shadow-md hover:bg-primary-container transition-all flex items-center gap-space-xs" type="submit">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Submit Dispute for Verification</span>
+</button>
+</div>
+</form>
+</div>
+<!-- SECTION C: Sponsored Campaign Violation & ASCI Non-Compliance Reporting -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md" id="section-report">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="p-2 rounded-lg bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">flag</span>
+</span>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Report Rogue Advertiser or ASCI Violation</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Flag sponsored tasks demanding sensitive financial credentials, OTPs, or deceptive off-platform redirects.</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold shrink-0">
+<span class="material-symbols-outlined text-[14px]">redeem</span>
+<span>₹50 Creator Bounty</span>
+</div>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col gap-space-sm">
+<div class="font-label-md text-label-md text-on-surface font-semibold">Common Prohibited Advertiser Behaviors:</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-lowest flex items-start gap-space-xs shadow-sm">
+<span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">lock_clock</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Demanded UPI PIN / Bank OTP</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Strict violation of RBI security guidelines. Never share.</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-lowest flex items-start gap-space-xs shadow-sm">
+<span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">open_in_new</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Escaped Secure Sandbox</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Task forced installation of non-verified APKs or extensions.</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-lowest flex items-start gap-space-xs shadow-sm">
+<span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">campaign</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">ASCI Disclosure Missing</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Advertiser disguised affiliate links without #Ad label.</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-lowest flex items-start gap-space-xs shadow-sm">
+<span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">downloading</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Deceptive Download Prompts</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Hidden subscription clauses or malicious payload scripts.</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pt-space-xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+                AdEarn AI holds ₹1,00,000 security collateral on all brand campaigns to penalize violations.
+              </span>
+<button class="px-space-md py-1.5 rounded-lg bg-error text-on-error font-label-md text-label-md font-semibold hover:bg-error/90 transition-colors shrink-0 shadow-sm" onclick="openCampaignReport()" type="button">
+                File Violation Report
+              </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Right Column (4 cols ~ 30-33%) -->
+<div class="lg:col-span-4 flex flex-col gap-space-xl">
+<!-- SECTION D: Instant Knowledge Base & Searchable FAQs -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md" id="section-faq">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Resolution Knowledge Base</h2>
+<span class="material-symbols-outlined text-secondary text-[20px]">menu_book</span>
+</div>
+<!-- FAQ Search Input -->
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-[18px] text-on-surface-variant">search</span>
+<input class="w-full pl-9 pr-3 py-2 bg-surface-container text-on-surface placeholder:text-on-surface-variant font-body-sm text-body-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-secondary" id="faqSearchInput" onkeyup="filterFaqs()" placeholder="Search Section 194R, traps, SLA..." type="text"/>
+</div>
+<!-- Accordion / FAQ Tiles -->
+<div class="flex flex-col gap-space-xs" id="faqAccordion">
+<details class="group bg-surface-container-low rounded-lg p-space-sm [&amp;_summary::-webkit-details-marker]:hidden cursor-pointer" open="">
+<summary class="flex items-center justify-between font-label-md text-label-md text-on-surface font-semibold">
+<span>Why was my reward flagged or escrowed?</span>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<p class="mt-space-xs font-body-sm text-body-sm text-on-surface-variant">
+                Brand partners run automated server webhooks. If their conversion webhook takes longer than 45 minutes, our telemetry locks the reward into escrow to prevent double-charging or creator loss.
+              </p>
+</details>
+<details class="group bg-surface-container-low rounded-lg p-space-sm [&amp;_summary::-webkit-details-marker]:hidden cursor-pointer">
+<summary class="flex items-center justify-between font-label-md text-label-md text-on-surface font-semibold">
+<span>What constitutes an ambiguous trap check?</span>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<p class="mt-space-xs font-body-sm text-body-sm text-on-surface-variant">
+                Under AdEarn Rule 2.1, attention trap questions must be deterministic (e.g., "Select the color Blue"). Questions with double negatives or debatable facts are automatically overturned in dispute.
+              </p>
+</details>
+<details class="group bg-surface-container-low rounded-lg p-space-sm [&amp;_summary::-webkit-details-marker]:hidden cursor-pointer">
+<summary class="flex items-center justify-between font-label-md text-label-md text-on-surface font-semibold">
+<span>NPCI UPI payout reversals &amp; timeouts</span>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<p class="mt-space-xs font-body-sm text-body-sm text-on-surface-variant">
+                If your bank's UPI switch encounters T+1 downtime, AdEarn's node retries 3 times before rolling the balance back into your creator wallet ledger automatically.
+              </p>
+</details>
+<details class="group bg-surface-container-low rounded-lg p-space-sm [&amp;_summary::-webkit-details-marker]:hidden cursor-pointer">
+<summary class="flex items-center justify-between font-label-md text-label-md text-on-surface font-semibold">
+<span>TDS deduction disputes (Section 194R)</span>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<p class="mt-space-xs font-body-sm text-body-sm text-on-surface-variant">
+                All TDS deductions on earnings above ₹20,000/year are matched against your PAN and uploaded quarterly via Form 16A certificates on the 15th of the subsequent month.
+              </p>
+</details>
+</div>
+<a class="text-secondary hover:text-on-secondary-container font-label-md text-label-md font-semibold flex items-center gap-1 justify-center pt-space-xs" href="#">
+<span>Browse Complete Documentation (34 Guides)</span>
+<span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</a>
+</div>
+<!-- SECTION E: AdEarn Compliance Officer & Statutory IT Rules Escalation -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-xs text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[20px]">policy</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold">Statutory Grievance Redressal</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Per Rule 3(2) of the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021:
+          </p>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1 font-body-sm text-body-sm text-on-surface">
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase">Grievance Officer:</span>
+<div class="font-semibold">Mr. Rajesh V. Ramanathan</div>
+</div>
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase">Designation:</span>
+<div>Chief Compliance &amp; Grievance Officer</div>
+</div>
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase">Entity:</span>
+<div>AdEarn Technologies India Private Limited</div>
+</div>
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase">Registered Office:</span>
+<div class="text-on-surface-variant">Level 7, Maker Maxity, BKC, Bandra East, Mumbai, MH 400051</div>
+</div>
+<div>
+<span class="text-on-surface-variant font-label-sm text-label-sm uppercase">Direct Legal Desk:</span>
+<div><a class="text-secondary hover:underline font-mono" href="mailto:grievance-officer@adearn.ai">grievance-officer@adearn.ai</a></div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm pt-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+<span>Statutory acknowledgment: 24h • Disposal SLA: 15 Days</span>
+</div>
+</div>
+<!-- SECTION F: AI Concierge & Live Support -->
+<div class="bg-surface-container-high rounded-xl p-space-lg shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary animate-ping"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">AI Dispute Concierge Online</span>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-lowest text-secondary font-label-sm text-label-sm font-semibold">&lt; 2m wait</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Have a fast question about a pending escrow or need help formatting an attention check appeal? Our trained AI compliance bot can analyze your transaction in real-time.
+          </p>
+<button class="w-full py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg shadow-sm hover:bg-primary-container transition-all flex items-center justify-center gap-space-xs" onclick="startConciergeChat()" type="button">
+<span class="material-symbols-outlined text-[18px]">chat_bubble</span>
+<span>Chat with Dispute Specialist</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- MODAL: Telemetry Timeline / Log Inspector (Interactive) -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden items-center justify-center p-space-md" id="timelineModal">
+<div class="bg-surface-container-lowest rounded-xl max-w-2xl w-full p-space-lg shadow-2xl flex flex-col gap-space-md max-h-[921px] overflow-y-auto">
+<div class="flex items-start justify-between">
+<div>
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-mono text-[11px] text-on-surface font-semibold">#DSP-2026-904</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold mt-1">Cryptographic Telemetry Timeline</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">SprintFlow SaaS • Webhook Timeout Investigation</p>
+</div>
+<button class="p-1 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container" onclick="closeTimelineModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Telemetry Sequence -->
+<div class="flex flex-col gap-space-md border-l-2 border-surface-container-high pl-space-md ml-space-sm mt-space-sm">
+<div class="relative">
+<span class="absolute -left-[27px] top-1 w-3.5 h-3.5 rounded-full bg-secondary"></span>
+<div class="font-label-md text-label-md text-on-surface font-semibold">Session Initiated via Secure Container</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">16 Oct 2026, 11:22:10 AM • Chrome Sandbox Node #BLR-4</div>
+</div>
+<div class="relative">
+<span class="absolute -left-[27px] top-1 w-3.5 h-3.5 rounded-full bg-secondary"></span>
+<div class="font-label-md text-label-md text-on-surface font-semibold">100% Video &amp; Interactive Flow Completed</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">11:26:54 AM • Telemetry payload hash matched expected advertiser contract.</div>
+</div>
+<div class="relative">
+<span class="absolute -left-[27px] top-1 w-3.5 h-3.5 rounded-full bg-error"></span>
+<div class="font-label-md text-label-md text-error font-semibold">Advertiser Webhook Failure (HTTP 504)</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">11:27:02 AM • API endpoint <code class="bg-surface-container px-1 py-0.5 rounded text-[11px]">api.sprintflow.io/v1/adearn-callback</code> timed out.</div>
+</div>
+<div class="relative">
+<span class="absolute -left-[27px] top-1 w-3.5 h-3.5 rounded-full bg-tertiary-fixed-dim"></span>
+<div class="font-label-md text-label-md text-on-surface font-semibold">Dispute Opened • AdEarn Auditor Reconciling</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">11:30:15 AM • Under 24h statutory auto-credit guarantee.</div>
+</div>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+<span>Verified by SHA-256 Signature</span>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md" onclick="closeTimelineModal()" type="button">
+          Close Inspector
+        </button>
+</div>
+</div>
+</div>
+<!-- Notification Toast Container -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="toastNotification">
+<div class="bg-surface-container-lowest text-on-surface px-space-md py-space-sm rounded-xl shadow-xl flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[22px]" id="toastIcon">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface" id="toastTitle">Notification</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant" id="toastBody">Action processed successfully.</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function switchState(state) {
+    // Reset all tabs
+    document.querySelectorAll('.state-pill').forEach(btn => {
+      btn.className = 'state-pill px-space-md py-1 rounded-full font-label-sm text-label-sm bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-1.5';
+    });
+    
+    // Highlight selected
+    const activeBtn = document.getElementById(`btn-state-${state}`);
+    if (activeBtn) {
+      activeBtn.className = 'state-pill px-space-md py-1 rounded-full font-label-sm text-label-sm bg-primary text-on-primary shadow-sm transition-all flex items-center gap-1.5';
+    }
+
+    // Scroll smoothly or focus appropriate section based on state
+    if (state === 'active') {
+      document.getElementById('section-tickets').scrollIntoView({ behavior: 'smooth' });
+      showToast('State: Active Tickets', 'Viewing ongoing creator dispute ledgers and SLA timers.');
+    } else if (state === 'modal') {
+      openDisputeModal();
+    } else if (state === 'report') {
+      document.getElementById('section-report').scrollIntoView({ behavior: 'smooth' });
+      showToast('State: Campaign Report Flow', 'Scroll to Rogue Advertiser and ASCI Violation module.');
+    } else if (state === 'faq') {
+      document.getElementById('section-faq').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('faqSearchInput').focus();
+      showToast('State: Knowledge Base', 'Ready for search across 34 dispute & taxation guides.');
+    } else if (state === 'approved') {
+      document.getElementById('section-tickets').scrollIntoView({ behavior: 'smooth' });
+      showToast('Dispute Approved State', 'Ticket #DSP-2026-881 verified. ₹35.00 credited to wallet.');
+    }
+  }
+
+  function openDisputeModal() {
+    document.getElementById('section-file-dispute').scrollIntoView({ behavior: 'smooth' });
+    const taskSelect = document.getElementById('taskSelect');
+    taskSelect.focus();
+    taskSelect.classList.add('ring-2', 'ring-secondary');
+    setTimeout(() => taskSelect.classList.remove('ring-2', 'ring-secondary'), 1800);
+    showToast('Filing Wizard Ready', 'Select your disqualified transaction to initiate arbitration.');
+  }
+
+  function openCampaignReport() {
+    showToast('Report Form Loaded', 'Please detail the rogue advertiser UPI/credential demand.');
+  }
+
+  function submitDispute() {
+    showToast('Dispute #DSP-2026-915 Filed', 'Telemetry log linked. 24h statutory SLA audit started.');
+    const form = document.getElementById('disputeForm');
+    form.reset();
+  }
+
+  function downloadGuide() {
+    showToast('Downloading SLA Guide', 'AdEarn_Arbitration_Code_2026.pdf (1.2 MB)');
+  }
+
+  function downloadResolutionCert(ref) {
+    showToast('Audit Certificate', `Generating signed settlement certificate for ${ref}...`);
+  }
+
+  function showTimelineModal(ticketId) {
+    const modal = document.getElementById('timelineModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  function closeTimelineModal() {
+    const modal = document.getElementById('timelineModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+
+  function startConciergeChat() {
+    showToast('AI Concierge Connected', 'AdEarn Dispute Specialist bot joined session.');
+  }
+
+  function filterFaqs() {
+    const input = document.getElementById('faqSearchInput').value.toLowerCase();
+    const details = document.querySelectorAll('#faqAccordion details');
+    details.forEach(item => {
+      const text = item.innerText.toLowerCase();
+      if (text.includes(input)) {
+        item.style.display = 'block';
+        item.open = true;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  function showToast(title, message) {
+    const toast = document.getElementById('toastNotification');
+    document.getElementById('toastTitle').innerText = title;
+    document.getElementById('toastBody').innerText = message;
+    
+    toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+    toast.classList.add('translate-y-0', 'opacity-100');
+
+    setTimeout(() => {
+      toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+      toast.classList.remove('translate-y-0', 'opacity-100');
+    }, 3500);
+  }
+</script></main></div></body></html>
