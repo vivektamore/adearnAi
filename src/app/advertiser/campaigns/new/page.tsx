@@ -23,6 +23,51 @@ export default function CampaignCreationWizardPage() {
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  // AI / ChatGPT generation state
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiSuccess, setAiSuccess] = useState(false);
+
+  async function handleAiGenerate(customPrompt?: string) {
+    const promptToUse = customPrompt || aiPrompt;
+    if (!promptToUse.trim()) {
+      setErrorMessage('Please type a product or brand idea to generate your campaign.');
+      return;
+    }
+
+    setAiLoading(true);
+    setErrorMessage('');
+    setAiSuccess(false);
+
+    try {
+      const res = await fetch('/api/campaigns/ai-generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: promptToUse, category }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success && data.campaign) {
+        const c = data.campaign;
+        setTitle(c.title || '');
+        setDescription(c.description || '');
+        if (c.category) setCategory(c.category);
+        if (c.actionType) setActionType(c.actionType);
+        if (c.targetUrl) setTargetUrl(c.targetUrl);
+        if (c.recommendedCostPerOutcome) setCostPerOutcomeRupees(c.recommendedCostPerOutcome.toString());
+        if (c.suggestedBudget) setBudgetAllocatedRupees(c.suggestedBudget.toString());
+        if (c.targetOutcomes) setTargetOutcomes(c.targetOutcomes.toString());
+        setAiSuccess(true);
+      } else {
+        setErrorMessage(data.error || 'Failed to auto-generate campaign with AI.');
+      }
+    } catch {
+      setErrorMessage('Network error while generating with AI.');
+    } finally {
+      setAiLoading(false);
+    }
+  }
+
   async function handleCreateCampaign(e: React.FormEvent) {
     e.preventDefault();
     if (!title || !description || !targetUrl) {
@@ -117,9 +162,93 @@ export default function CampaignCreationWizardPage() {
         <form onSubmit={handleCreateCampaign} className="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/30 shadow-xs space-y-space-lg">
           {step === 1 && (
             <div className="space-y-4">
-              <h2 className="font-headline text-base font-bold text-on-surface">Step 1: Campaign Details & Action Type</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="font-headline text-base font-bold text-on-surface">Step 1: Campaign Details & Action Type</h2>
+                <span className="text-[11px] text-secondary font-bold flex items-center gap-1">
+                  <span className="material-symbols-outlined text-[15px]">auto_awesome</span>
+                  AI Assisted
+                </span>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+              {/* AI / ChatGPT Generator Box */}
+              <div className="p-4 rounded-xl bg-gradient-to-r from-secondary-container/30 to-primary-container/20 border border-secondary/30 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shadow-xs">
+                      <span className="material-symbols-outlined text-[18px]">auto_awesome</span>
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-on-surface block">
+                        Auto-Draft Campaign with ChatGPT & AI
+                      </span>
+                      <span className="text-[11px] text-on-surface-variant">
+                        Type your product idea, app name, or website URL and AI will fill this wizard automatically.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <input
+                    type="text"
+                    value={aiPrompt}
+                    onChange={(e) => setAiPrompt(e.target.value)}
+                    placeholder="e.g. AI-powered financial trading assistant with zero commission"
+                    className="flex-1 px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-xs focus:border-secondary outline-none"
+                    disabled={aiLoading}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleAiGenerate()}
+                    disabled={aiLoading}
+                    className="px-4 py-2 rounded-lg bg-secondary text-on-secondary text-xs font-bold hover:bg-on-secondary-container transition-colors shadow-xs flex items-center justify-center gap-1.5 shrink-0"
+                  >
+                    {aiLoading ? (
+                      <>
+                        <div className="w-3.5 h-3.5 border-2 border-on-secondary border-t-transparent rounded-full animate-spin"></div>
+                        <span>Drafting with AI...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="material-symbols-outlined text-[16px]">auto_awesome</span>
+                        <span>Generate with AI</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Quick 1-click inspiration chips */}
+                <div className="flex items-center gap-1.5 flex-wrap pt-1">
+                  <span className="text-[10px] text-on-surface-variant font-semibold">Quick Ideas:</span>
+                  {[
+                    'ChatGPT SaaS Productivity Tool',
+                    'Zero Brokerage FinTech App',
+                    'D2C Organic Skincare Store',
+                    'Solar Energy Green Initiative',
+                  ].map((idea) => (
+                    <button
+                      key={idea}
+                      type="button"
+                      onClick={() => {
+                        setAiPrompt(idea);
+                        handleAiGenerate(idea);
+                      }}
+                      className="px-2 py-0.5 rounded-md bg-surface text-[10px] font-medium text-on-surface hover:text-secondary border border-outline-variant/30 hover:border-secondary transition-colors"
+                    >
+                      {idea}
+                    </button>
+                  ))}
+                </div>
+
+                {aiSuccess && (
+                  <div className="p-2 rounded-lg bg-secondary-container/40 text-secondary text-xs font-semibold flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[16px]">check_circle</span>
+                    <span>Campaign drafted by AI! You can customize any field below or proceed to Step 2.</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-space-md pt-1">
                 <div className="space-y-1 md:col-span-2">
                   <label className="text-xs font-semibold text-on-surface">Campaign Title</label>
                   <input

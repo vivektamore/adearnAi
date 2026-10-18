@@ -58,13 +58,19 @@ export default function WithdrawalsPage() {
       return;
     }
 
+    if (!user?.upiId) {
+      setErrorMsg('Please add your UPI ID or Bank details in your Profile before requesting a withdrawal.');
+      setSubmitting(false);
+      return;
+    }
+
     try {
       const res = await fetch('/api/payouts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           amountRupees: val,
-          upiId: user?.upiId || 'arun@okaxis',
+          upiId: user.upiId,
         }),
       });
 
@@ -168,12 +174,12 @@ export default function WithdrawalsPage() {
                   <div>
                     <span className="text-xs text-on-surface-variant font-medium block">Verified Payout Target</span>
                     <span className="text-sm font-bold text-on-surface font-mono">
-                      {user?.upiId || 'arun@okaxis'} (Masked: ar**@okaxis)
+                      {user?.upiId ? `${user.upiId}` : 'No UPI ID linked (Update in Profile)'}
                     </span>
                   </div>
                 </div>
                 <span className="px-2 py-0.5 rounded bg-surface-container text-secondary text-xs font-semibold">
-                  Verified Tier 1
+                  {user?.kycTier ? `Verified ${user.kycTier}` : 'Creator Tier'}
                 </span>
               </div>
 
