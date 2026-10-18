@@ -146,10 +146,18 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="text-center pt-2">
-          <Link href="/" className="text-xs text-secondary font-semibold hover:underline">
-            ← Continue as Guest to Dashboard
-          </Link>
+        <div className="text-center pt-2 space-y-2">
+          <p className="text-xs text-on-surface-variant">
+            Don&apos;t have an account?{' '}
+            <Link href="/register" className="text-secondary font-bold hover:underline">
+              Create a new account here
+            </Link>
+          </p>
+          <div>
+            <Link href="/" className="text-xs text-on-surface-variant hover:text-on-surface">
+              ← Continue as Guest to Dashboard
+            </Link>
+          </div>
         </div>
       </div>
     </div>

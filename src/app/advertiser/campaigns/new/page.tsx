@@ -176,7 +176,7 @@ export default function CampaignCreationWizardPage() {
                   <label className="text-xs font-semibold text-on-surface">Destination URL (SSL/HTTPS Only)</label>
                   <input
                     type="url"
-                    placeholder="https://zerodha.com/campaign-landing"
+                    placeholder="https://yourbrand.com/landing"
                     value={targetUrl}
                     onChange={(e) => setTargetUrl(e.target.value)}
                     className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm focus:border-secondary outline-none font-mono"

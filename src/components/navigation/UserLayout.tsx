@@ -1,11 +1,23 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 export default function UserLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [user, setUser] = useState<{ name: string; kycTier: string } | null>(null);
+
+  useEffect(() => {
+    fetch('/api/extension/session')
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.authenticated && d.user) {
+          setUser(d.user);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const navLinks = [
     { label: 'Dashboard', href: '/' },
@@ -86,15 +98,26 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
               <span>Chrome Companion</span>
             </Link>
 
-            <Link href="/profile" className="flex items-center gap-space-sm pl-space-xs cursor-pointer group">
-              <div className="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-semibold text-xs ring-1 ring-surface-container-high">
-                AK
-              </div>
-              <div className="hidden md:flex flex-col text-left">
-                <span className="text-xs font-semibold text-on-surface leading-tight">Arun Kumar</span>
-                <span className="text-[11px] text-secondary font-medium leading-tight">Verified Tier 1</span>
-              </div>
-            </Link>
+            {user ? (
+              <Link href="/profile" className="flex items-center gap-space-sm pl-space-xs cursor-pointer group">
+                <div className="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-semibold text-xs ring-1 ring-surface-container-high">
+                  {user.name
+                    ? user.name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase()
+                    : 'U'}
+                </div>
+                <div className="hidden md:flex flex-col text-left">
+                  <span className="text-xs font-semibold text-on-surface leading-tight">{user.name}</span>
+                  <span className="text-[11px] text-secondary font-medium leading-tight">Verified {user.kycTier || 'Tier 1'}</span>
+                </div>
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="px-3 py-1.5 rounded-lg bg-secondary text-on-secondary text-xs font-bold hover:bg-on-secondary-container transition-colors shadow-xs"
+              >
+                Sign In
+              </Link>
+            )}
           </div>
         </div>
       </header>

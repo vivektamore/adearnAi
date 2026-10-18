@@ -82,6 +82,10 @@ export async function GET(req: NextRequest) {
       activeCampaignsCount: campaigns.filter((c) => c.status === 'ACTIVE').length,
       blockedIVTCount: blockedAttempts,
     },
+    user: {
+      name: auth.session!.name,
+      email: auth.session!.email,
+    },
     campaigns,
   });
 }

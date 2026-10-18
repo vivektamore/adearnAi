@@ -22,7 +22,7 @@ export interface VerificationVerdict {
 }
 
 export function generateSessionToken(userId: string, campaignId: string): string {
-  const nonce = crypto.randomBytes(16).toString('hex');
+  const nonce = crypto.randomBytes(8).toString('hex');
   const payload = `${userId}:${campaignId}:${Date.now()}:${nonce}`;
   const signature = crypto.createHmac('sha256', SIGNING_KEY).update(payload).digest('hex');
   return `${Buffer.from(payload).toString('base64url')}.${signature}`;

@@ -59,16 +59,26 @@ export default function ChromeExtensionCompanionPage() {
               <div className="p-3 rounded-xl bg-surface-container-low border border-outline-variant/20 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-xs font-bold text-secondary">
-                    AK
+                    {session?.user?.name
+                      ? session.user.name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase()
+                      : '??'}
                   </div>
                   <div>
                     <span className="text-xs font-bold text-on-surface block">
-                      {session?.user?.name || 'Arun Kumar'}
+                      {session?.user?.name || (session?.authenticated ? 'Authenticated User' : 'Guest / Sign In Required')}
                     </span>
-                    <span className="text-[10px] text-secondary font-semibold">Verified Creator Tier 1</span>
+                    <span className="text-[10px] text-secondary font-semibold">
+                      {session?.user?.kycTier ? `Verified ${session.user.kycTier}` : 'Creator Tier'}
+                    </span>
                   </div>
                 </div>
-                <span className="material-symbols-outlined text-secondary text-[18px]">verified</span>
+                {session?.authenticated ? (
+                  <span className="material-symbols-outlined text-secondary text-[18px]">verified</span>
+                ) : (
+                  <Link href="/login" className="text-[10px] text-secondary font-bold hover:underline">
+                    Sign In
+                  </Link>
+                )}
               </div>
 
               {/* Balance Box */}
@@ -96,15 +106,27 @@ export default function ChromeExtensionCompanionPage() {
                   <span className="text-[11px] text-on-surface-variant">Eligible for voluntary participation</span>
                 </div>
                 <Link
-                  href="/feed"
+                  href="/campaigns"
                   className="px-3 py-1.5 rounded-lg bg-secondary text-on-secondary text-xs font-bold shadow-xs hover:bg-on-secondary-container"
                 >
                   View Feed
                 </Link>
               </div>
 
-              {/* Full Platform CTA */}
-              <div className="pt-2">
+              {/* Action Buttons */}
+              <div className="pt-2 space-y-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (typeof window !== 'undefined') {
+                      window.open('/extension', 'AdEarnCompanionPopup', 'width=420,height=620,menubar=no,toolbar=no,status=no');
+                    }
+                  }}
+                  className="w-full py-2 rounded-lg bg-secondary/15 text-secondary text-xs font-bold hover:bg-secondary/25 transition-colors flex items-center justify-center gap-1.5 border border-secondary/30"
+                >
+                  <span className="material-symbols-outlined text-[16px]">picture_in_picture</span>
+                  <span>Pop Out Extension Window</span>
+                </button>
                 <Link
                   href="/"
                   className="w-full py-2.5 rounded-lg bg-surface-container text-on-surface text-xs font-bold hover:bg-surface-container-high transition-colors flex items-center justify-center gap-1.5 border border-outline-variant/30"

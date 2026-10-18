@@ -32,30 +32,32 @@ export async function GET(req: NextRequest) {
     }),
   ]);
 
+  // Derive genuine tax settlement receipts from real top-up ledger transactions
+  const topUpTxs = transactions.filter((t) => t.type === 'ADVERTISER_TOPUP');
+  const invoices = topUpTxs.map((t, idx) => {
+    const basePaise = (t.amountPaise * BigInt(100)) / BigInt(118);
+    const gstPaise = t.amountPaise - basePaise;
+    return {
+      id: `INV-${t.referenceId ? t.referenceId.slice(0, 16) : `TX${idx + 1001}`}`,
+      date: new Date(t.createdAt).toLocaleDateString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      }),
+      period: t.reason || 'Nodal Escrow Pool Deposit',
+      amountPaise: t.amountPaise.toString(),
+      basePaise: basePaise.toString(),
+      gstPaise: gstPaise.toString(),
+      status: 'PAID',
+      paymentMode: t.referenceId?.startsWith('RTGS') ? 'HDFC RTGS Nodal Clearing' : 'UPI / NetBanking Nodal Pool',
+    };
+  });
+
   return NextResponse.json({
     organization: org,
     wallet,
     transactions,
-    invoices: [
-      {
-        id: 'INV-2026-0912',
-        date: '01 Oct 2026',
-        period: 'Q3 Escrow Allocation',
-        amountPaise: '45000000',
-        gstPaise: '8100000',
-        status: 'PAID',
-        paymentMode: 'HDFC RTGS Nodal Clearing',
-      },
-      {
-        id: 'INV-2026-0844',
-        date: '01 Sep 2026',
-        period: 'Monthly Outcome Settlement',
-        amountPaise: '12500000',
-        gstPaise: '2250000',
-        status: 'PAID',
-        paymentMode: 'IMPS Bank Transfer',
-      },
-    ],
+    invoices,
   });
 }
 

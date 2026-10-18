@@ -150,11 +150,18 @@ export default function AdvertiserBillingPage() {
             <div className="space-y-2 text-on-surface-variant">
               <div>
                 <span className="block font-semibold text-on-surface">Registered GSTIN:</span>
-                <span className="font-mono text-secondary font-bold">{data?.organization?.gstin || '29AAACZ1234A1Z5'}</span>
+                <span className="font-mono text-secondary font-bold">
+                  {data?.organization?.gstin || 'Not registered / Optional for Pilot'}
+                </span>
               </div>
               <div>
                 <span className="block font-semibold text-on-surface">PAN Identification:</span>
-                <span className="font-mono">{data?.organization?.pan || 'AAACZ1234A'}</span>
+                <span className="font-mono">
+                  {data?.organization?.pan ||
+                    (data?.organization?.gstin && data.organization.gstin.length >= 12
+                      ? data.organization.gstin.slice(2, 12)
+                      : 'Not on file')}
+                </span>
               </div>
               <p className="pt-2 border-t border-outline-variant/20">
                 18% GST (CGST 9% + SGST 9%) is applied to campaign platform commissions in compliance with Central Board of Indirect Taxes and Customs.
@@ -167,46 +174,60 @@ export default function AdvertiserBillingPage() {
         <div className="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/30 shadow-xs space-y-space-md">
           <h2 className="font-headline text-base font-bold text-on-surface">Tax Invoices & Settlement Receipts</h2>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="bg-surface-container-low text-on-surface-variant text-xs uppercase tracking-wider border-b border-outline-variant/20">
-                  <th className="py-3 px-space-md font-semibold">Invoice Number</th>
-                  <th className="py-3 px-space-md font-semibold">Date</th>
-                  <th className="py-3 px-space-md font-semibold">Description</th>
-                  <th className="py-3 px-space-md font-semibold">Base Amount</th>
-                  <th className="py-3 px-space-md font-semibold">GST (18%)</th>
-                  <th className="py-3 px-space-md font-semibold">Status</th>
-                  <th className="py-3 px-space-md font-semibold text-right">Receipt</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-outline-variant/20 text-sm">
-                {(data?.invoices || []).map((inv: any) => (
-                  <tr key={inv.id} className="hover:bg-surface-container-low/50 transition-colors">
-                    <td className="py-3 px-space-md font-mono text-xs font-bold text-on-surface">{inv.id}</td>
-                    <td className="py-3 px-space-md text-xs text-on-surface-variant">{inv.date}</td>
-                    <td className="py-3 px-space-md text-xs font-medium text-on-surface">{inv.period}</td>
-                    <td className="py-3 px-space-md font-bold text-on-surface tabular-nums">{formatINR(inv.amountPaise)}</td>
-                    <td className="py-3 px-space-md text-xs text-on-surface-variant tabular-nums">{formatINR(inv.gstPaise)}</td>
-                    <td className="py-3 px-space-md">
-                      <span className="px-2 py-0.5 rounded-full bg-secondary-container/40 text-secondary text-xs font-bold">
-                        {inv.status}
-                      </span>
-                    </td>
-                    <td className="py-3 px-space-md text-right">
-                      <button
-                        onClick={() => alert(`Downloading verified GST invoice receipt ${inv.id}`)}
-                        className="p-1.5 rounded hover:bg-surface-container text-secondary text-xs font-semibold flex items-center gap-1 ml-auto"
-                      >
-                        <span className="material-symbols-outlined text-[16px]">download</span>
-                        <span>PDF</span>
-                      </button>
-                    </td>
+          {(!data?.invoices || data.invoices.length === 0) ? (
+            <div className="p-8 text-center bg-surface-container-low rounded-xl border border-outline-variant/20 space-y-2">
+              <span className="material-symbols-outlined text-secondary text-[32px]">receipt_long</span>
+              <p className="text-sm font-semibold text-on-surface">No Escrow Deposit Invoices Yet</p>
+              <p className="text-xs text-on-surface-variant max-w-md mx-auto">
+                Once you make a deposit above via RTGS, NEFT, or NetBanking, an official RBI-compliant GST tax invoice receipt will be generated automatically.
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-surface-container-low text-on-surface-variant text-xs uppercase tracking-wider border-b border-outline-variant/20">
+                    <th className="py-3 px-space-md font-semibold">Invoice Number</th>
+                    <th className="py-3 px-space-md font-semibold">Date</th>
+                    <th className="py-3 px-space-md font-semibold">Description</th>
+                    <th className="py-3 px-space-md font-semibold">Base Amount</th>
+                    <th className="py-3 px-space-md font-semibold">GST (18%)</th>
+                    <th className="py-3 px-space-md font-semibold">Status</th>
+                    <th className="py-3 px-space-md font-semibold text-right">Receipt</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-outline-variant/20 text-sm">
+                  {data.invoices.map((inv: any) => (
+                    <tr key={inv.id} className="hover:bg-surface-container-low/50 transition-colors">
+                      <td className="py-3 px-space-md font-mono text-xs font-bold text-on-surface">{inv.id}</td>
+                      <td className="py-3 px-space-md text-xs text-on-surface-variant">{inv.date}</td>
+                      <td className="py-3 px-space-md text-xs font-medium text-on-surface">{inv.period}</td>
+                      <td className="py-3 px-space-md font-bold text-on-surface tabular-nums">
+                        {formatINR(inv.basePaise || inv.amountPaise)}
+                      </td>
+                      <td className="py-3 px-space-md text-xs text-on-surface-variant tabular-nums">
+                        {formatINR(inv.gstPaise || 0)}
+                      </td>
+                      <td className="py-3 px-space-md">
+                        <span className="px-2 py-0.5 rounded-full bg-secondary-container/40 text-secondary text-xs font-bold">
+                          {inv.status}
+                        </span>
+                      </td>
+                      <td className="py-3 px-space-md text-right">
+                        <button
+                          onClick={() => alert(`Downloading verified GST invoice receipt ${inv.id}`)}
+                          className="p-1.5 rounded hover:bg-surface-container text-secondary text-xs font-semibold flex items-center gap-1 ml-auto"
+                        >
+                          <span className="material-symbols-outlined text-[16px]">download</span>
+                          <span>PDF</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </AdvertiserLayout>

@@ -7,13 +7,21 @@ import { formatINR } from '@/lib/currency';
 
 export default function AdvertiserLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [escrowBalancePaise, setEscrowBalancePaise] = useState<bigint | number>(45000000);
+  const [escrowBalancePaise, setEscrowBalancePaise] = useState<bigint | number>(0);
+  const [orgName, setOrgName] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
 
   useEffect(() => {
     fetch('/api/advertiser/overview')
       .then((res) => res.json())
       .then((data) => {
-        if (data.metrics?.escrowBalancePaise) {
+        if (data.organization?.name) {
+          setOrgName(data.organization.name);
+        }
+        if (data.user?.name) {
+          setUserName(data.user.name);
+        }
+        if (data.metrics?.escrowBalancePaise !== undefined) {
           setEscrowBalancePaise(data.metrics.escrowBalancePaise);
         }
       })
@@ -131,11 +139,11 @@ export default function AdvertiserLayout({ children }: { children: React.ReactNo
                 <div className="flex flex-col">
                   <div className="flex items-center gap-space-xs">
                     <span className="text-xs font-semibold text-on-surface truncate max-w-[280px]">
-                      Zerodha Advisory Solutions India Pvt. Ltd.
+                      {orgName || 'Active Advertiser Organization'}
                     </span>
                     <span className="material-symbols-outlined text-[16px] text-on-surface-variant">verified</span>
                   </div>
-                  <span className="text-[11px] text-on-surface-variant font-medium">Active Tier 1 Institutional Advertiser</span>
+                  <span className="text-[11px] text-on-surface-variant font-medium">Active Verified Brand Partner</span>
                 </div>
               </div>
             </div>
@@ -153,11 +161,15 @@ export default function AdvertiserLayout({ children }: { children: React.ReactNo
 
               <div className="flex items-center gap-space-sm pl-space-sm">
                 <div className="flex flex-col text-right hidden sm:flex">
-                  <span className="text-xs font-semibold text-on-surface">Vikram Mehta</span>
-                  <span className="text-[11px] text-on-surface-variant">VP Growth & Attribution</span>
+                  <span className="text-xs font-semibold text-on-surface">
+                    {userName || 'Brand Director'}
+                  </span>
+                  <span className="text-[11px] text-on-surface-variant">Authorized Brand Account</span>
                 </div>
                 <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary text-xs font-bold">
-                  VM
+                  {userName
+                    ? userName.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase()
+                    : 'BA'}
                 </div>
               </div>
             </div>
