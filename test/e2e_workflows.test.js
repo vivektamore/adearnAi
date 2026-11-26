@@ -48,6 +48,8 @@ async function runE2ETests() {
   let testOrgId = null;
   let testAdvWalletId = null;
   let testCampaignId = null;
+  let ephemeralCampId = null;
+  let ephemeralOrgId = null;
 
   let adminUser = null;
   let adminToken = null;
@@ -109,10 +111,39 @@ async function runE2ETests() {
   });
 
   await step('Step 3: Discover active sponsored campaigns from live feed', async () => {
-    const campaigns = await prisma.campaign.findMany({
+    let campaigns = await prisma.campaign.findMany({
       where: { status: 'ACTIVE' },
       include: { organization: true },
     });
+    if (campaigns.length === 0) {
+      const ephemeralOrg = await prisma.organization.create({
+        data: {
+          name: `Ephemeral Test Org ${Date.now()}`,
+          contactEmail: `ephemeral_${Date.now()}@test.in`,
+        },
+      });
+      ephemeralOrgId = ephemeralOrg.id;
+
+      const ephemeralCamp = await prisma.campaign.create({
+        data: {
+          organizationId: ephemeralOrg.id,
+          title: 'Ephemeral Discovery Task',
+          description: 'Interactive sponsored activity for test discovery',
+          category: 'FinTech',
+          actionType: 'SURVEY',
+          status: 'ACTIVE',
+          targetUrl: 'https://test.adearn.ai',
+          budgetAllocatedPaise: BigInt(500000),
+          budgetSpentPaise: BigInt(0),
+          costPerOutcomePaise: BigInt(2500),
+          targetOutcomes: 200,
+          verifiedOutcomes: 0,
+        },
+        include: { organization: true },
+      });
+      ephemeralCampId = ephemeralCamp.id;
+      campaigns = [ephemeralCamp];
+    }
     assert.ok(campaigns.length > 0, 'Feed must return at least one active campaign');
     testCampaignId = campaigns[0].id;
   });
@@ -578,6 +609,15 @@ async function runE2ETests() {
   await step('Safely prune ephemeral test records from database', async () => {
     // Prune test-specific tasks, disputes, payouts, campaigns, and wallets
     if (taskId) await prisma.userTask.deleteMany({ where: { id: taskId } });
+    if (ephemeralCampId) {
+      await prisma.userTask.deleteMany({ where: { campaignId: ephemeralCampId } });
+      await prisma.creativeAsset.deleteMany({ where: { campaignId: ephemeralCampId } });
+      await prisma.moderationRecord.deleteMany({ where: { campaignId: ephemeralCampId } });
+      await prisma.campaign.deleteMany({ where: { id: ephemeralCampId } });
+    }
+    if (ephemeralOrgId) {
+      await prisma.organization.deleteMany({ where: { id: ephemeralOrgId } });
+    }
     if (payoutRequestId) await prisma.payoutRequest.deleteMany({ where: { id: payoutRequestId } });
     if (createdCampaignId) {
       await prisma.moderationRecord.deleteMany({ where: { campaignId: createdCampaignId } });

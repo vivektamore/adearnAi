@@ -106,7 +106,7 @@ export default function ChromeExtensionCompanionPage() {
                   <span className="text-[11px] text-on-surface-variant">Eligible for voluntary participation</span>
                 </div>
                 <Link
-                  href="/campaigns"
+                  href="/feed"
                   className="px-3 py-1.5 rounded-lg bg-secondary text-on-secondary text-xs font-bold shadow-xs hover:bg-on-secondary-container"
                 >
                   View Feed

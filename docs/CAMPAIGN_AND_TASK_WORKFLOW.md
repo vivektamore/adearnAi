@@ -1,4 +1,4 @@
-# Authoritative Campaign-to-Task Lifecycle & Verification Pipeline — AdEarn AI
+ # Authoritative Campaign-to-Task Lifecycle & Verification Pipeline — AdEarn AI
 
 AdEarn AI operates strictly on an audited, server-side verified advertising model. It rejects unverified clicks, browser-simulated engagement, and arbitrary client-side reward submissions.
 

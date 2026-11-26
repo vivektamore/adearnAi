@@ -152,7 +152,7 @@ export default function CampaignDetailTelemetryPage() {
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold block">Telemetry IVT Rate</span>
             <div className="font-headline text-xl font-bold text-secondary tabular-nums">
-              {campaign.ivtRatePercent}%
+              {(campaign.ivtRatePercent ?? 0).toFixed(2)}%
             </div>
             <span className="text-[10px] text-secondary font-medium block mt-1">Industry-leading fraud prevention</span>
           </div>
@@ -208,7 +208,7 @@ export default function CampaignDetailTelemetryPage() {
                         </span>
                       </td>
                       <td className="py-3 px-space-md text-xs font-mono">
-                        {t.anomalyScore.toFixed(2)}
+                        {(t.anomalyScore ?? 0).toFixed(2)}
                       </td>
                       <td className="py-3 px-space-md">
                         <span className="px-2 py-0.5 rounded bg-surface-container text-xs font-semibold text-secondary">

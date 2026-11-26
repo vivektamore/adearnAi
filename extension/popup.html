@@ -3,15 +3,23 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AdEarn AI Companion</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 16px;
-      width: 340px;
+      padding: 0;
+    }
+
+    body {
+      width: 400px;
+      min-height: 580px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #f8f9ff;
       color: #0b1c30;
+      padding: 12px;
+      overflow-x: hidden;
     }
 
     .header {
@@ -19,8 +27,8 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 12px;
-      margin-bottom: 14px;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
     }
 
     .brand {
@@ -28,88 +36,603 @@
       align-items: center;
       gap: 8px;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 13px;
     }
 
     .logo-badge {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       background: #131b2e;
-      color: #fff;
+      color: #89f5e7;
       border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
+      font-size: 11px;
+      font-weight: 800;
     }
 
+    .node-status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      color: #006a61;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #008176;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+
+    /* Tab Navigation Bar */
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 10px;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 6px 0;
+      border: none;
+      background: transparent;
+      font-size: 10px;
+      font-weight: 600;
+      color: #595c64;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .tab-btn.active {
+      background: #131b2e;
+      color: #ffffff;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    /* Balance Card */
     .card {
       background: #131b2e;
       color: #ffffff;
-      padding: 14px;
+      padding: 12px 14px;
       border-radius: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(19, 27, 46, 0.12);
     }
 
     .card-title {
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: #7c839b;
-      margin-bottom: 4px;
+      color: #89f5e7;
+      margin-bottom: 3px;
+      font-weight: 700;
     }
 
     .card-balance {
       font-size: 24px;
       font-weight: 700;
-      color: #89f5e7;
+      color: #ffffff;
     }
 
-    .status-box {
+    .card-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 10px;
+      color: #bec6e0;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 10px;
+    }
+
+    /* Optional Rewards Toggle Row */
+    .toggle-row {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 11px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 32px;
+      height: 18px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #cbd5e1;
+      transition: .3s;
+      border-radius: 18px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #006a61;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(14px);
+    }
+
+    /* User Profile Bar */
+    .user-pill {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    /* Auth Box */
+    .login-box {
       background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 10px;
       padding: 12px;
-      font-size: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 7px;
     }
 
-    .btn {
+    .input-field {
+      width: 100%;
+      padding: 7px 9px;
+      border: 1px solid #dcdfe8;
+      border-radius: 6px;
+      font-size: 11px;
+    }
+
+    .btn-login-submit {
+      width: 100%;
+      padding: 7px 0;
+      background: #006a61;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-login-submit:hover {
+      background: #008176;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #45464d;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Ad Cards */
+    .ad-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 10px;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    .ad-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 9px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .ad-card:hover {
+      border-color: #006a61;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .ad-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ad-badge {
+      font-size: 9px;
+      font-weight: 700;
+      color: #006a61;
+      background: #e0f2f1;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    .ad-reward {
+      font-size: 10px;
+      font-weight: 700;
+      color: #006a61;
+    }
+
+    .ad-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #131b2e;
+      line-height: 1.25;
+    }
+
+    .ad-desc {
+      font-size: 10px;
+      color: #595c64;
+      line-height: 1.3;
+    }
+
+    .ad-actions {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 3px;
+    }
+
+    .btn-action-sm {
+      background: #f1f3f9;
+      border: 1px solid #dcdfe8;
+      border-radius: 5px;
+      padding: 5px 7px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #131b2e;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .btn-action-sm:hover {
+      background: #e4e7f2;
+    }
+
+    .btn-action-primary {
+      background: #006a61;
+      color: #ffffff;
+      border: none;
+      font-weight: 700;
+    }
+
+    .btn-action-primary:hover {
+      background: #008176;
+    }
+
+    .impression-toast {
+      font-size: 9px;
+      color: #006a61;
+      font-weight: 600;
+      display: none;
+      margin-top: 2px;
+    }
+
+    /* History / Prefs / Privacy styles */
+    .history-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 7px 9px;
+      margin-bottom: 6px;
+      font-size: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pref-group {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 8px;
+      font-size: 11px;
+    }
+
+    .pref-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 0;
+    }
+
+    .privacy-notice {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 10px;
+      line-height: 1.4;
+      color: #45464d;
+      margin-bottom: 8px;
+    }
+
+    .footer-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 8px;
+    }
+
+    .btn-primary {
       display: block;
       width: 100%;
       text-align: center;
-      padding: 10px 0;
-      background: #006a61;
-      color: #fff;
+      padding: 8px 0;
+      background: #131b2e;
+      color: #ffffff;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 13px;
-      border-radius: 8px;
+      font-weight: 700;
+      font-size: 11px;
+      border-radius: 6px;
+    }
+
+    .config-box {
+      font-size: 9px;
+      color: #7c839b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .link-subtle {
+      color: #006a61;
+      text-decoration: none;
+      cursor: pointer;
     }
   </style>
 </head>
 
 <body>
+  <!-- Extension Header -->
   <div class="header">
     <div class="brand">
       <div class="logo-badge">A</div>
-      <span>AdEarn AI</span>
+      <span>AdEarn AI Companion</span>
     </div>
-    <span style="font-size: 11px; color: #006a61; font-weight: 600;">● Live Node</span>
+    <div class="node-status" id="node-status">
+      <span class="status-dot"></span>
+      <span id="node-text">Syncing...</span>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="card-title">Available Withdrawable Balance</div>
-    <div class="card-balance" id="balance">Loading...</div>
-    <div style="font-size: 11px; color: #bec6e0; margin-top: 6px;" id="pending">Syncing with platform...</div>
+  <!-- Navigation Tabs -->
+  <div class="tab-bar">
+    <button type="button" class="tab-btn active" data-tab="tab-ads">Ads & Rewards</button>
+    <button type="button" class="tab-btn" data-tab="tab-history">Activity</button>
+    <button type="button" class="tab-btn" data-tab="tab-prefs">Preferences</button>
+    <button type="button" class="tab-btn" data-tab="tab-privacy">Privacy</button>
+    <button type="button" class="tab-btn" data-tab="tab-support">Support</button>
   </div>
 
-  <div class="status-box">
-    <strong>Creator Status:</strong>
-    <div style="color: #45464d; margin-top: 2px;" id="user-info">Connecting to local session...</div>
+  <!-- TAB 1: Ads & Rewards -->
+  <div class="tab-pane active" id="tab-ads">
+    <!-- Wallet Balance Card -->
+    <div class="card">
+      <div class="card-title">Available Withdrawable Balance</div>
+      <div class="card-balance" id="balance">₹0.00</div>
+      
+      <div class="card-metrics">
+        <span id="pending-hold">Pending: ₹0.00</span>
+        <span id="lifetime-earned">Lifetime: ₹0.00</span>
+      </div>
+
+      <div class="card-footer">
+        <span style="color: #bec6e0; font-size: 9px;" id="payout-status">No active withdrawals</span>
+        <a href="#" id="link-withdraw" style="color: #89f5e7; text-decoration: none; font-weight: 600;">Withdraw →</a>
+      </div>
+    </div>
+
+    <!-- Optional Reward Participation Toggle -->
+    <div class="toggle-row">
+      <div>
+        <span style="font-weight: 700; display: block;">Reward Participation</span>
+        <span style="color: #595c64; font-size: 10px;">Earn cash rewards for verified views & clicks</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="toggle-rewards" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <!-- User Pill / Sign In -->
+    <div class="user-pill" id="user-pill">
+      <div>
+        <span style="font-weight: 700; display: block;" id="user-name">Guest Creator</span>
+        <span style="color: #595c64; font-size: 10px;" id="user-tier">Please sign in to earn rewards</span>
+      </div>
+      <a href="#" id="link-auth" class="link-subtle" style="font-weight: 700;">Sign In</a>
+    </div>
+
+    <!-- Auth Box (Login & Register in-popup) -->
+    <div class="login-box" id="login-box">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <strong style="font-size: 11px;" id="auth-box-title">Sign In to AdEarn Account</strong>
+        <a href="#" id="auth-switch-mode" class="link-subtle" style="font-size: 10px;">Create Account</a>
+      </div>
+      
+      <input type="text" id="reg-name" class="input-field" placeholder="Full name" style="display: none;">
+      <input type="email" id="login-email" class="input-field" placeholder="Email address">
+      <input type="password" id="login-pass" class="input-field" placeholder="Password">
+      
+      <button type="button" id="btn-login-submit" class="btn-login-submit">Sign In</button>
+      <div id="login-err" style="color: #ba1a1a; font-size: 10px; display: none;"></div>
+    </div>
+
+    <!-- Sponsored Content Section -->
+    <div class="section-title">
+      <span>Sponsored Advertisements</span>
+      <span style="font-size: 10px; color: #006a61; font-weight: normal;" id="ads-count">0 Available</span>
+    </div>
+
+    <div class="ad-list" id="ad-list">
+      <div style="text-align: center; padding: 20px; color: #7c839b; font-size: 11px;">
+        Loading verified campaigns...
+      </div>
+    </div>
   </div>
 
-  <a href="http://localhost:3000" target="_blank" class="btn">Open Full Web Platform →</a>
+  <!-- TAB 2: Activity History -->
+  <div class="tab-pane" id="tab-history">
+    <div class="section-title">
+      <span>Recent Verified Activity</span>
+      <a href="#" id="btn-clear-history" class="link-subtle" style="font-size: 10px;">Clear</a>
+    </div>
+    <div id="history-list" style="max-height: 380px; overflow-y: auto;">
+      <div style="text-align: center; padding: 24px; color: #7c839b; font-size: 10px;">
+        No recent activity logged yet. Verified impressions and clicks will record here.
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: Preferences -->
+  <div class="tab-pane" id="tab-prefs">
+    <div class="section-title">
+      <span>Advertising Category Preferences</span>
+    </div>
+    <div class="pref-group">
+      <p style="font-size: 10px; color: #595c64; margin-bottom: 8px;">
+        Select the categories of sponsored content you are interested in seeing:
+      </p>
+      <div class="pref-item">
+        <span>FinTech & Investment</span>
+        <input type="checkbox" class="cat-pref" data-cat="FinTech" checked>
+      </div>
+      <div class="pref-item">
+        <span>Enterprise SaaS & AI</span>
+        <input type="checkbox" class="cat-pref" data-cat="Enterprise SaaS" checked>
+      </div>
+      <div class="pref-item">
+        <span>E-Commerce & Brands</span>
+        <input type="checkbox" class="cat-pref" data-cat="E-Commerce" checked>
+      </div>
+      <div class="pref-item">
+        <span>Web3 & Blockchain</span>
+        <input type="checkbox" class="cat-pref" data-cat="Web3" checked>
+      </div>
+      <div class="pref-item">
+        <span>EdTech & Learning</span>
+        <input type="checkbox" class="cat-pref" data-cat="EdTech" checked>
+      </div>
+      <button type="button" id="btn-save-prefs" class="btn-login-submit" style="margin-top: 10px;">Save Preferences</button>
+    </div>
+  </div>
+
+  <!-- TAB 4: Privacy & Consent -->
+  <div class="tab-pane" id="tab-privacy">
+    <div class="section-title">
+      <span>Privacy & Consent Controls</span>
+    </div>
+    <div class="privacy-notice">
+      <strong style="color: #131b2e; display: block; margin-bottom: 4px;">Zero Third-Party DOM Manipulation</strong>
+      AdEarn AI operates strictly within this extension popup and Chrome Side Panel. We never inject banners into third-party websites (ChatGPT, Google, YouTube).
+    </div>
+    <div class="privacy-notice">
+      <strong style="color: #131b2e; display: block; margin-bottom: 4px;">Zero Private Browsing Data Collection</strong>
+      We do NOT collect browsing history, private page contents, or conversation logs. Engagement telemetry is limited strictly to opt-in ad viewability and explicit clicks.
+    </div>
+    <div class="privacy-notice">
+      <strong style="color: #131b2e; display: block; margin-bottom: 4px;">DPDP Act & Consent Standard</strong>
+      Compliant with the Digital Personal Data Protection Act 2023. You can toggle off reward participation anytime.
+    </div>
+  </div>
+
+  <!-- TAB 5: Support -->
+  <div class="tab-pane" id="tab-support">
+    <div class="section-title">
+      <span>Help & Creator Support</span>
+    </div>
+    <div class="privacy-notice">
+      <strong style="color: #131b2e; display: block; margin-bottom: 4px;">Have a Question or Dispute?</strong>
+      If an ad failed to reward or a task submission was flagged, you can submit a dispute ticket through the AdEarn Web Support desk.
+      <div style="margin-top: 8px;">
+        <a href="#" id="link-support-desk" class="btn-primary" style="padding: 6px 0; font-size: 10px;">Open Support Desk →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Actions -->
+  <div class="footer-actions">
+    <a href="#" id="link-dashboard" class="btn-primary">Open Full AdEarn Web Platform →</a>
+    <div class="config-box">
+      <span id="api-label">API: http://localhost:3000</span>
+      <a href="#" id="toggle-config" class="link-subtle">Configure API</a>
+    </div>
+  </div>
 
   <script src="popup.js"></script>
 </body>

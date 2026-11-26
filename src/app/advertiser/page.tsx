@@ -22,6 +22,11 @@ interface AdvertiserData {
     activeCampaignsCount: number;
     blockedIVTCount: number;
   };
+  dailySeries?: Array<{
+    date: string;
+    valid: number;
+    blocked: number;
+  }>;
   campaigns: Array<{
     id: string;
     title: string;
@@ -93,13 +98,15 @@ export default function AdvertiserOverviewPage() {
               <h1 className="font-headline text-2xl lg:text-3xl font-bold text-on-surface">
                 Advertiser Overview Dashboard
               </h1>
-              <span className="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-xs font-semibold flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                Node 02 · Synced
+              <span className="px-2.5 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-fixed-variant text-xs font-semibold flex items-center gap-1">
+                <span className="material-symbols-outlined text-[14px] text-secondary">
+                  {data?.organization?.isVerified ? 'verified' : 'hourglass_top'}
+                </span>
+                {data?.organization?.isVerified ? 'Verified Brand Partner' : 'Verification Under Review'}
               </span>
             </div>
             <p className="text-sm text-on-surface-variant max-w-3xl">
-              Monitor verified campaign delivery, escrow utilization, billable conversion outcomes, and cryptographic attention audits across certified creators.
+              Monitor verified campaign delivery, escrow utilization, billable conversion outcomes, and verified viewability audits across certified creators.
             </p>
           </div>
 
@@ -150,11 +157,11 @@ export default function AdvertiserOverviewPage() {
             </div>
           </div>
 
-          {/* Nodal Escrow Pool */}
+          {/* Committed Escrow Reserve */}
           <div className="p-space-md rounded-xl bg-surface-container-lowest shadow-xs border border-outline-variant/30 flex flex-col justify-between hover:shadow-sm transition-shadow">
             <div className="space-y-1">
               <div className="flex items-center justify-between text-on-surface-variant">
-                <span className="text-[11px] uppercase tracking-wider font-semibold">Nodal Escrow Pool</span>
+                <span className="text-[11px] uppercase tracking-wider font-semibold">Committed Escrow Reserve</span>
                 <span className="material-symbols-outlined text-[18px] text-secondary">verified</span>
               </div>
               <div className="font-headline text-xl lg:text-2xl font-bold text-secondary tabular-nums">
@@ -178,12 +185,12 @@ export default function AdvertiserOverviewPage() {
                 {loading ? '...' : (data?.metrics?.verifiedOutcomes ?? 0).toLocaleString('en-IN')}
               </div>
             </div>
-            <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20">
-              <span className="inline-flex items-center gap-0.5 text-secondary text-xs font-semibold">
+            <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20 gap-1">
+              <span className="inline-flex items-center gap-1 text-secondary text-xs font-semibold shrink-0">
                 <span className="material-symbols-outlined text-[14px]">verified</span>
                 100% Validated
               </span>
-              <span className="text-[11px] text-on-surface-variant">Zero estimate</span>
+              <span className="text-[10px] text-on-surface-variant truncate">Real Outcomes</span>
             </div>
           </div>
 
@@ -198,12 +205,12 @@ export default function AdvertiserOverviewPage() {
                 {loading ? '₹...' : formatINR(data?.metrics?.effectiveCpoPaise ?? 0)}
               </div>
             </div>
-            <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20">
-              <span className="inline-flex items-center gap-0.5 text-secondary text-xs font-semibold">
+            <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20 gap-1">
+              <span className="inline-flex items-center gap-1 text-secondary text-xs font-semibold shrink-0">
                 <span className="material-symbols-outlined text-[14px]">verified</span>
                 Cost per Outcome
               </span>
-              <span className="text-[11px] text-on-surface-variant">Audited Rate</span>
+              <span className="text-[10px] text-on-surface-variant truncate">Live Telemetry</span>
             </div>
           </div>
 
@@ -218,9 +225,9 @@ export default function AdvertiserOverviewPage() {
                 {data?.metrics?.ivtRatePercent ?? 0}%
               </div>
             </div>
-            <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20">
-              <span className="text-secondary text-xs font-semibold">Telemetry Verified</span>
-              <span className="text-[11px] text-on-surface-variant">{data?.metrics?.blockedIVTCount ?? 0} blocks</span>
+            <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20 gap-1">
+              <span className="text-secondary text-xs font-semibold shrink-0">Telemetry Verified</span>
+              <span className="text-[10px] text-on-surface-variant truncate">{data?.metrics?.blockedIVTCount ?? 0} blocks</span>
             </div>
           </div>
 
@@ -235,9 +242,9 @@ export default function AdvertiserOverviewPage() {
                 {data?.campaigns?.length ?? 0} Active
               </div>
             </div>
-            <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20">
-              <span className="text-on-tertiary-container text-xs font-semibold">Flight Monitored</span>
-              <span className="text-[11px] text-on-surface-variant">Live telemetry</span>
+            <div className="mt-space-sm pt-space-xs flex items-center justify-between border-t border-outline-variant/20 gap-1">
+              <span className="text-on-tertiary-container text-xs font-semibold shrink-0">Flight Monitored</span>
+              <span className="text-[10px] text-on-surface-variant truncate">Live telemetry</span>
             </div>
           </div>
         </div>
@@ -252,7 +259,7 @@ export default function AdvertiserOverviewPage() {
                   <span className="font-headline text-base font-bold text-on-surface">Verified Outcomes vs Disqualified IVT</span>
                   <span className="material-symbols-outlined text-[16px] text-on-surface-variant">info</span>
                 </div>
-                <p className="text-xs text-on-surface-variant">Granular 30-day hourly load showing daylight peak verification (10:00–18:00 IST)</p>
+                <p className="text-xs text-on-surface-variant">Granular 7-day daily verification stream backed by IAB/MRC viewability and attention audits</p>
               </div>
               <div className="flex items-center gap-space-md text-xs font-semibold">
                 <div className="flex items-center gap-1.5">
@@ -266,39 +273,48 @@ export default function AdvertiserOverviewPage() {
               </div>
             </div>
 
-            {/* SVG Visual Graph */}
-            <div className="relative w-full h-56 flex flex-col justify-end">
-              <svg className="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 600 200">
-                <defs>
-                  <linearGradient id="gradEmerald" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#006a61" stopOpacity="0.32" />
-                    <stop offset="100%" stopColor="#006a61" stopOpacity="0.02" />
-                  </linearGradient>
-                </defs>
-                <line stroke="#E2E8F0" strokeDasharray="4 4" strokeWidth="1" x1="0" x2="600" y1="30" y2="30" />
-                <line stroke="#E2E8F0" strokeDasharray="4 4" strokeWidth="1" x1="0" x2="600" y1="80" y2="80" />
-                <line stroke="#E2E8F0" strokeDasharray="4 4" strokeWidth="1" x1="0" x2="600" y1="130" y2="130" />
-                <line stroke="#CBD5E1" strokeWidth="1" x1="0" x2="600" y1="190" y2="190" />
-                <path d="M 0,160 Q 50,145 100,150 T 200,105 T 300,75 T 400,50 T 500,40 T 600,30 L 600,190 L 0,190 Z" fill="url(#gradEmerald)" />
-                <path d="M 0,160 Q 50,145 100,150 T 200,105 T 300,75 T 400,50 T 500,40 T 600,30" fill="none" stroke="#006a61" strokeWidth="2.5" />
-                <g fill="#ba1a1a" opacity="0.8">
-                  <rect height="15" rx="1" width="8" x="75" y="175" />
-                  <rect height="18" rx="1" width="8" x="155" y="172" />
-                  <rect height="22" rx="1" width="8" x="235" y="168" />
-                  <rect height="28" rx="1" width="8" x="315" y="162" />
-                  <rect height="32" rx="1" width="8" x="395" y="158" />
-                  <rect height="25" rx="1" width="8" x="475" y="165" />
-                  <rect height="20" rx="1" width="8" x="555" y="170" />
-                </g>
-              </svg>
-              <div className="flex justify-between items-center text-on-surface-variant text-[11px] pt-2">
-                <span>Sep 16 (08:00)</span>
-                <span>Sep 23 (Peak 14:00)</span>
-                <span>Sep 30 (Settlement)</span>
-                <span>Oct 07</span>
-                <span>Oct 16 (Live)</span>
+            {loading ? (
+              <div className="h-56 flex items-center justify-center text-xs text-on-surface-variant">
+                Loading verification telemetry...
               </div>
-            </div>
+            ) : (data?.metrics?.verifiedOutcomes ?? 0) === 0 && (data?.metrics?.blockedIVTCount ?? 0) === 0 ? (
+              <div className="h-56 flex flex-col items-center justify-center text-center p-4 bg-surface-container-low/50 rounded-lg border border-outline-variant/20 space-y-2">
+                <span className="material-symbols-outlined text-secondary text-[28px]">show_chart</span>
+                <p className="text-xs font-semibold text-on-surface">No Verified Outcomes or IVT Activity Yet</p>
+                <p className="text-[11px] text-on-surface-variant max-w-sm">
+                  Telemetry validation stream will plot genuine verified creator conversions and blocked IVT attempts here as campaigns run.
+                </p>
+              </div>
+            ) : (
+              <div className="relative w-full h-56 flex flex-col justify-end">
+                <div className="h-44 w-full flex items-end justify-between gap-2 px-2 pb-2 border-b border-outline-variant/30">
+                  {(data?.dailySeries || []).map((day, idx) => {
+                    const maxVal = Math.max(1, ...(data?.dailySeries || []).map((d) => d.valid + d.blocked));
+                    const validHeight = Math.round((day.valid / maxVal) * 120);
+                    const blockedHeight = Math.round((day.blocked / maxVal) * 120);
+                    return (
+                      <div key={idx} className="flex-1 flex flex-col items-center gap-1">
+                        <div className="w-full flex items-end justify-center gap-1 h-32">
+                          <div
+                            style={{ height: `${Math.max(4, validHeight)}px` }}
+                            className="w-1/2 max-w-[14px] bg-secondary rounded-t-sm"
+                            title={`${day.date}: ${day.valid} Valid`}
+                          />
+                          {day.blocked > 0 && (
+                            <div
+                              style={{ height: `${Math.max(4, blockedHeight)}px` }}
+                              className="w-1/2 max-w-[14px] bg-error/70 rounded-t-sm"
+                              title={`${day.date}: ${day.blocked} Blocked IVT`}
+                            />
+                          )}
+                        </div>
+                        <span className="text-[10px] text-on-surface-variant truncate w-full text-center">{day.date}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Chart 2: Escrow Burn vs Allocated Budget */}
@@ -307,46 +323,86 @@ export default function AdvertiserOverviewPage() {
               <div>
                 <div className="flex items-center gap-space-xs">
                   <span className="font-headline text-base font-bold text-on-surface">Escrow Burn vs Allocated Budget</span>
-                  <span className="px-1.5 py-0.5 rounded bg-surface-container text-[11px] font-semibold text-on-surface-variant">Ceiling: ₹5,00,000</span>
+                  <span className="px-1.5 py-0.5 rounded bg-surface-container text-[11px] font-semibold text-on-surface-variant">
+                    Ceiling: {formatINR(data?.metrics?.totalAllocatedPaise || data?.metrics?.escrowBalancePaise || 0)}
+                  </span>
                 </div>
-                <p className="text-xs text-on-surface-variant">Dynamic drawdown curve against committed bank nodal accounts</p>
+                <p className="text-xs text-on-surface-variant">Dynamic drawdown curve against committed advertising escrow reserves</p>
               </div>
               <div className="flex items-center gap-space-md text-xs font-semibold">
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-0.5 bg-primary"></span>
-                  <span>Spend (₹3.45L)</span>
+                  <span>Spend ({formatINR(data?.metrics?.totalSpendPaise || 0)})</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-0.5 bg-secondary border-dashed border-t"></span>
-                  <span className="text-secondary">Projected Clearance</span>
+                  <span className="text-secondary">Authoritative Ledger</span>
                 </div>
               </div>
             </div>
 
-            {/* SVG Visual Curve */}
-            <div className="relative w-full h-56 flex flex-col justify-end">
-              <svg className="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 600 200">
-                <line stroke="#76777d" strokeDasharray="6 4" strokeWidth="1.5" x1="0" x2="600" y1="20" y2="20" />
-                <line stroke="#E2E8F0" strokeDasharray="4 4" strokeWidth="1" x1="0" x2="600" y1="70" y2="70" />
-                <line stroke="#E2E8F0" strokeDasharray="4 4" strokeWidth="1" x1="0" x2="600" y1="120" y2="120" />
-                <line stroke="#CBD5E1" strokeWidth="1" x1="0" x2="600" y1="180" y2="180" />
-                <path d="M 0,180 L 90,165 L 180,140 L 270,122 L 360,95 L 420,78" fill="none" stroke="#131b2e" strokeWidth="3" />
-                <path d="M 420,78 L 510,55 L 600,38" fill="none" stroke="#006a61" strokeDasharray="5 5" strokeWidth="2" />
-                <circle cx="420" cy="78" fill="#131b2e" r="5" stroke="#ffffff" strokeWidth="2" />
-              </svg>
-              <div className="flex justify-between items-center text-on-surface-variant text-[11px] pt-2">
-                <span>Day 01 (Allocated)</span>
-                <span>Day 10 (35% Burn)</span>
-                <span>Day 20 (Today: 69%)</span>
-                <span>Day 25 (Projected)</span>
-                <span>Day 30 (Clearance)</span>
+            {loading ? (
+              <div className="h-56 flex items-center justify-center text-xs text-on-surface-variant">
+                Loading escrow burn trajectory...
               </div>
-            </div>
+            ) : !data?.metrics || (BigInt(data.metrics.totalAllocatedPaise || '0') === 0n && BigInt(data.metrics.totalSpendPaise || '0') === 0n) ? (
+              <div className="h-56 flex flex-col items-center justify-center text-center p-4 bg-surface-container-low/50 rounded-lg border border-outline-variant/20 space-y-2">
+                <span className="material-symbols-outlined text-secondary text-[28px]">trending_up</span>
+                <p className="text-xs font-semibold text-on-surface">No Campaign Spend Recorded Yet</p>
+                <p className="text-[11px] text-on-surface-variant max-w-sm">
+                  Create and fund campaigns to begin tracking dynamic burn and escrow drawdown against committed advertising reserves.
+                </p>
+              </div>
+            ) : (
+              <div className="relative w-full h-56 flex flex-col justify-between p-4 bg-surface-container-low/30 rounded-lg border border-outline-variant/20">
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs font-semibold text-on-surface">
+                    <span>Campaign Spend Progress</span>
+                    <span className="text-secondary font-bold">
+                      {BigInt(data.metrics.totalAllocatedPaise || '0') > 0n
+                        ? Math.min(100, Math.round((Number(data.metrics.totalSpendPaise || '0') / Number(data.metrics.totalAllocatedPaise || '1')) * 100))
+                        : 0}% Burned
+                    </span>
+                  </div>
+                  <div className="w-full bg-surface-container h-3 rounded-full overflow-hidden">
+                    <div
+                      className="bg-secondary h-full rounded-full transition-all duration-500"
+                      style={{
+                        width: `${BigInt(data.metrics.totalAllocatedPaise || '0') > 0n
+                          ? Math.min(100, Math.round((Number(data.metrics.totalSpendPaise || '0') / Number(data.metrics.totalAllocatedPaise || '1')) * 100))
+                          : 0}%`
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 pt-4 border-t border-outline-variant/20 text-center">
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-on-surface-variant block">Allocated Budget</span>
+                    <span className="text-xs font-bold text-on-surface tabular-nums">
+                      {formatINR(data.metrics.totalAllocatedPaise || 0)}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-on-surface-variant block">Verified Spend</span>
+                    <span className="text-xs font-bold text-secondary tabular-nums">
+                      {formatINR(data.metrics.totalSpendPaise || 0)}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase font-semibold text-on-surface-variant block">Remaining Escrow</span>
+                    <span className="text-xs font-bold text-on-surface tabular-nums">
+                      {formatINR(data.metrics.escrowBalancePaise || 0)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Active Campaign Portfolio Table matching Stitch Screen 08 */}
-        <div className="p-space-lg rounded-xl bg-surface-container-lowest shadow-xs border border-outline-variant/30 space-y-space-md">
+        <div id="campaigns" className="p-space-lg rounded-xl bg-surface-container-lowest shadow-xs border border-outline-variant/30 space-y-space-md scroll-mt-20">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-space-sm border-b border-outline-variant/20 pb-space-sm">
             <div>
               <div className="flex items-center gap-space-sm">
@@ -368,7 +424,7 @@ export default function AdvertiserOverviewPage() {
                 className="px-3 py-1.5 rounded-lg bg-surface border border-outline-variant/40 text-xs focus:border-secondary outline-none w-48 sm:w-64"
               />
               <div className="inline-flex rounded-lg bg-surface-container p-0.5 text-xs font-semibold">
-                {['ALL', 'ACTIVE', 'PAUSED'].map((st) => (
+                {['ALL', 'ACTIVE', 'IN_REVIEW', 'PAUSED'].map((st) => (
                   <button
                     key={st}
                     onClick={() => setStatusFilter(st)}
@@ -376,7 +432,7 @@ export default function AdvertiserOverviewPage() {
                       statusFilter === st ? 'bg-surface-container-lowest text-on-surface shadow-xs' : 'text-on-surface-variant hover:text-on-surface'
                     }`}
                   >
-                    {st}
+                    {st.replace('_', ' ')}
                   </button>
                 ))}
               </div>
@@ -411,21 +467,30 @@ export default function AdvertiserOverviewPage() {
                     return (
                       <tr key={camp.id} className="hover:bg-surface-container-low/50 transition-colors">
                         <td className="py-3 px-space-md">
-                          <span className="font-semibold text-on-surface block hover:text-secondary cursor-pointer">
+                          <Link
+                            href={`/advertiser/campaigns/${camp.id}`}
+                            className="font-semibold text-on-surface block hover:text-secondary transition-colors"
+                          >
                             {camp.title}
-                          </span>
+                          </Link>
                           <span className="text-xs text-on-surface-variant">
                             {camp.actionType.replace('_', ' ')} · {camp.category}
                           </span>
                         </td>
                         <td className="py-3 px-space-md">
-                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                             camp.status === 'ACTIVE'
                               ? 'bg-secondary-container/50 text-secondary'
+                              : camp.status === 'IN_REVIEW'
+                              ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30'
+                              : camp.status === 'REJECTED'
+                              ? 'bg-error-container text-on-error-container'
                               : 'bg-surface-container text-on-surface-variant'
                           }`}>
-                            <span className={`w-1.5 h-1.5 rounded-full ${camp.status === 'ACTIVE' ? 'bg-secondary' : 'bg-outline'}`}></span>
-                            {camp.status}
+                            <span className={`w-1.5 h-1.5 rounded-full ${
+                              camp.status === 'ACTIVE' ? 'bg-secondary' : camp.status === 'IN_REVIEW' ? 'bg-amber-500' : camp.status === 'REJECTED' ? 'bg-error' : 'bg-outline'
+                            }`}></span>
+                            {camp.status.replace('_', ' ')}
                           </span>
                         </td>
                         <td className="py-3 px-space-md">

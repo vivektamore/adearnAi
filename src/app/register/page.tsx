@@ -142,7 +142,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-semibold text-on-surface">Password (Min. 8 characters)</label>
+            <label className="text-xs font-semibold text-on-surface">Password</label>
             <input
               type="password"
               value={password}
@@ -152,6 +152,7 @@ export default function RegisterPage() {
               minLength={8}
               required
             />
+            <p className="text-[11px] text-on-surface-variant">Must be at least 8 characters with letters and numbers or symbols.</p>
           </div>
 
           {role === 'ADVERTISER' && (
@@ -198,8 +199,8 @@ export default function RegisterPage() {
             </Link>
           </p>
           <div>
-            <Link href="/" className="text-xs text-on-surface-variant hover:text-on-surface">
-              ← Return to Dashboard
+            <Link href="/login" className="text-xs text-on-surface-variant hover:text-on-surface">
+              ← Return to Sign In
             </Link>
           </div>
         </div>

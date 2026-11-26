@@ -1,80 +1,57 @@
 # Environment Variables Reference — AdEarn AI
+## Production Configuration, Invariants, and Secret Rotation Guide
 
-All sensitive configuration must be managed through environment variables. Never commit `.env` files with production credentials to Git.
-
----
-
-## 1. Core Server & Application
-
-| Variable | Required | Description | Example |
-|---|---|---|---|
-| `NODE_ENV` | Yes | Runtime environment (`production`, `development`, `test`) | `production` |
-| `PORT` | Yes | HTTP listening port for the Next.js process | `3000` |
-| `NEXT_PUBLIC_APP_URL` | Yes | Publicly accessible base URL | `https://adearn.ai` |
+All sensitive configuration must be managed through environment variables. **Never commit `.env` files with production credentials to Git.** In production, variables must be loaded via Docker Compose environment directives or a secure vault.
 
 ---
 
-## 2. Relational Database (MySQL 8.0)
+## 1. Master Environment Variable Matrix
 
-| Variable | Required | Description | Example |
-|---|---|---|---|
-| `DATABASE_URL` | Yes | Prisma connection string with connection pool options | `mysql://adearn_user:password@db:3306/adearn_ai?connection_limit=30` |
-| `DB_ROOT_PASSWORD` | Yes (Docker) | Root password for MySQL container initialization | `openssl rand -hex 16` |
-| `DB_PASSWORD` | Yes (Docker) | Dedicated application user password | `openssl rand -hex 16` |
-
----
-
-## 3. Distributed Cache & Job Queue (Redis 7)
-
-| Variable | Required | Description | Example |
-|---|---|---|---|
-| `REDIS_URL` | Yes | Connection string for Redis instance with password | `redis://:password@redis:6379` |
-| `REDIS_PASSWORD` | Yes (Docker) | Password required for Redis clients (`AUTH`) | `openssl rand -hex 16` |
-
----
-
-## 4. Cryptographic Secrets & Authentication
-
-| Variable | Required | Description | Example |
-|---|---|---|---|
-| `JWT_SECRET` | Yes | High-entropy secret for HMAC-SHA256 session tokens | `openssl rand -base64 32` |
-| `COOKIE_SECRET` | Yes | Secret for signing secure session cookies | `openssl rand -base64 32` |
-| `AUDIT_HMAC_SECRET` | Yes | Key for tamper-evident audit log hashing | `openssl rand -base64 32` |
-
----
-
-## 5. Payment & Payout Adapters
-
-| Variable | Required | Description | Default / Example |
-|---|---|---|---|
-| `UPI_PAYOUT_PROVIDER` | Yes | Payout provider engine (`sandbox`, `cashfree`, `razorpayx`) | `sandbox` |
-| `CASHFREE_CLIENT_ID` | Conditional | Cashfree Payouts API Client ID | `CF_PAYOUT_ID_...` |
-| `CASHFREE_CLIENT_SECRET` | Conditional | Cashfree Payouts API Secret Key | `CF_SECRET_...` |
-| `RAZORPAYX_ACCOUNT_NUMBER` | Conditional | RazorpayX Current Account Number | `78787800800` |
-| `RAZORPAYX_KEY_ID` | Conditional | RazorpayX API Key ID | `rzp_live_...` |
-| `RAZORPAYX_KEY_SECRET` | Conditional | RazorpayX API Key Secret | `rzp_secret_...` |
+| Variable Name | Purpose | Required / Optional | Example Format / Placeholder | Target Environment | Secret Rotation / Renewal Procedure |
+|---|---|---|---|---|---|
+| `NODE_ENV` | Controls Next.js compilation & runtime optimizations | Required | `production` | Production, Staging | Set statically during image build and deployment. |
+| `PORT` | Local container HTTP listening port | Required | `3000` | All | Static port allocation. |
+| `NEXT_PUBLIC_APP_URL` | Canonical public FQDN for CORS, redirects, and webhooks | Required | `https://adearn.ai` | All | Update DNS record and SSL certificate simultaneously if domain changes. |
+| `DATABASE_URL` | Prisma MySQL 8.0 connection string with pool bounds | Required | `mysql://adearn_user:<PASSWORD>@db:3306/adearn_ai?connection_limit=30` | Production, Staging | Rotate DB password in MySQL first (`ALTER USER`), update `.env`, restart container. |
+| `DB_ROOT_PASSWORD` | MySQL container root administrative credential | Required (Docker) | `openssl rand -hex 24` | Production, Staging | Rotate during planned maintenance window. Restrict access to DB host only. |
+| `DB_PASSWORD` | MySQL application user credential | Required (Docker) | `openssl rand -hex 24` | Production, Staging | Zero-downtime rotation: create secondary user/password, test connection, update app. |
+| `REDIS_URL` | Connection string for Redis 7 distributed cache | Required | `redis://:<PASSWORD>@redis:6379` | Production, Staging | Set matching password in Redis server configuration and update application URL. |
+| `REDIS_PASSWORD` | Redis `AUTH` password | Required (Docker) | `openssl rand -hex 24` | Production, Staging | Rotate using `CONFIG SET requirepass <NEW_PASS>` without downtime, update `.env`. |
+| `JWT_SECRET` | HMAC-SHA256 signing key for session tokens (min 32 chars) | Required | `openssl rand -base64 32` | Production, Staging | Generate new secret. Note: Invalidates existing active sessions; users must re-authenticate. |
+| `COOKIE_SECRET` | Secret for cryptographic cookie signing | Required | `openssl rand -base64 32` | Production, Staging | Rotate quarterly. Invalidates stored browser cookies. |
+| `AUDIT_HMAC_SECRET` | Key for tamper-evident audit log ledger hashing | Required | `openssl rand -base64 32` | Production, Staging | Master forensic key. Store encrypted backup in secure offline physical vault. |
+| `PAYOUT_MODE` / `UPI_PAYOUT_PROVIDER` | Payout provider engine (`sandbox`, `cashfree`, `razorpayx`) | Required | `sandbox` (pre-live) / `razorpayx` | Production, Staging | Toggle to live only after bank nodal account KYC approval is formally executed. |
+| `RAZORPAYX_KEY_ID` | RazorpayX API Key ID for automated payouts | Conditional | `rzp_live_xxxxxxxxxxxxxxxx` | Production (Live) | Rotate annually or immediately if leaked via Razorpay dashboard. |
+| `RAZORPAYX_KEY_SECRET` | RazorpayX API Secret Key | Conditional | `openssl rand -hex 16` | Production (Live) | Generated in Razorpay dashboard. Replaces old key within 24-hour grace window. |
+| `RAZORPAYX_ACCOUNT_NUMBER` | Authoritative bank current / nodal account number | Conditional | `78787800800` | Production (Live) | Authoritative corporate account assigned by banking partner. |
+| `TELEMETRY_SIGNING_KEY` | Key for anti-fraud kinematic telemetry verification | Required | `openssl rand -hex 32` | Production, Staging | Rotate bi-annually. Shared between API and Chrome extension companion. |
+| `STORAGE_DRIVER` | Media asset storage adapter (`local`, `s3`) | Required | `local` | Production, Staging | Change to `s3` when moving to multi-instance cloud cluster. |
+| `STORAGE_LOCAL_PATH` | Absolute path inside container for uploads | Conditional | `/app/storage/uploads` | Production (Local) | Persistent Docker volume mount point. |
+| `AWS_S3_BUCKET` | Cloudflare R2 / AWS S3 bucket name | Conditional | `adearn-creatives-prod` | Production (S3) | Set on initial cloud storage provisioning. |
+| `AWS_ACCESS_KEY_ID` | Cloud object storage IAM credentials | Conditional | `AKIAIOSFODNN7EXAMPLE` | Production (S3) | Rotate via AWS IAM every 90 days using dual-key rotation. |
+| `AWS_SECRET_ACCESS_KEY` | Cloud object storage IAM secret key | Conditional | `wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY` | Production (S3) | Rotate via AWS IAM every 90 days. |
+| `AWS_REGION` | AWS / R2 region code | Conditional | `ap-south-1` (Mumbai) | Production (S3) | Match server geographic locality for low latency. |
 
 ---
 
-## 6. Storage Adapter
+## 2. Startup Validation & Safe Failure Handling
 
-| Variable | Required | Description | Default / Example |
-|---|---|---|---|
-| `STORAGE_DRIVER` | Yes | Media asset storage adapter (`local`, `s3`) | `local` |
-| `STORAGE_LOCAL_PATH` | Conditional | Local directory for uploaded creative assets | `/app/storage/uploads` |
-| `AWS_S3_BUCKET` | Conditional | S3 / Cloudflare R2 bucket name | `adearn-creatives-prod` |
-| `AWS_ACCESS_KEY_ID` | Conditional | Object storage access key ID | `AKIA...` |
-| `AWS_SECRET_ACCESS_KEY` | Conditional | Object storage secret key | `...` |
-| `AWS_REGION` | Conditional | S3 region | `ap-south-1` (Mumbai) |
+AdEarn AI strictly enforces required configuration during process initialization:
+1. If `DATABASE_URL` is missing, Prisma will immediately abort startup with an informative configuration error.
+2. If `JWT_SECRET` is missing or shorter than 32 characters, the authentication engine will safely reject startup in production mode to avoid weak HMAC security.
+3. Diagnostic endpoints (`/api/health`) report only adapter **modes** and **health statuses** (`healthy` / `degraded`). Secret strings and connection credentials are **never printed to logs, console output, or API responses**.
 
 ---
 
-## 7. Email & Communication Gateway
+## 3. Cryptographic Secret Generation Commands
 
-| Variable | Required | Description | Default / Example |
-|---|---|---|---|
-| `SMTP_HOST` | Optional | Transactional email provider host | `smtp.sendgrid.net` |
-| `SMTP_PORT` | Optional | SMTP port | `587` |
-| `SMTP_USER` | Optional | SMTP username | `apikey` |
-| `SMTP_PASS` | Optional | SMTP API key | `SG...` |
-| `FROM_EMAIL` | Optional | Sender address for system notifications | `notifications@adearn.ai` |
+Use these exact commands on the Ubuntu deployment host to generate production-grade keys:
+
+```bash
+# Generate 64-character hex strings
+JWT_SECRET=$(openssl rand -hex 32)
+COOKIE_SECRET=$(openssl rand -hex 32)
+AUDIT_HMAC_SECRET=$(openssl rand -hex 32)
+DB_PASSWORD=$(openssl rand -hex 24)
+REDIS_PASSWORD=$(openssl rand -hex 24)
+```

@@ -1,7 +1,18 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import UserLayout from '@/components/navigation/UserLayout';
+
+interface PayoutMethodItem {
+  id: string;
+  type: 'UPI' | 'BANK_ACCOUNT';
+  accountHolderName: string;
+  maskedAddress: string;
+  bankName: string | null;
+  ifscCode: string | null;
+  isDefault: boolean;
+}
 
 export default function ProfilePage() {
   const [user, setUser] = useState<any>(null);
@@ -10,21 +21,27 @@ export default function ProfilePage() {
   const [bankAccountNumber, setBankAccountNumber] = useState('');
   const [bankIfsc, setBankIfsc] = useState('');
   const [bankAccountName, setBankAccountName] = useState('');
+  const [payoutMethods, setPayoutMethods] = useState<PayoutMethodItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [statusMsg, setStatusMsg] = useState('');
 
   useEffect(() => {
-    fetch('/api/user/profile')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.user) {
-          setUser(data.user);
-          setName(data.user.name || '');
-          setUpiId(data.user.upiId || '');
-          setBankAccountNumber(data.user.bankAccountNumber || '');
-          setBankIfsc(data.user.bankIfsc || '');
-          setBankAccountName(data.user.bankAccountName || '');
+    Promise.all([
+      fetch('/api/user/profile').then((res) => res.json()),
+      fetch('/api/payout-methods').then((res) => res.json()),
+    ])
+      .then(([profData, pmData]) => {
+        if (profData.user) {
+          setUser(profData.user);
+          setName(profData.user.name || '');
+          setUpiId(profData.user.upiId || '');
+          setBankAccountNumber(profData.user.bankAccountNumber || '');
+          setBankIfsc(profData.user.bankIfsc || '');
+          setBankAccountName(profData.user.bankAccountName || '');
+        }
+        if (pmData.payoutMethods) {
+          setPayoutMethods(pmData.payoutMethods);
         }
         setLoading(false);
       })
@@ -54,7 +71,7 @@ export default function ProfilePage() {
 
       const data = await res.json();
       if (res.ok) {
-        setStatusMsg('Profile and payment destinations updated successfully.');
+        setStatusMsg('Profile and payment preferences updated successfully.');
       } else {
         setStatusMsg(data.error || 'Failed to update preferences.');
       }
@@ -65,6 +82,15 @@ export default function ProfilePage() {
     }
   }
 
+  const initials = user?.name
+    ? user.name
+        .split(' ')
+        .map((p: string) => p[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase()
+    : 'CR';
+
   return (
     <UserLayout>
       <div className="w-full max-w-[1080px] mx-auto px-space-lg py-space-xl space-y-space-lg">
@@ -72,33 +98,95 @@ export default function ProfilePage() {
         <div className="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/30 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-space-md">
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-full bg-secondary-container flex items-center justify-center text-secondary text-2xl font-bold border border-secondary/30">
-              AK
+              {initials}
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="font-headline text-2xl font-bold text-on-surface">{user?.name || 'Arun Kumar'}</h1>
+                <h1 className="font-headline text-2xl font-bold text-on-surface">
+                  {user?.name || (loading ? 'Loading...' : 'Creator')}
+                </h1>
                 <span className="px-2 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-fixed-variant text-xs font-semibold">
-                  Verified Tier 1
+                  {user?.kycTier ? `Verified ${user.kycTier}` : 'Verified Tier 1'}
                 </span>
               </div>
-              <p className="text-xs text-on-surface-variant mt-0.5">{user?.email || 'arun@creator.in'}</p>
+              <p className="text-xs text-on-surface-variant mt-0.5">{user?.email || ''}</p>
             </div>
           </div>
 
           <div className="text-right">
-            <span className="text-[11px] text-on-surface-variant uppercase font-semibold block">KYC Status</span>
+            <span className="text-[11px] text-on-surface-variant uppercase font-semibold block">KYC Verification</span>
             <span className="text-xs font-bold text-secondary flex items-center justify-end gap-1">
               <span className="material-symbols-outlined text-[16px]">verified</span>
-              PAN & Aadhaar Verified
+              {user?.kycStatus === 'VERIFIED' ? 'PAN & Aadhaar Verified' : 'Compliance Active'}
             </span>
           </div>
+        </div>
+
+        {/* Configured Payout Methods List */}
+        <div className="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/30 shadow-xs space-y-space-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="font-headline text-base font-bold text-on-surface">Configured Payout Destinations</h2>
+              <p className="text-xs text-on-surface-variant">Active Indian UPI and bank destinations enabled for instant withdrawal</p>
+            </div>
+            <Link
+              href="/withdrawals"
+              className="px-3 py-1.5 rounded-lg bg-secondary text-on-secondary text-xs font-bold flex items-center gap-1 hover:bg-on-secondary-container transition-colors shadow-xs"
+            >
+              <span className="material-symbols-outlined text-[16px]">add_card</span>
+              Manage in Withdrawals
+            </Link>
+          </div>
+
+          {payoutMethods.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {payoutMethods.map((pm) => (
+                <div
+                  key={pm.id}
+                  className="p-3.5 rounded-xl bg-surface-container-low border border-outline-variant/30 flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-secondary-container/40 text-secondary flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-[20px]">
+                        {pm.type === 'UPI' ? 'qr_code_2' : 'account_balance'}
+                      </span>
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-sm font-bold text-on-surface">{pm.maskedAddress}</span>
+                        {pm.isDefault && (
+                          <span className="text-[10px] bg-secondary-container text-secondary font-bold px-1.5 py-0.2 rounded">
+                            Default
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-on-surface-variant">
+                        {pm.accountHolderName} {pm.bankName ? `• ${pm.bankName}` : ''}
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-xs text-secondary font-semibold flex items-center gap-0.5">
+                    <span className="material-symbols-outlined text-[14px]">check_circle</span>
+                    Verified
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="p-4 rounded-xl bg-surface-container-low border border-dashed border-outline-variant/40 text-xs text-on-surface-variant flex items-center justify-between">
+              <span>No multiple payout destinations linked yet. Your primary UPI destination is configured below.</span>
+              <Link href="/withdrawals" className="text-secondary font-bold hover:underline">
+                Add Destination →
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Profile and Destination Form */}
         <form onSubmit={handleSave} className="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/30 shadow-xs space-y-space-lg">
           <div>
-            <h2 className="font-headline text-base font-bold text-on-surface">Payment Preferences & Payout Target</h2>
-            <p className="text-xs text-on-surface-variant">Update your registered Indian UPI Virtual Payment Address and Bank details for instant withdrawals</p>
+            <h2 className="font-headline text-base font-bold text-on-surface">Primary Payment Profile</h2>
+            <p className="text-xs text-on-surface-variant">Update your registered Indian UPI Virtual Payment Address and primary banking details</p>
           </div>
 
           {statusMsg && (
@@ -110,7 +198,7 @@ export default function ProfilePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-space-md">
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-on-surface">Full Name</label>
+              <label className="text-xs font-semibold text-on-surface">Full Legal Name</label>
               <input
                 type="text"
                 value={name}

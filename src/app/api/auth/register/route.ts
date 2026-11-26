@@ -3,6 +3,8 @@ import prisma from '@/lib/prisma';
 import { hashPassword, signToken } from '@/lib/auth';
 import { recordAuditLog } from '@/lib/audit';
 
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+
 export async function POST(req: NextRequest) {
   try {
     const { email, password, name, role = 'USER', organizationName, gstin } = await req.json();
@@ -11,11 +13,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Name, email, and password are required.' }, { status: 400 });
     }
 
-    if (password.length < 8) {
-      return NextResponse.json({ error: 'Password must be at least 8 characters long.' }, { status: 400 });
+    const cleanEmail = email.toLowerCase().trim();
+    const cleanName = name.trim();
+
+    if (!EMAIL_REGEX.test(cleanEmail) || cleanEmail.length > 254) {
+      return NextResponse.json({ error: 'Please provide a valid email address.' }, { status: 400 });
     }
 
-    const cleanEmail = email.toLowerCase().trim();
+    if (password.length < 8 || password.length > 128) {
+      return NextResponse.json({ error: 'Password must be between 8 and 128 characters long.' }, { status: 400 });
+    }
+
+    if (!/[a-zA-Z]/.test(password) || !/[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+      return NextResponse.json({ error: 'Password must contain at least one letter and one number or special character.' }, { status: 400 });
+    }
 
     const existing = await prisma.user.findUnique({
       where: { email: cleanEmail },
@@ -26,59 +37,74 @@ export async function POST(req: NextRequest) {
     }
 
     const passwordHash = await hashPassword(password);
-    const assignedRole = role === 'ADVERTISER' ? 'ADVERTISER' : 'USER';
+    const assignedRole = (role === 'ADVERTISER' || role === 'BRAND') ? 'ADVERTISER' : 'USER';
 
-    const user = await prisma.user.create({
-      data: {
-        email: cleanEmail,
-        passwordHash,
-        name,
-        role: assignedRole,
-        kycTier: assignedRole === 'ADVERTISER' ? 'TIER_2' : 'TIER_1',
-        kycStatus: 'VERIFIED',
-      },
-    });
-
-    let organizationId: string | null = null;
-
-    if (assignedRole === 'ADVERTISER') {
-      const org = await prisma.organization.create({
+    // Atomic transaction: Guarantees user, organization, and wallet sub-ledger are created atomically
+    const { user, organizationId } = await prisma.$transaction(async (tx) => {
+      const newUser = await tx.user.create({
         data: {
-          name: organizationName || `${name} Organization`,
-          gstin: gstin || null,
-          contactEmail: cleanEmail,
-          isVerified: true,
-          users: {
-            create: {
-              userId: user.id,
-              role: 'OWNER',
+          email: cleanEmail,
+          passwordHash,
+          name: cleanName,
+          role: assignedRole,
+          kycTier: 'TIER_1',
+          kycStatus: 'UNVERIFIED',
+        },
+      });
+
+      let orgId: string | null = null;
+
+      // Initialize default user preferences atomically
+      await tx.userPreference.create({
+        data: {
+          userId: newUser.id,
+          optInRewards: true,
+          emailNotifications: true,
+          theme: 'SYSTEM',
+        },
+      });
+
+      if (assignedRole === 'ADVERTISER') {
+        const org = await tx.organization.create({
+          data: {
+            name: (organizationName || `${cleanName}'s Organization`).trim(),
+            gstin: gstin ? gstin.trim().toUpperCase() : null,
+            contactEmail: cleanEmail,
+            isVerified: false,
+            users: {
+              create: {
+                userId: newUser.id,
+                role: 'OWNER',
+              },
             },
           },
-        },
-      });
-      organizationId = org.id;
+        });
+        orgId = org.id;
 
-      // Create advertiser escrow wallet
-      await prisma.wallet.create({
-        data: {
-          organizationId: org.id,
-          escrowPaise: BigInt(0),
-          availablePaise: BigInt(0),
-          pendingPaise: BigInt(0),
-        },
-      });
-    } else {
-      // Create user reward wallet
-      await prisma.wallet.create({
-        data: {
-          userId: user.id,
-          availablePaise: BigInt(0),
-          pendingPaise: BigInt(0),
-          lifetimeEarnedPaise: BigInt(0),
-          lifetimePaidPaise: BigInt(0),
-        },
-      });
-    }
+        // Create advertiser escrow wallet
+        await tx.wallet.create({
+          data: {
+            organizationId: org.id,
+            escrowPaise: BigInt(0),
+            availablePaise: BigInt(0),
+            pendingPaise: BigInt(0),
+          },
+        });
+      } else {
+        // Create user reward wallet
+        await tx.wallet.create({
+          data: {
+            userId: newUser.id,
+            availablePaise: BigInt(0),
+            pendingPaise: BigInt(0),
+            lifetimeEarnedPaise: BigInt(0),
+            lifetimePaidPaise: BigInt(0),
+          },
+        });
+      }
+
+      return { user: newUser, organizationId: orgId };
+    });
 
     const token = signToken({
       userId: user.id,

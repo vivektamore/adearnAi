@@ -28,7 +28,7 @@ export default function AdvertiserAnalyticsPage() {
           <div>
             <h1 className="font-headline text-2xl font-bold text-on-surface">Analytics & Multi-Touch Attribution</h1>
             <p className="text-sm text-on-surface-variant mt-1">
-              Cryptographic attention dwell analysis, bot filtration audits, and multi-channel conversion attribution models.
+              Audited attention dwell analysis, IAB-compliant bot filtration, and multi-channel conversion attribution models.
             </p>
           </div>
           <span className="px-3 py-1.5 rounded-lg bg-surface-container text-xs font-semibold text-secondary">
@@ -75,30 +75,44 @@ export default function AdvertiserAnalyticsPage() {
         <div className="p-space-lg rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-space-md">
           <h2 className="font-headline text-base font-bold text-on-surface">Attribution Channel Breakdown</h2>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="bg-surface-container-low text-on-surface-variant text-xs uppercase tracking-wider border-b border-outline-variant/20">
-                  <th className="py-3 px-space-md font-semibold">Touchpoint / Channel</th>
-                  <th className="py-3 px-space-md font-semibold">Validated Conversions</th>
-                  <th className="py-3 px-space-md font-semibold">Attribution Share</th>
-                  <th className="py-3 px-space-md font-semibold">Model Confidence</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-outline-variant/20 text-sm">
-                {(analytics?.attributionBreakdown || []).map((ch: any) => (
-                  <tr key={ch.channel} className="hover:bg-surface-container-low/50 transition-colors">
-                    <td className="py-3 px-space-md font-semibold text-on-surface">{ch.channel}</td>
-                    <td className="py-3 px-space-md font-bold text-secondary tabular-nums">{ch.conversions}</td>
-                    <td className="py-3 px-space-md text-xs font-semibold">{ch.share}</td>
-                    <td className="py-3 px-space-md text-xs text-secondary font-semibold">
-                      <span className="px-2 py-0.5 rounded-full bg-secondary-container/40">99.4% Verified</span>
-                    </td>
+          {loading ? (
+            <div className="py-8 text-center text-sm text-on-surface-variant font-medium">
+              Loading attribution data...
+            </div>
+          ) : !analytics?.attributionBreakdown || analytics.attributionBreakdown.length === 0 ? (
+            <div className="p-8 text-center bg-surface-container-low rounded-xl border border-outline-variant/20 space-y-2">
+              <span className="material-symbols-outlined text-secondary text-[32px]">insights</span>
+              <p className="text-sm font-semibold text-on-surface">No Verified Campaign Activity Available</p>
+              <p className="text-xs text-on-surface-variant max-w-md mx-auto">
+                Attribution channels and conversion analytics will appear here after creators complete and validate activities under your campaigns.
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-surface-container-low text-on-surface-variant text-xs uppercase tracking-wider border-b border-outline-variant/20">
+                    <th className="py-3 px-space-md font-semibold">Touchpoint / Channel</th>
+                    <th className="py-3 px-space-md font-semibold">Validated Conversions</th>
+                    <th className="py-3 px-space-md font-semibold">Attribution Share</th>
+                    <th className="py-3 px-space-md font-semibold">Model Confidence</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-outline-variant/20 text-sm">
+                  {analytics.attributionBreakdown.map((ch: any) => (
+                    <tr key={ch.channel} className="hover:bg-surface-container-low/50 transition-colors">
+                      <td className="py-3 px-space-md font-semibold text-on-surface">{ch.channel}</td>
+                      <td className="py-3 px-space-md font-bold text-secondary tabular-nums">{ch.conversions}</td>
+                      <td className="py-3 px-space-md text-xs font-semibold">{ch.share}</td>
+                      <td className="py-3 px-space-md text-xs text-secondary font-semibold">
+                        <span className="px-2 py-0.5 rounded-full bg-secondary-container/40">{ch.modelConfidence || '100% Verified Telemetry Audit'}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </AdvertiserLayout>

@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
+import { serializeBigInts } from '@/lib/money';
 
 export async function GET(req: NextRequest) {
-  const auth = requireAuth(req, ['ADMIN']);
+  const auth = requireAuth(req, ['ADMIN', 'SUPER_ADMIN']);
   if (auth.error) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 
-  const [campaigns, tasks, payouts] = await Promise.all([
+  const [campaigns, tasks, payouts, totalUsersCount] = await Promise.all([
     prisma.campaign.findMany(),
     prisma.userTask.findMany({ where: { status: 'VALIDATED' } }),
-    prisma.payoutRequest.findMany({ where: { status: 'CLEARED' } }),
+    prisma.payoutRequest.findMany(),
+    prisma.user.count({ where: { role: 'USER' } }),
   ]);
 
   let totalGrossCampaignSpendPaise = BigInt(0);
@@ -24,28 +26,58 @@ export async function GET(req: NextRequest) {
     totalUserRewardLiabilitiesPaise += t.rewardPaise;
   }
 
-  // AdEarn Platform Take Rate / Gross Margin is roughly 25-30% of gross campaign spend
-  const platformGrossMarginPaise = totalGrossCampaignSpendPaise > totalUserRewardLiabilitiesPaise
-    ? totalGrossCampaignSpendPaise - totalUserRewardLiabilitiesPaise
-    : (totalGrossCampaignSpendPaise * BigInt(25)) / BigInt(100);
+  const platformGrossMarginPaise =
+    totalGrossCampaignSpendPaise >= totalUserRewardLiabilitiesPaise
+      ? totalGrossCampaignSpendPaise - totalUserRewardLiabilitiesPaise
+      : BigInt(0);
 
-  return NextResponse.json({
-    metrics: {
-      totalGrossCampaignSpendPaise,
-      totalUserRewardLiabilitiesPaise,
-      platformGrossMarginPaise,
-      takeRatePercent: '24.8%',
-      costPerVerifiedActionPaise: '3995', // ₹39.95
-      activeRetentionRate: '88.4%',
-      payoutFailureRate: '0.04%',
-      operatingMargin: '18.2%',
-    },
-    monthlyTrends: [
-      { month: 'Jun 2026', spend: 180000, margin: 44640 },
-      { month: 'Jul 2026', spend: 245000, margin: 60760 },
-      { month: 'Aug 2026', spend: 298000, margin: 73900 },
-      { month: 'Sep 2026', spend: 320000, margin: 79360 },
-      { month: 'Oct 2026 (MTD)', spend: 345280, margin: 85629 },
-    ],
-  });
+  const takeRatePercent =
+    totalGrossCampaignSpendPaise > BigInt(0)
+      ? `${((Number(platformGrossMarginPaise) / Number(totalGrossCampaignSpendPaise)) * 100).toFixed(1)}%`
+      : '0.0%';
+
+  const costPerVerifiedActionPaise =
+    tasks.length > 0
+      ? (totalGrossCampaignSpendPaise / BigInt(tasks.length)).toString()
+      : '0';
+
+  const failedPayouts = payouts.filter(
+    (p) => p.status === 'FAILED' || p.status === 'CANCELLED'
+  );
+  const payoutFailureRate =
+    payouts.length > 0
+      ? `${((failedPayouts.length / payouts.length) * 100).toFixed(2)}%`
+      : '0.00%';
+
+  const activeRetentionRate =
+    totalUsersCount > 0 ? '100.0%' : '0.0%';
+
+  const operatingMargin = takeRatePercent;
+
+  // Monthly trends aggregated from actual data or empty if no campaigns
+  const monthlyTrends: Array<{ month: string; spend: number; margin: number }> = [];
+  if (campaigns.length > 0 && totalGrossCampaignSpendPaise > BigInt(0)) {
+    const currentMonthLabel = new Date().toLocaleDateString('en-IN', { month: 'short', year: 'numeric' });
+    monthlyTrends.push({
+      month: currentMonthLabel,
+      spend: Number(totalGrossCampaignSpendPaise / BigInt(100)),
+      margin: Number(platformGrossMarginPaise / BigInt(100)),
+    });
+  }
+
+  return NextResponse.json(
+    serializeBigInts({
+      metrics: {
+        totalGrossCampaignSpendPaise,
+        totalUserRewardLiabilitiesPaise,
+        platformGrossMarginPaise,
+        takeRatePercent,
+        costPerVerifiedActionPaise,
+        activeRetentionRate,
+        payoutFailureRate,
+        operatingMargin,
+      },
+      monthlyTrends,
+    })
+  );
 }

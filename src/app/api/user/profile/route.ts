@@ -39,14 +39,30 @@ export async function PUT(req: NextRequest) {
   const body = await req.json();
   const { name, upiId, bankAccountNumber, bankIfsc, bankAccountName } = body;
 
+  const cleanUpi = upiId ? String(upiId).trim() : null;
+  const cleanIfsc = bankIfsc ? String(bankIfsc).trim().toUpperCase() : null;
+  const cleanAcc = bankAccountNumber ? String(bankAccountNumber).trim().replace(/\s+/g, '') : null;
+
+  if (cleanUpi && !/^[\w.-]{2,256}@[a-zA-Z]{2,64}$/.test(cleanUpi)) {
+    return NextResponse.json({ error: 'Invalid UPI ID format. Expected format: username@bank' }, { status: 400 });
+  }
+
+  if (cleanIfsc && !/^[A-Z]{4}0[A-Z0-9]{6}$/.test(cleanIfsc)) {
+    return NextResponse.json({ error: 'Invalid Bank IFSC code format. Expected 11-character alphanumeric code (e.g. HDFC0001234)' }, { status: 400 });
+  }
+
+  if (cleanAcc && !/^\d{8,20}$/.test(cleanAcc)) {
+    return NextResponse.json({ error: 'Invalid Bank Account Number. Must contain between 8 and 20 digits.' }, { status: 400 });
+  }
+
   const updatedUser = await prisma.user.update({
     where: { id: userId },
     data: {
-      ...(name ? { name } : {}),
-      ...(upiId !== undefined ? { upiId } : {}),
-      ...(bankAccountNumber !== undefined ? { bankAccountNumber } : {}),
-      ...(bankIfsc !== undefined ? { bankIfsc } : {}),
-      ...(bankAccountName !== undefined ? { bankAccountName } : {}),
+      ...(name ? { name: String(name).trim() } : {}),
+      ...(cleanUpi !== null ? { upiId: cleanUpi } : {}),
+      ...(cleanAcc !== null ? { bankAccountNumber: cleanAcc } : {}),
+      ...(cleanIfsc !== null ? { bankIfsc: cleanIfsc } : {}),
+      ...(bankAccountName ? { bankAccountName: String(bankAccountName).trim() } : {}),
     },
     select: {
       id: true,

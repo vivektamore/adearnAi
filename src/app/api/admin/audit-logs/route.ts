@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
 
 export async function GET(req: NextRequest) {
-  const auth = requireAuth(req, ['ADMIN']);
+  const auth = requireAuth(req, ['ADMIN', 'SUPER_ADMIN']);
   if (auth.error) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }

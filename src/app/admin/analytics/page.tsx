@@ -66,9 +66,9 @@ export default function AdminUnitEconomicsPage() {
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Payout Failure / Loss Rate</span>
             <div className="font-headline text-2xl font-bold text-secondary">
-              {data?.metrics?.payoutFailureRate ?? '0.04%'}
+              {data?.metrics?.payoutFailureRate ?? '0.00%'}
             </div>
-            <span className="text-[11px] text-secondary font-semibold">Operating Margin: {data?.metrics?.operatingMargin ?? '18.2%'}</span>
+            <span className="text-[11px] text-secondary font-semibold">Operating Margin: {data?.metrics?.operatingMargin ?? '0.0%'}</span>
           </div>
         </div>
 
@@ -88,20 +88,28 @@ export default function AdminUnitEconomicsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-outline-variant/20 text-sm">
-                {(data?.monthlyTrends || []).map((m: any) => {
-                  const rewards = m.spend - m.margin;
-                  return (
-                    <tr key={m.month} className="hover:bg-surface-container-low/50 transition-colors">
-                      <td className="py-3 px-space-md font-bold text-on-surface">{m.month}</td>
-                      <td className="py-3 px-space-md tabular-nums font-semibold">₹{m.spend.toLocaleString('en-IN')}.00</td>
-                      <td className="py-3 px-space-md tabular-nums text-on-surface-variant">₹{rewards.toLocaleString('en-IN')}.00</td>
-                      <td className="py-3 px-space-md tabular-nums font-bold text-secondary">₹{m.margin.toLocaleString('en-IN')}.00</td>
-                      <td className="py-3 px-space-md text-right font-bold text-secondary">
-                        {Math.round((m.margin / m.spend) * 100)}%
-                      </td>
-                    </tr>
-                  );
-                })}
+                {!data?.monthlyTrends || data.monthlyTrends.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="py-8 text-center text-sm text-on-surface-variant">
+                      No historical settlement cycles recorded yet. Metrics will compute dynamically as campaigns complete validation and settlement.
+                    </td>
+                  </tr>
+                ) : (
+                  data.monthlyTrends.map((m: any) => {
+                    const rewards = m.spend - m.margin;
+                    return (
+                      <tr key={m.month} className="hover:bg-surface-container-low/50 transition-colors">
+                        <td className="py-3 px-space-md font-bold text-on-surface">{m.month}</td>
+                        <td className="py-3 px-space-md tabular-nums font-semibold">₹{m.spend.toLocaleString('en-IN')}.00</td>
+                        <td className="py-3 px-space-md tabular-nums text-on-surface-variant">₹{rewards.toLocaleString('en-IN')}.00</td>
+                        <td className="py-3 px-space-md tabular-nums font-bold text-secondary">₹{m.margin.toLocaleString('en-IN')}.00</td>
+                        <td className="py-3 px-space-md text-right font-bold text-secondary">
+                          {m.spend > 0 ? Math.round((m.margin / m.spend) * 100) : 0}%
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>

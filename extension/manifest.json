@@ -1,30 +1,37 @@
 {
   "manifest_version": 3,
-  "name": "AdEarn AI Companion & ChatGPT Sponsored Prompts",
-  "version": "1.1.0",
-  "description": "Voluntary rewards companion, real-time wallet telemetry, and authorized sponsored brand prompts on ChatGPT.",
+  "name": "AdEarn AI — Creator Rewards & Sponsored Prompts Companion",
+  "version": "2.0.0",
+  "description": "Official AdEarn AI companion for verified creator rewards, real-time wallet telemetry, and voluntary sponsored brand discovery.",
   "action": {
     "default_popup": "popup.html",
     "default_title": "AdEarn AI Companion"
   },
+  "side_panel": {
+    "default_path": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
   "permissions": [
-    "storage"
-  ],
-  "host_permissions": [
-    "http://localhost:3000/*",
-    "https://*.adearn.ai/*",
-    "https://chatgpt.com/*",
-    "https://*.openai.com/*"
+    "storage",
+    "sidePanel"
   ],
   "content_scripts": [
     {
       "matches": [
         "https://chatgpt.com/*",
-        "https://*.openai.com/*"
+        "https://chat.openai.com/*"
       ],
-      "js": ["content.js"],
-      "css": ["content.css"],
+      "js": ["chatgpt_content.js"],
+      "css": ["chatgpt_content.css"],
       "run_at": "document_idle"
     }
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "https://*.adearn.ai/*",
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*"
   ]
 }

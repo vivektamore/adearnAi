@@ -4,20 +4,22 @@
  * 1 INR = 100 paise.
  */
 
+import { parseRupeesToPaise, paiseToDecimalRupees } from './money';
+
 export function paiseToRupees(paise: number | bigint): number {
   return Number(paise) / 100;
 }
 
-export function rupeesToPaise(rupees: number): bigint {
-  return BigInt(Math.round(rupees * 100));
+export function rupeesToPaise(rupees: number | string | bigint): bigint {
+  return parseRupeesToPaise(rupees, true);
 }
 
 export function formatINR(paise: number | bigint | string | null | undefined, showDecimals: boolean = true): string {
   if (paise === null || paise === undefined) return '₹0.00';
-  const val = Number(paise) / 100;
   
-  // Format using Indian numbering system (e.g. ₹1,25,000.00)
-  const parts = val.toFixed(showDecimals ? 2 : 0).split('.');
+  // Use exact decimal conversion
+  const decimalStr = paiseToDecimalRupees(typeof paise === 'bigint' ? paise : BigInt(Math.trunc(Number(paise))));
+  const parts = decimalStr.split('.');
   let integerPart = parts[0];
   const decimalPart = parts[1];
   

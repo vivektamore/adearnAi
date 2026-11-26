@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
+import { serializeBigInts } from '@/lib/money';
 
 export async function GET(req: NextRequest) {
-  const auth = requireAuth(req, ['ADMIN']);
+  const auth = requireAuth(req, ['ADMIN', 'SUPER_ADMIN']);
   if (auth.error) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
@@ -41,18 +42,26 @@ export async function GET(req: NextRequest) {
     totalEscrowPaise += w.escrowPaise;
   }
 
-  return NextResponse.json({
-    metrics: {
-      totalUsers,
-      totalAdvertisers,
-      activeCampaigns,
-      pendingModeration,
-      pendingPayouts,
-      flaggedFraud,
-      totalAvailablePaise,
-      totalEscrowPaise,
-      systemStatus: 'ALL_NODES_OPERATIONAL',
-    },
-    recentAuditLogs,
-  });
+  return NextResponse.json(
+    serializeBigInts({
+      sessionUser: {
+        userId: auth.session!.userId,
+        email: auth.session!.email,
+        name: auth.session!.name,
+        role: auth.session!.role,
+      },
+      metrics: {
+        totalUsers,
+        totalAdvertisers,
+        activeCampaigns,
+        pendingModeration,
+        pendingPayouts,
+        flaggedFraud,
+        totalAvailablePaise,
+        totalEscrowPaise,
+        systemStatus: 'ALL_NODES_OPERATIONAL',
+      },
+      recentAuditLogs,
+    })
+  );
 }

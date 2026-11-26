@@ -34,6 +34,19 @@ enum CampaignStatus {
   REJECTED
 }
 
+enum PricingModel {
+  CPO
+  CPM
+  HYBRID
+}
+
+enum ImpressionStatus {
+  RECORDED
+  VALIDATED
+  REJECTED
+  FLAGGED
+}
+
 enum ActionType {
   SURVEY
   SANDBOX_TRIAL
@@ -63,12 +76,36 @@ enum LedgerTransactionType {
   ESCROW_RELEASE
   ADVERTISER_TOPUP
   ADMIN_ADJUSTMENT
+  PAYOUT_REVERSAL
+  CREDIT_IMPRESSION_REWARD
 }
 
 enum PayoutStatus {
   REQUESTED
   PROCESSING
   CLEARED
+  FAILED
+  CANCELLED
+  RECONCILIATION_PENDING
+}
+
+enum PayoutMethodType {
+  UPI
+  BANK_ACCOUNT
+}
+
+enum PayoutMethodStatus {
+  NOT_CONFIGURED
+  PENDING_VERIFICATION
+  VERIFIED
+  REJECTED
+  REMOVED
+}
+
+enum FundingOrderStatus {
+  INITIATED
+  PENDING
+  CONFIRMED
   FAILED
   CANCELLED
 }
@@ -78,6 +115,47 @@ enum DisputeStatus {
   UNDER_REVIEW
   RESOLVED_CREDITED
   REJECTED
+}
+
+enum InstallationStatus {
+  ACTIVE
+  INACTIVE
+  REVOKED
+  UNINSTALLED
+}
+
+enum PlacementStatus {
+  ACTIVE
+  PAUSED
+  DEPRECATED
+}
+
+enum AdDecisionStatus {
+  ISSUED
+  CLAIMED
+  EXPIRED
+  DISCARDED
+}
+
+enum AdEventType {
+  IMPRESSION
+  CLICK
+  CONVERSION
+}
+
+enum EventStatus {
+  RECEIVED
+  VALIDATED
+  DUPLICATE
+  REJECTED
+  SETTLED
+}
+
+enum WebhookStatus {
+  PENDING
+  PROCESSED
+  FAILED
+  IGNORED
 }
 
 model User {
@@ -97,12 +175,21 @@ model User {
   createdAt          DateTime     @default(now())
   updatedAt          DateTime     @updatedAt
 
-  wallet             Wallet?
-  userOrganizations  UserOrganization[]
-  userTasks          UserTask[]
-  payoutRequests     PayoutRequest[]
-  disputes           Dispute[]
-  auditLogs          AuditLog[]   @relation("ActorAuditLogs")
+  wallet                 Wallet?
+  userOrganizations      UserOrganization[]
+  userTasks              UserTask[]
+  payoutRequests         PayoutRequest[]
+  payoutMethods          PayoutMethod[]
+  disputes               Dispute[]
+  auditLogs              AuditLog[]   @relation("ActorAuditLogs")
+  impressions            CampaignImpression[]
+  sessions               Session[]
+  userPreference         UserPreference?
+  consentHistory         ConsentHistory[]
+  extensionInstallations ExtensionInstallation[]
+  adPreferences          UserAdPreference[]
+  adRequests             AdRequest[]
+  adEvents               AdEvent[]
 
   @@index([email])
   @@index([role])
@@ -121,6 +208,7 @@ model Organization {
   users              UserOrganization[]
   wallet             Wallet?
   campaigns          Campaign[]
+  fundingOrders      FundingOrder[]
 
   @@index([name])
 }
@@ -177,34 +265,46 @@ model LedgerTransaction {
 }
 
 model Campaign {
-  id                   String         @id @default(cuid())
-  organizationId       String
-  title                String
-  description          String         @db.Text
-  category             String         @default("FinTech")
-  actionType           ActionType     @default(SURVEY)
-  status               CampaignStatus @default(DRAFT)
-  targetUrl            String         @db.Text
-  requirementsJson     String?        @db.Text
-  budgetAllocatedPaise BigInt         @default(0)
-  budgetSpentPaise     BigInt         @default(0)
-  costPerOutcomePaise  BigInt         @default(0)
-  targetOutcomes       Int            @default(100)
-  verifiedOutcomes     Int            @default(0)
-  ivtRatePercent       Float          @default(0.0)
-  flightStart          DateTime?
-  flightEnd            DateTime?
-  createdAt            DateTime       @default(now())
-  updatedAt            DateTime       @updatedAt
+  id                           String         @id @default(cuid())
+  organizationId               String
+  title                        String
+  description                  String         @db.Text
+  category                     String         @default("FinTech")
+  actionType                   ActionType     @default(SURVEY)
+  status                       CampaignStatus @default(DRAFT)
+  targetUrl                    String         @db.Text
+  requirementsJson             String?        @db.Text
+  budgetAllocatedPaise         BigInt         @default(0)
+  budgetSpentPaise             BigInt         @default(0)
+  costPerOutcomePaise          BigInt         @default(0)
+  pricingModel                 PricingModel   @default(CPO)
+  cpmRatePaise                 BigInt         @default(0)
+  creatorImpressionRewardPaise BigInt         @default(0)
+  dailyBudgetCapPaise          BigInt         @default(0)
+  minKycTier                   KycTier        @default(TIER_0)
+  targetOutcomes               Int            @default(100)
+  verifiedOutcomes             Int            @default(0)
+  impressionsCount             Int            @default(0)
+  ivtRatePercent               Float          @default(0.0)
+  flightStart                  DateTime?
+  flightEnd                    DateTime?
+  createdAt                    DateTime       @default(now())
+  updatedAt                    DateTime       @updatedAt
 
   organization         Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   creativeAssets       CreativeAsset[]
   userTasks            UserTask[]
   moderationRecords    ModerationRecord[]
+  impressions          CampaignImpression[]
+  campaignPlacements   CampaignPlacement[]
+  adDecisions          AdDecision[]
+  adEvents             AdEvent[]
+  dailyAggregates      CampaignDailyAggregate[]
 
   @@index([organizationId])
   @@index([status])
   @@index([actionType])
+  @@index([pricingModel])
 }
 
 model CreativeAsset {
@@ -219,8 +319,38 @@ model CreativeAsset {
   createdAt      DateTime     @default(now())
 
   campaign       Campaign     @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  impressions    CampaignImpression[]
 
   @@index([campaignId])
+}
+
+model CampaignImpression {
+  id               String            @id @default(cuid())
+  campaignId       String
+  userId           String
+  creativeAssetId  String?
+  eventId          String            @unique
+  sessionToken     String            @db.Text
+  tokenDigest      String            @unique @db.VarChar(64)
+  dwellSeconds     Float             @default(0.0)
+  viewabilityScore Float             @default(1.0)
+  status           ImpressionStatus  @default(VALIDATED)
+  rewardPaise      BigInt            @default(0)
+  chargePaise      BigInt            @default(0)
+  ipAddress        String?
+  userAgent        String?
+  createdAt        DateTime          @default(now())
+  validatedAt      DateTime?
+
+  campaign         Campaign          @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  creativeAsset    CreativeAsset?    @relation(fields: [creativeAssetId], references: [id], onDelete: SetNull)
+
+  @@index([campaignId])
+  @@index([userId])
+  @@index([eventId])
+  @@index([status])
+  @@index([createdAt])
 }
 
 model UserTask {
@@ -250,24 +380,30 @@ model UserTask {
 }
 
 model PayoutRequest {
-  id                 String       @id @default(cuid())
+  id                 String        @id @default(cuid())
   userId             String
+  payoutMethodId     String?
   amountPaise        BigInt
-  method             String       @default("UPI")
+  method             String        @default("UPI")
   destinationAddress String
   maskedAddress      String
-  status             PayoutStatus @default(REQUESTED)
+  status             PayoutStatus  @default(REQUESTED)
   utrNumber          String?
   failureReason      String?
-  idempotencyKey     String       @unique
+  idempotencyKey     String        @unique
   approvedByUserId   String?
-  createdAt          DateTime     @default(now())
+  outboxStatus       String?       @default("DISPATCHED")
+  dispatchAttempts   Int           @default(1)
+  lastDispatchedAt   DateTime?
+  createdAt          DateTime      @default(now())
   clearedAt          DateTime?
 
-  user               User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user               User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payoutMethod       PayoutMethod? @relation(fields: [payoutMethodId], references: [id], onDelete: SetNull)
   disputes           Dispute[]
 
   @@index([userId])
+  @@index([payoutMethodId])
   @@index([status])
   @@index([idempotencyKey])
 }
@@ -354,4 +490,392 @@ model SystemSetting {
   updatedAt   DateTime @updatedAt
 
   @@index([key])
+}
+
+model PayoutMethod {
+  id                 String             @id @default(cuid())
+  userId             String
+  type               PayoutMethodType   @default(UPI)
+  accountHolderName  String
+  destinationAddress String
+  maskedAddress      String
+  ifscCode           String?
+  bankName           String?
+  status             PayoutMethodStatus @default(VERIFIED)
+  isDefault          Boolean            @default(false)
+  verifiedAt         DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payoutRequests     PayoutRequest[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model FundingOrder {
+  id                String             @id @default(cuid())
+  organizationId    String
+  amountPaise       BigInt
+  gstPaise          BigInt             @default(0)
+  totalPaise        BigInt
+  currency          String             @default("INR")
+  status            FundingOrderStatus @default(INITIATED)
+  provider          String             @default("SANDBOX_NODAL")
+  providerOrderId   String?            @unique
+  providerPaymentId String?
+  utrNumber         String?
+  idempotencyKey    String             @unique
+  metadataJson      String?            @db.Text
+  confirmedAt       DateTime?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  organization      Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([status])
+}
+
+enum AccountType {
+  ASSET
+  LIABILITY
+  EQUITY
+  REVENUE
+  EXPENSE
+}
+
+enum EntryType {
+  DEBIT
+  CREDIT
+}
+
+model Account {
+  id             String         @id @default(cuid())
+  code           String         @unique
+  name           String
+  type           AccountType
+  currency       String         @default("INR")
+  userId         String?
+  organizationId String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  journalEntries JournalEntry[]
+
+  @@index([code])
+  @@index([type])
+  @@index([userId])
+  @@index([organizationId])
+}
+
+model JournalTransaction {
+  id             String                 @id @default(cuid())
+  referenceId    String
+  idempotencyKey String                 @unique
+  type           LedgerTransactionType
+  description    String
+  actorId        String?
+  metadataJson   String?                @db.Text
+  postedAt       DateTime               @default(now())
+
+  entries        JournalEntry[]
+
+  @@index([referenceId])
+  @@index([idempotencyKey])
+  @@index([postedAt])
+}
+
+model JournalEntry {
+  id                   String             @id @default(cuid())
+  journalTransactionId String
+  accountId            String
+  entryType            EntryType
+  amountPaise          BigInt
+  currency             String             @default("INR")
+  createdAt            DateTime           @default(now())
+
+  journalTransaction   JournalTransaction @relation(fields: [journalTransactionId], references: [id], onDelete: Cascade)
+  account              Account            @relation(fields: [accountId], references: [id], onDelete: Restrict)
+
+  @@index([journalTransactionId])
+  @@index([accountId])
+  @@index([entryType])
+}
+
+// =========================================================================
+// HYBRID AD NETWORK EXTENSION MODELS (PHASE 1 ADDITIVE FOUNDATION)
+// =========================================================================
+
+model Session {
+  id           String    @id @default(cuid())
+  userId       String
+  sessionToken String    @unique @db.VarChar(128)
+  ipAddress    String?
+  userAgent    String?   @db.Text
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([sessionToken])
+  @@index([expiresAt])
+}
+
+model UserPreference {
+  id                      String   @id @default(cuid())
+  userId                  String   @unique
+  optInRewards            Boolean  @default(true)
+  emailNotifications      Boolean  @default(true)
+  preferredCategoriesJson String?  @db.Text
+  theme                   String   @default("SYSTEM")
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  user                    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model ConsentHistory {
+  id                 String   @id @default(cuid())
+  userId             String
+  consentType        String
+  granted            Boolean  @default(true)
+  ipAddress          String?
+  userAgent          String?  @db.Text
+  consentTextVersion String   @default("1.0")
+  consentedAt        DateTime @default(now())
+
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([consentType])
+}
+
+model ExtensionInstallation {
+  id               String             @id @default(cuid())
+  userId           String
+  installationId   String             @unique @db.VarChar(64)
+  extensionVersion String             @default("2.0.0")
+  clientPlatform   String?
+  status           InstallationStatus @default(ACTIVE)
+  lastSeenAt       DateTime           @default(now())
+  installedAt      DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([installationId])
+  @@index([status])
+}
+
+model UserAdPreference {
+  id        String   @id @default(cuid())
+  userId    String
+  category  String
+  enabled   Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, category])
+  @@index([userId])
+}
+
+model AdPlacement {
+  id              String          @id @default(cuid())
+  key             String          @unique @db.VarChar(64)
+  name            String
+  surfaceType     String
+  dimensions      String
+  floorCpmPaise   BigInt          @default(3000)
+  floorCpcPaise   BigInt          @default(150)
+  minDwellSeconds Float           @default(1.0)
+  status          PlacementStatus @default(ACTIVE)
+  policyText      String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  campaignPlacements CampaignPlacement[]
+  adRequests         AdRequest[]
+  dailyAggregates    PlacementDailyAggregate[]
+
+  @@index([key])
+  @@index([status])
+}
+
+model CampaignPlacement {
+  id          String      @id @default(cuid())
+  campaignId  String
+  placementId String
+  status      String      @default("ACTIVE")
+  createdAt   DateTime    @default(now())
+
+  campaign    Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  placement   AdPlacement @relation(fields: [placementId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, placementId])
+  @@index([campaignId])
+  @@index([placementId])
+}
+
+model AdRequest {
+  id            String       @id @default(cuid())
+  requestId     String       @unique @db.VarChar(64)
+  userId        String?
+  placementId   String?
+  ipAddress     String?
+  userAgent     String?      @db.Text
+  eligibleCount Int          @default(0)
+  createdAt     DateTime     @default(now())
+
+  user          User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  placement     AdPlacement? @relation(fields: [placementId], references: [id], onDelete: SetNull)
+  decisions     AdDecision[]
+
+  @@index([requestId])
+  @@index([userId])
+  @@index([placementId])
+  @@index([createdAt])
+}
+
+model AdDecision {
+  id              String           @id @default(cuid())
+  adRequestId     String?
+  campaignId      String
+  creativeAssetId String?
+  userId          String?
+  tokenDigest     String           @unique @db.VarChar(64)
+  decisionToken   String           @db.Text
+  pricingModel    PricingModel     @default(CPM)
+  chargePaise     BigInt           @default(0)
+  rewardPaise     BigInt           @default(0)
+  status          AdDecisionStatus @default(ISSUED)
+  expiresAt       DateTime
+  createdAt       DateTime         @default(now())
+
+  adRequest       AdRequest?       @relation(fields: [adRequestId], references: [id], onDelete: SetNull)
+  campaign        Campaign         @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  events          AdEvent[]
+
+  @@index([adRequestId])
+  @@index([campaignId])
+  @@index([tokenDigest])
+  @@index([status])
+  @@index([expiresAt])
+}
+
+model AdEvent {
+  id           String      @id @default(cuid())
+  eventId      String      @unique @db.VarChar(64)
+  adDecisionId String?
+  campaignId   String
+  userId       String
+  eventType    AdEventType
+  tokenDigest  String      @unique @db.VarChar(64)
+  status       EventStatus @default(RECEIVED)
+  payloadJson  String?     @db.Text
+  chargePaise  BigInt      @default(0)
+  rewardPaise  BigInt      @default(0)
+  ipAddress    String?
+  userAgent    String?     @db.Text
+  receivedAt   DateTime    @default(now())
+  processedAt  DateTime?
+
+  adDecision   AdDecision? @relation(fields: [adDecisionId], references: [id], onDelete: SetNull)
+  campaign     Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+  @@index([campaignId])
+  @@index([userId])
+  @@index([eventType])
+  @@index([tokenDigest])
+  @@index([status])
+  @@index([receivedAt])
+}
+
+model FraudCase {
+  id                    String    @id @default(cuid())
+  caseNumber            String    @unique @db.VarChar(32)
+  incidentType          String
+  severity              String    @default("MEDIUM")
+  targetType            String
+  targetId              String
+  userId                String?
+  campaignId            String?
+  status                String    @default("OPEN")
+  description           String    @db.Text
+  telemetryEvidenceJson String?   @db.Text
+  resolutionNotes       String?   @db.Text
+  resolvedByUserId      String?
+  resolvedAt            DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([caseNumber])
+  @@index([userId])
+  @@index([campaignId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model PaymentWebhookRecord {
+  id             String        @id @default(cuid())
+  provider       String
+  eventType      String
+  eventId        String?
+  idempotencyKey String        @unique @db.VarChar(128)
+  payloadJson    String        @db.Text
+  status         WebhookStatus @default(PENDING)
+  errorReason    String?       @db.Text
+  receivedAt     DateTime      @default(now())
+  processedAt    DateTime?
+
+  @@index([provider])
+  @@index([idempotencyKey])
+  @@index([status])
+  @@index([receivedAt])
+}
+
+model CampaignDailyAggregate {
+  id                 String   @id @default(cuid())
+  campaignId         String
+  date               DateTime @db.Date
+  impressionsCount   Int      @default(0)
+  clicksCount        Int      @default(0)
+  conversionsCount   Int      @default(0)
+  spendPaise         BigInt   @default(0)
+  creatorRewardPaise BigInt   @default(0)
+  ivtBlockedCount    Int      @default(0)
+  updatedAt          DateTime @updatedAt
+
+  campaign           Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, date])
+  @@index([campaignId])
+  @@index([date])
+}
+
+model PlacementDailyAggregate {
+  id               String      @id @default(cuid())
+  placementId      String
+  date             DateTime    @db.Date
+  requestsCount    Int         @default(0)
+  impressionsCount Int         @default(0)
+  clicksCount      Int         @default(0)
+  revenuePaise     BigInt      @default(0)
+  updatedAt        DateTime    @updatedAt
+
+  placement        AdPlacement @relation(fields: [placementId], references: [id], onDelete: Cascade)
+
+  @@unique([placementId, date])
+  @@index([placementId])
+  @@index([date])
 }

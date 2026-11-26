@@ -11,6 +11,7 @@
    - Double-entry accounting with append-only ledger transactions.
    - All monetary amounts stored as 64-bit integer minor units (`paise`, where ₹1.00 = 100 paise).
    - Strict overdraft protection: concurrent withdrawals cannot exceed available balances.
+   - Compensating failure recovery: failed payouts generate atomic `PAYOUT_REVERSAL` ledger credits.
    - Idempotency guarantees on all money-moving operations.
 3. **Kinematic Attention Telemetry Engine**:
    - Validates user task engagement via dwell time, mouse vector velocity, and keystroke cadence.
@@ -23,6 +24,10 @@
    - Kinematic Fraud Lab for forensic inspection of bot attempts.
    - Payout clearing console with dual-approval workflow for high-value transactions.
    - Tamper-evident SHA-256 cryptographic audit logging.
+6. **Hardened Edge Security & RBAC**:
+   - Next.js Edge Middleware verifying WebCrypto HMAC-SHA256 session tokens.
+   - Role-Based Access Control enforcing boundary isolation between User, Advertiser, and Admin portals.
+   - PII destination masking on creator payout destinations (`••••••••8123` / `ro*******ma@okhdfcbank`).
 
 ---
 
@@ -75,11 +80,16 @@ A unified 1-click test login is accessible at `/login`.
 
 ---
 
-## 🧪 Automated Testing & Load Benchmarking
+## 🧪 Comprehensive Automated Test Suites
 
 ```bash
-# Run automated financial ledger, telemetry, and RBAC test suite
-node test/run_tests.js
+# Run the complete test suite (56 Invariants Verified: 56 Passed, 0 Failed)
+npm test
+
+# Alternatively, run individual test suites:
+node test/run_tests.js                 # Financial invariants & anti-fraud engine (16 tests)
+node test/e2e_workflows.test.js        # Cross-portal end-to-end workflows (23 tests)
+node test/security_and_payments.test.js # Edge middleware, RBAC & payment flows (17 tests)
 
 # Run high-concurrency HTTP and database load benchmark
 node scripts/load_test.js
@@ -87,24 +97,38 @@ node scripts/load_test.js
 
 ---
 
-## 🚢 Production Deployment
+## 🚢 Production Deployment & Operations
 
-For full deployment instructions on an Ubuntu server using Docker Compose and Nginx, refer to the documentation:
+AdEarn AI includes production-ready Docker orchestration, Nginx reverse proxy, and automated operational scripts:
 
-- [Ubuntu Server Setup](docs/deployment/UBUNTU_SERVER_SETUP.md)
-- [Docker Compose Deployment](docs/deployment/DOCKER_COMPOSE_DEPLOYMENT.md)
-- [Environment Variables](docs/deployment/ENVIRONMENT_VARIABLES.md)
-- [Nginx Reverse Proxy & SSL](docs/deployment/NGINX_REVERSE_PROXY.md)
-- [Database Setup & Tuning](docs/deployment/DATABASE_SETUP.md)
-- [Disaster Recovery & Backups](docs/deployment/BACKUP_AND_RESTORE.md)
-- [Production Pre-Flight Checklist](docs/deployment/PRODUCTION_CHECKLIST.md)
+### Operational Shell Scripts
+- **Database Backup:** `bash ./scripts/backup_db.sh [backup_dir]` (automated snapshot, gzip-9, 7-day retention)
+- **Database Restore:** `bash ./scripts/restore_db.sh <backup_file.sql.gz>` (safe restore with pre-flight snapshot)
+- **Production Deploy:** `bash ./scripts/deploy.sh` (backup -> build -> migrate -> health check -> Nginx reload)
+- **Emergency Rollback:** `bash ./scripts/rollback.sh [--with-db-restore]` (instant rollback to `:previous` image)
+
+### Deployment Documentation Suite (`docs/deployment/`)
+1. [Ubuntu Server Setup Guide](docs/deployment/UBUNTU_SERVER_SETUP.md) — Bare-metal / Cloud VM hardening and setup.
+2. [Environment Variables Reference](docs/deployment/ENVIRONMENT_VARIABLES.md) — Variable reference and rotation policies.
+3. [Docker Deployment Guide](docs/deployment/DOCKER_DEPLOYMENT.md) — Container topology and operations.
+4. [Nginx Reverse Proxy & Load Balancer](docs/deployment/Nginx_REVERSE_PROXY.md) — Edge gateway and rate-limiting zones.
+5. [HTTPS & Automated SSL Setup](docs/deployment/HTTPS_SETUP.md) — Let's Encrypt Certbot automation.
+6. [Database Migrations & Data Safety](docs/deployment/DATABASE_MIGRATIONS.md) — Prisma schema migrations and data protection.
+7. [Database Backup & Disaster Recovery](docs/deployment/BACKUP_AND_RESTORE.md) — Snapshot routines and recovery.
+8. [Release Rollback Procedures](docs/deployment/ROLLBACK.md) — Emergency reversion and forward-fixes.
+9. [Pre-Flight Production Checklist](docs/deployment/PRODUCTION_CHECKLIST.md) — 24-point pre-flight audit.
+10. [Production Troubleshooting](docs/deployment/TROUBLESHOOTING.md) — Diagnostics for DB, proxy, cache, and payouts.
+11. [Deployment & Readiness Report](docs/deployment/DEPLOYMENT_REPORT.md) — Evidence-based deployment audit.
 
 ---
 
-## 📚 Complete System Documentation
+## 📚 Technical Reference Documentation
 
-- [Implementation Audit](docs/IMPLEMENTATION_AUDIT.md)
 - [System Architecture](docs/ARCHITECTURE.md)
+- [Implementation Audit](docs/IMPLEMENTATION_AUDIT.md)
+- [DevOps SRE Runbook](docs/DEVOPS_RUNBOOK.md)
+- [Known Limitations](docs/KNOWN_LIMITATIONS.md)
+- [Implementation Roadmap](docs/IMPLEMENTATION_ROADMAP.md)
 - [API Reference](docs/API.md)
 - [Database Schema](docs/DATABASE_SCHEMA.md)
 - [Financial Ledger](docs/FINANCIAL_LEDGER.md)
@@ -112,5 +136,4 @@ For full deployment instructions on an Ubuntu server using Docker Compose and Ng
 - [Role Permission Matrix](docs/ROLE_PERMISSION_MATRIX.md)
 - [Security Review](docs/SECURITY_REVIEW.md)
 - [Privacy & DPDP Act Compliance](docs/PRIVACY_AND_DATA_HANDLING.md)
-- [DevOps SRE Runbook](docs/DEVOPS_RUNBOOK.md)
 - [Load Test Results](docs/performance/LOAD_TEST_RESULTS.md)

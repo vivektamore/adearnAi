@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
+import { serializeBigInts } from '@/lib/money';
 
 export async function GET(req: NextRequest) {
   const auth = requireAuth(req, ['USER', 'ADMIN']);
@@ -38,13 +39,15 @@ export async function GET(req: NextRequest) {
     prisma.ledgerTransaction.count({ where }),
   ]);
 
-  return NextResponse.json({
-    wallet,
-    transactions,
-    pagination: {
-      total,
-      page,
-      totalPages: Math.ceil(total / limit),
-    },
-  });
+  return NextResponse.json(
+    serializeBigInts({
+      wallet,
+      transactions,
+      pagination: {
+        total,
+        page,
+        totalPages: Math.ceil(total / limit),
+      },
+    })
+  );
 }

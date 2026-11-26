@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { serializeBigInts } from '@/lib/money';
 
 export const dynamic = 'force-dynamic';
 
@@ -57,15 +58,17 @@ export async function GET(req: NextRequest) {
       distinct: ['category'],
     });
 
-    return NextResponse.json({
-      campaigns,
-      pagination: {
-        total,
-        page,
-        totalPages: Math.ceil(total / limit),
-      },
-      categories: ['All', ...categories.map((c) => c.category)],
-    });
+    return NextResponse.json(
+      serializeBigInts({
+        campaigns,
+        pagination: {
+          total,
+          page,
+          totalPages: Math.ceil(total / limit),
+        },
+        categories: ['All', ...categories.map((c) => c.category)],
+      })
+    );
   } catch (err: any) {
     console.error('Error fetching campaigns feed:', err);
     return NextResponse.json({ error: 'Failed to retrieve campaigns.' }, { status: 500 });

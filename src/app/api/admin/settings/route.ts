@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { requireAuth } from '@/lib/auth';
+import { requireAdminPermission, requireRole } from '@/lib/rbac';
 import { recordAuditLog } from '@/lib/audit';
 
 export async function GET(req: NextRequest) {
-  const auth = requireAuth(req, ['ADMIN']);
-  if (auth.error) {
+  const auth = requireRole(req, ['ADMIN', 'SUPER_ADMIN']);
+  if (!auth.authorized) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 
@@ -30,8 +30,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  const auth = requireAuth(req, ['ADMIN']);
-  if (auth.error) {
+  const auth = requireAdminPermission(req, 'settings.manage');
+  if (!auth.authorized) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 

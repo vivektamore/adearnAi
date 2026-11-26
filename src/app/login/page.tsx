@@ -28,9 +28,9 @@ export default function LoginPage() {
 
       const data = await res.json();
       if (res.ok && data.success) {
-        if (data.user.role === 'ADMIN') {
+        if (data.user.role === 'ADMIN' || data.user.role === 'SUPER_ADMIN') {
           router.push('/admin');
-        } else if (data.user.role === 'ADVERTISER') {
+        } else if (data.user.role === 'ADVERTISER' || data.user.role === 'BRAND') {
           router.push('/advertiser');
         } else {
           router.push('/');
@@ -75,35 +75,37 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Quick Demo Role Fillers */}
-        <div className="p-3 rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-2">
-          <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold block">
-            1-Click Test Access:
-          </span>
-          <div className="grid grid-cols-3 gap-2">
-            <button
-              type="button"
-              onClick={() => quickLogin('USER')}
-              className="py-1.5 px-2 rounded-lg bg-surface-container text-xs font-semibold hover:bg-surface-container-high transition-colors text-on-surface"
-            >
-              Creator
-            </button>
-            <button
-              type="button"
-              onClick={() => quickLogin('ADVERTISER')}
-              className="py-1.5 px-2 rounded-lg bg-surface-container text-xs font-semibold hover:bg-surface-container-high transition-colors text-on-surface"
-            >
-              Brand
-            </button>
-            <button
-              type="button"
-              onClick={() => quickLogin('ADMIN')}
-              className="py-1.5 px-2 rounded-lg bg-surface-container text-xs font-semibold hover:bg-surface-container-high transition-colors text-on-surface"
-            >
-              Admin
-            </button>
+        {/* Quick Demo Role Fillers for Development & Staging */}
+        {process.env.NODE_ENV !== 'production' && (
+          <div className="p-3 rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-2">
+            <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold block">
+              Staging / Dev Test Access:
+            </span>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={() => quickLogin('USER')}
+                className="py-1.5 px-2 rounded-lg bg-surface-container text-xs font-semibold hover:bg-surface-container-high transition-colors text-on-surface"
+              >
+                Creator
+              </button>
+              <button
+                type="button"
+                onClick={() => quickLogin('ADVERTISER')}
+                className="py-1.5 px-2 rounded-lg bg-surface-container text-xs font-semibold hover:bg-surface-container-high transition-colors text-on-surface"
+              >
+                Brand
+              </button>
+              <button
+                type="button"
+                onClick={() => quickLogin('ADMIN')}
+                className="py-1.5 px-2 rounded-lg bg-surface-container text-xs font-semibold hover:bg-surface-container-high transition-colors text-on-surface"
+              >
+                Admin
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         {errorMsg && (
           <div className="p-3 rounded-lg bg-error-container text-on-error-container text-xs flex items-center gap-2 font-semibold">
@@ -153,11 +155,6 @@ export default function LoginPage() {
               Create a new account here
             </Link>
           </p>
-          <div>
-            <Link href="/" className="text-xs text-on-surface-variant hover:text-on-surface">
-              ← Continue as Guest to Dashboard
-            </Link>
-          </div>
         </div>
       </div>
     </div>

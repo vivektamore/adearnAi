@@ -66,13 +66,17 @@ export default function FraudForensicLabPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Bot Intercept Accuracy</span>
-            <div className="font-headline text-2xl font-bold text-secondary">99.18%</div>
+            <div className="font-headline text-2xl font-bold text-secondary">
+              {data?.labSummary?.botInterceptAccuracy ?? '100.0%'}
+            </div>
             <span className="text-[11px] text-on-surface-variant">Validated against certified human baselines</span>
           </div>
 
           <div className="p-space-md rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-xs space-y-1">
             <span className="text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">Average Human Dwell</span>
-            <div className="font-headline text-2xl font-bold text-on-surface">38.4s</div>
+            <div className="font-headline text-2xl font-bold text-on-surface">
+              {data?.labSummary?.avgKinematicDwellSec ? `${data.labSummary.avgKinematicDwellSec}s` : '0.0s'}
+            </div>
             <span className="text-[11px] text-secondary font-semibold">Zero automated macro penetration</span>
           </div>
 

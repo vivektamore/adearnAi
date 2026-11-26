@@ -31,6 +31,40 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Subject and detailed description are required.' }, { status: 400 });
   }
 
+  // IDOR Defense: If userTaskId is provided, verify it belongs to caller
+  if (userTaskId) {
+    const task = await prisma.userTask.findUnique({
+      where: { id: userTaskId },
+      select: { userId: true },
+    });
+    if (!task) {
+      return NextResponse.json({ error: 'Referenced user task not found.' }, { status: 404 });
+    }
+    if (task.userId !== userId) {
+      return NextResponse.json(
+        { error: 'Forbidden. Cannot file dispute referencing another user’s task.' },
+        { status: 403 }
+      );
+    }
+  }
+
+  // IDOR Defense: If payoutRequestId is provided, verify it belongs to caller
+  if (payoutRequestId) {
+    const payout = await prisma.payoutRequest.findUnique({
+      where: { id: payoutRequestId },
+      select: { userId: true },
+    });
+    if (!payout) {
+      return NextResponse.json({ error: 'Referenced payout request not found.' }, { status: 404 });
+    }
+    if (payout.userId !== userId) {
+      return NextResponse.json(
+        { error: 'Forbidden. Cannot file dispute referencing another user’s payout request.' },
+        { status: 403 }
+      );
+    }
+  }
+
   const dispute = await prisma.dispute.create({
     data: {
       userId,

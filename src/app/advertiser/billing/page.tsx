@@ -11,6 +11,7 @@ export default function AdvertiserBillingPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [statusMsg, setStatusMsg] = useState('');
+  const [selectedInvoice, setSelectedInvoice] = useState<any>(null);
 
   useEffect(() => {
     fetchBilling();
@@ -68,7 +69,7 @@ export default function AdvertiserBillingPage() {
           <div>
             <h1 className="font-headline text-2xl font-bold text-on-surface">Advertiser Billing, Invoices & Escrow Top-Up</h1>
             <p className="text-sm text-on-surface-variant mt-1">
-              Maintain institutional escrow reserves under Indian RBI nodal framework. Download GST-compliant tax invoices.
+              Maintain institutional advertising reserves with our banking and payment partners. Download GST-compliant tax invoices.
             </p>
           </div>
 
@@ -85,8 +86,8 @@ export default function AdvertiserBillingPage() {
           {/* Top-up Form */}
           <div className="lg:col-span-2 bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/30 shadow-xs space-y-space-md">
             <div>
-              <h2 className="font-headline text-base font-bold text-on-surface">Top-Up Nodal Escrow Reserve</h2>
-              <p className="text-xs text-on-surface-variant">Instant credit via RTGS / NEFT / NetBanking to HDFC Nodal Pool</p>
+              <h2 className="font-headline text-base font-bold text-on-surface">Top-Up Advertising Escrow Reserve</h2>
+              <p className="text-xs text-on-surface-variant">Instant credit via RTGS / NEFT / NetBanking via Authorized Banking Partners</p>
             </div>
 
             {statusMsg && (
@@ -126,11 +127,11 @@ export default function AdvertiserBillingPage() {
 
               <div className="p-space-sm rounded-lg bg-surface-container-low border border-outline-variant/20 text-xs text-on-surface-variant flex items-center justify-between">
                 <div>
-                  <span className="font-bold text-on-surface block">Destination: AdEarn AI Nodal Settlement</span>
-                  <span>HDFC Bank Nodal Virtual Account · IFSC: HDFC0000128</span>
+                  <span className="font-bold text-on-surface block">Destination: AdEarn AI Escrow Reserve (Partner Bank)</span>
+                  <span>Virtual Escrow Account · Partner Bank Settlement Rail</span>
                 </div>
                 <span className="px-2 py-0.5 rounded bg-surface-container font-mono text-[11px] text-secondary font-bold">
-                  AUTOPAY ENABLED
+                  TEST SANDBOX CLEARING
                 </span>
               </div>
 
@@ -179,7 +180,7 @@ export default function AdvertiserBillingPage() {
               <span className="material-symbols-outlined text-secondary text-[32px]">receipt_long</span>
               <p className="text-sm font-semibold text-on-surface">No Escrow Deposit Invoices Yet</p>
               <p className="text-xs text-on-surface-variant max-w-md mx-auto">
-                Once you make a deposit above via RTGS, NEFT, or NetBanking, an official RBI-compliant GST tax invoice receipt will be generated automatically.
+                Once you make a deposit above via RTGS, NEFT, or NetBanking, an official GST tax invoice receipt will be generated automatically.
               </p>
             </div>
           ) : (
@@ -215,11 +216,11 @@ export default function AdvertiserBillingPage() {
                       </td>
                       <td className="py-3 px-space-md text-right">
                         <button
-                          onClick={() => alert(`Downloading verified GST invoice receipt ${inv.id}`)}
-                          className="p-1.5 rounded hover:bg-surface-container text-secondary text-xs font-semibold flex items-center gap-1 ml-auto"
+                          onClick={() => setSelectedInvoice(inv)}
+                          className="p-1.5 rounded hover:bg-surface-container text-secondary text-xs font-semibold flex items-center gap-1 ml-auto cursor-pointer"
                         >
-                          <span className="material-symbols-outlined text-[16px]">download</span>
-                          <span>PDF</span>
+                          <span className="material-symbols-outlined text-[16px]">receipt</span>
+                          <span>View Tax Receipt</span>
                         </button>
                       </td>
                     </tr>
@@ -229,6 +230,87 @@ export default function AdvertiserBillingPage() {
             </div>
           )}
         </div>
+
+        {/* GST Tax Invoice Modal */}
+        {selectedInvoice && (
+          <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-2xl max-w-lg w-full p-6 shadow-xl space-y-4">
+              <div className="flex items-center justify-between border-b border-outline-variant/20 pb-3">
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-secondary">Institutional Tax Receipt</span>
+                  <h3 className="font-headline text-lg font-bold text-on-surface">GST Tax Invoice #{selectedInvoice.id}</h3>
+                </div>
+                <button
+                  onClick={() => setSelectedInvoice(null)}
+                  className="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-[20px]">close</span>
+                </button>
+              </div>
+
+              <div className="space-y-3 text-xs">
+                <div className="grid grid-cols-2 gap-2 p-3 rounded-lg bg-surface-container-low">
+                  <div>
+                    <span className="text-on-surface-variant block font-medium">Issuer:</span>
+                    <span className="font-semibold text-on-surface">AdEarn AI Media Tech Pvt. Ltd.</span>
+                    <span className="text-[11px] text-on-surface-variant block font-mono">GSTIN: 27AABCA1234F1Z8</span>
+                  </div>
+                  <div>
+                    <span className="text-on-surface-variant block font-medium">Recipient:</span>
+                    <span className="font-semibold text-on-surface">{data?.organization?.name || 'Authorized Brand'}</span>
+                    <span className="text-[11px] text-on-surface-variant block font-mono">
+                      GSTIN: {data?.organization?.gstin || 'Unregistered'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="divide-y divide-outline-variant/20 border border-outline-variant/20 rounded-lg overflow-hidden">
+                  <div className="flex justify-between p-2.5 bg-surface-container-low font-semibold text-on-surface">
+                    <span>Particulars</span>
+                    <span>Amount</span>
+                  </div>
+                  <div className="flex justify-between p-2.5 text-on-surface">
+                    <span>Escrow Allocation ({selectedInvoice.period || 'Settlement'})</span>
+                    <span className="font-mono tabular-nums">{formatINR(selectedInvoice.basePaise || selectedInvoice.amountPaise)}</span>
+                  </div>
+                  <div className="flex justify-between p-2.5 text-on-surface-variant">
+                    <span>CGST (9.0%)</span>
+                    <span className="font-mono tabular-nums">{formatINR((selectedInvoice.gstPaise || 0) / 2)}</span>
+                  </div>
+                  <div className="flex justify-between p-2.5 text-on-surface-variant">
+                    <span>SGST (9.0%)</span>
+                    <span className="font-mono tabular-nums">{formatINR((selectedInvoice.gstPaise || 0) / 2)}</span>
+                  </div>
+                  <div className="flex justify-between p-2.5 bg-surface-container-low font-bold text-on-surface">
+                    <span>Total Settled</span>
+                    <span className="font-mono tabular-nums text-secondary">{formatINR(selectedInvoice.amountPaise)}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 text-[11px] text-on-surface-variant">
+                  <span className="material-symbols-outlined text-[16px] text-secondary">verified</span>
+                  <span>Validated with Partner Banking UTR Settlement.</span>
+                </div>
+              </div>
+
+              <div className="flex gap-2 pt-2 border-t border-outline-variant/20">
+                <button
+                  onClick={() => window.print()}
+                  className="flex-1 py-2 rounded-lg bg-secondary text-on-secondary font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-[16px]">print</span>
+                  <span>Print / Save Tax Receipt</span>
+                </button>
+                <button
+                  onClick={() => setSelectedInvoice(null)}
+                  className="px-4 py-2 rounded-lg bg-surface-container text-on-surface font-semibold text-xs hover:bg-surface-container-high cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </AdvertiserLayout>
   );

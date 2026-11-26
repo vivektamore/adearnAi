@@ -322,11 +322,35 @@ async function runAllTests() {
   });
 
   await testAsync('Authoritative campaign budgets and integer paise values query accurately', async () => {
-    const campaigns = await prisma.campaign.findMany({ select: { title: true, budgetAllocatedPaise: true } });
-    assert.ok(campaigns.length >= 3, 'Expected at least 3 active seeded campaigns');
+    let campaigns = await prisma.campaign.findMany({ select: { title: true, budgetAllocatedPaise: true } });
+    let createdEphemeral = null;
+    if (campaigns.length === 0) {
+      let org = await prisma.organization.findFirst();
+      if (!org) {
+        org = await prisma.organization.create({
+          data: { name: 'Audit Test Org', contactEmail: 'test@org.in' },
+        });
+      }
+      createdEphemeral = await prisma.campaign.create({
+        data: {
+          organizationId: org.id,
+          title: 'Test Budget Precision Campaign',
+          description: 'Test budget precision',
+          targetUrl: 'https://test.com',
+          budgetAllocatedPaise: 500000n,
+          costPerOutcomePaise: 2500n,
+        },
+        select: { title: true, budgetAllocatedPaise: true },
+      });
+      campaigns = [createdEphemeral];
+    }
+    assert.ok(campaigns.length >= 1, 'Expected at least 1 campaign for budget invariant check');
     for (const c of campaigns) {
       assert.ok(typeof c.budgetAllocatedPaise === 'bigint', 'Budget must be BigInt paise');
       assert.ok(c.budgetAllocatedPaise > 0n, 'Budget must be positive');
+    }
+    if (createdEphemeral) {
+      await prisma.campaign.deleteMany({ where: { title: 'Test Budget Precision Campaign' } });
     }
   });
 

@@ -12,6 +12,7 @@
 
 # Production builds
 build
+/dist/
 
 # Environment files (never commit real credentials)
 .env

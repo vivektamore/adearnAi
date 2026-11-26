@@ -15,9 +15,22 @@ export default function CampaignCreationWizardPage() {
   const [category, setCategory] = useState('FinTech');
   const [actionType, setActionType] = useState('SURVEY');
   const [targetUrl, setTargetUrl] = useState('');
-  const [budgetAllocatedRupees, setBudgetAllocatedRupees] = useState('50000');
-  const [costPerOutcomeRupees, setCostPerOutcomeRupees] = useState('40');
-  const [targetOutcomes, setTargetOutcomes] = useState('1250');
+  const [assetUrl, setAssetUrl] = useState('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80');
+
+  // Pricing & Budget states
+  const [pricingModel, setPricingModel] = useState<'CPO' | 'CPC' | 'CPM'>('CPO');
+  const [budgetAllocatedRupees, setBudgetAllocatedRupees] = useState('5000');
+  const [dailyBudgetCapRupees, setDailyBudgetCapRupees] = useState('1000');
+  const [costPerOutcomeRupees, setCostPerOutcomeRupees] = useState('25');
+  const [targetOutcomes, setTargetOutcomes] = useState('200');
+  const [cpcRateRupees, setCpcRateRupees] = useState('2.50');
+  const [creatorClickRewardRupees, setCreatorClickRewardRupees] = useState('1.25');
+  const [cpmRateRupees, setCpmRateRupees] = useState('60');
+  const [creatorImpressionRewardRupees, setCreatorImpressionRewardRupees] = useState('30');
+
+  // Targeting & Rewards states
+  const [rewardsEnabled, setRewardsEnabled] = useState(true);
+  const [minKycTier, setMinKycTier] = useState('TIER_0');
   const [policyDeclared, setPolicyDeclared] = useState(true);
 
   const [submitting, setSubmitting] = useState(false);
@@ -83,19 +96,40 @@ export default function CampaignCreationWizardPage() {
     setErrorMessage('');
 
     try {
+      const payload: any = {
+        title,
+        description,
+        category,
+        actionType,
+        pricingModel,
+        targetUrl,
+        assetUrl,
+        budgetAllocatedRupees: parseFloat(budgetAllocatedRupees),
+        rewardsEnabled,
+        minKycTier,
+      };
+
+      if (dailyBudgetCapRupees) {
+        payload.dailyBudgetCapRupees = parseFloat(dailyBudgetCapRupees);
+      }
+
+      if (pricingModel === 'CPO') {
+        payload.costPerOutcomeRupees = parseFloat(costPerOutcomeRupees);
+        payload.targetOutcomes = parseInt(targetOutcomes, 10) || 200;
+      } else if (pricingModel === 'CPC') {
+        payload.cpcRateRupees = parseFloat(cpcRateRupees);
+        payload.creatorClickRewardRupees = parseFloat(creatorClickRewardRupees);
+        payload.targetOutcomes = Math.floor(parseFloat(budgetAllocatedRupees) / parseFloat(cpcRateRupees));
+      } else if (pricingModel === 'CPM') {
+        payload.cpmRateRupees = parseFloat(cpmRateRupees);
+        payload.creatorImpressionRewardRupees = parseFloat(creatorImpressionRewardRupees);
+        payload.targetOutcomes = Math.floor((parseFloat(budgetAllocatedRupees) / parseFloat(cpmRateRupees)) * 1000);
+      }
+
       const res = await fetch('/api/advertiser/campaigns', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title,
-          description,
-          category,
-          actionType,
-          targetUrl,
-          budgetAllocatedRupees: parseFloat(budgetAllocatedRupees),
-          costPerOutcomeRupees: parseFloat(costPerOutcomeRupees),
-          targetOutcomes: parseInt(targetOutcomes, 10),
-        }),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
@@ -121,14 +155,14 @@ export default function CampaignCreationWizardPage() {
           <span className="text-on-surface font-semibold">New Campaign Wizard</span>
         </div>
 
-        {/* Wizard Header matching Stitch Screen 09 */}
+        {/* Wizard Header */}
         <div className="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/30 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-space-md">
           <div>
             <h1 className="font-headline text-2xl font-bold text-on-surface">
               Campaign Creation & Escrow Allocation Wizard
             </h1>
             <p className="text-sm text-on-surface-variant mt-1">
-              Deploy verified performance campaigns. Budget is securely reserved from your Nodal Escrow balance.
+              Deploy verified advertising campaigns across CPM, CPC, or CPO pricing models with guaranteed partner bank escrow protection.
             </p>
           </div>
 
@@ -141,10 +175,10 @@ export default function CampaignCreationWizardPage() {
         {/* Step Indicator */}
         <div className="grid grid-cols-3 gap-2 text-center text-xs font-semibold">
           <div className={`p-2.5 rounded-lg border ${step === 1 ? 'bg-primary-container text-on-primary border-primary-container' : 'bg-surface-container-lowest text-on-surface-variant border-outline-variant/30'}`}>
-            1. Campaign Identity & Action
+            1. Campaign Identity & Assets
           </div>
           <div className={`p-2.5 rounded-lg border ${step === 2 ? 'bg-primary-container text-on-primary border-primary-container' : 'bg-surface-container-lowest text-on-surface-variant border-outline-variant/30'}`}>
-            2. Budget & Escrow Lock
+            2. Pricing, Budgets & Targeting
           </div>
           <div className={`p-2.5 rounded-lg border ${step === 3 ? 'bg-primary-container text-on-primary border-primary-container' : 'bg-surface-container-lowest text-on-surface-variant border-outline-variant/30'}`}>
             3. Regulatory Review & Launch
@@ -152,9 +186,19 @@ export default function CampaignCreationWizardPage() {
         </div>
 
         {errorMessage && (
-          <div className="p-3 rounded-lg bg-error-container text-on-error-container text-xs flex items-center gap-2 font-semibold">
-            <span className="material-symbols-outlined text-[18px]">error</span>
-            <span>{errorMessage}</span>
+          <div className="p-3 rounded-lg bg-error-container text-on-error-container text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-semibold">
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-[18px]">error</span>
+              <span>{errorMessage}</span>
+            </div>
+            {errorMessage.toLowerCase().includes('escrow') && (
+              <Link
+                href="/advertiser/billing"
+                className="px-3 py-1 bg-on-error-container text-error-container rounded font-bold hover:opacity-90 shrink-0 text-center"
+              >
+                Top-Up Escrow &rarr;
+              </Link>
+            )}
           </div>
         )}
 
@@ -163,14 +207,14 @@ export default function CampaignCreationWizardPage() {
           {step === 1 && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="font-headline text-base font-bold text-on-surface">Step 1: Campaign Details & Action Type</h2>
+                <h2 className="font-headline text-base font-bold text-on-surface">Step 1: Campaign Details & Creative Assets</h2>
                 <span className="text-[11px] text-secondary font-bold flex items-center gap-1">
                   <span className="material-symbols-outlined text-[15px]">auto_awesome</span>
                   AI Assisted
                 </span>
               </div>
 
-              {/* AI / ChatGPT Generator Box */}
+              {/* AI Generator Box */}
               <div className="p-4 rounded-xl bg-gradient-to-r from-secondary-container/30 to-primary-container/20 border border-secondary/30 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -217,7 +261,7 @@ export default function CampaignCreationWizardPage() {
                   </button>
                 </div>
 
-                {/* Quick 1-click inspiration chips */}
+                {/* Quick inspiration chips */}
                 <div className="flex items-center gap-1.5 flex-wrap pt-1">
                   <span className="text-[10px] text-on-surface-variant font-semibold">Quick Ideas:</span>
                   {[
@@ -262,10 +306,10 @@ export default function CampaignCreationWizardPage() {
                 </div>
 
                 <div className="space-y-1 md:col-span-2">
-                  <label className="text-xs font-semibold text-on-surface">Activity Description</label>
+                  <label className="text-xs font-semibold text-on-surface">Activity Description / Ad Copy</label>
                   <textarea
                     rows={3}
-                    placeholder="Provide clear guidelines on the voluntary engagement expected from creators..."
+                    placeholder="Provide clear guidelines on the value proposition and engagement expected from users..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm focus:border-secondary outline-none resize-none"
@@ -284,6 +328,8 @@ export default function CampaignCreationWizardPage() {
                     <option value="Enterprise SaaS">Enterprise SaaS & Productivity</option>
                     <option value="Digital Commerce">Digital Commerce & Retail</option>
                     <option value="Sustainability">ESG & Green Finance</option>
+                    <option value="EdTech">EdTech & Upskilling</option>
+                    <option value="Web3">Web3 & Decentralized Tools</option>
                   </select>
                 </div>
 
@@ -298,6 +344,7 @@ export default function CampaignCreationWizardPage() {
                     <option value="SANDBOX_TRIAL">Interactive Sandbox Trial</option>
                     <option value="APP_INSTALL">Application Trial & Exploration</option>
                     <option value="SENTIMENT_POLL">Public Sentiment Poll</option>
+                    <option value="VIDEO_ATTENTION">High-Attention Brand Video</option>
                   </select>
                 </div>
 
@@ -312,6 +359,24 @@ export default function CampaignCreationWizardPage() {
                     required
                   />
                 </div>
+
+                <div className="space-y-1 md:col-span-2">
+                  <label className="text-xs font-semibold text-on-surface">Creative Banner / Asset Image URL</label>
+                  <div className="flex gap-2">
+                    <input
+                      type="url"
+                      placeholder="https://images.unsplash.com/photo-..."
+                      value={assetUrl}
+                      onChange={(e) => setAssetUrl(e.target.value)}
+                      className="flex-1 px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-xs focus:border-secondary outline-none font-mono"
+                    />
+                    {assetUrl && (
+                      <div className="w-12 h-9 rounded border border-outline-variant/30 overflow-hidden shrink-0 bg-surface-container">
+                        <img src={assetUrl} alt="Preview" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className="flex justify-end pt-4">
@@ -320,65 +385,236 @@ export default function CampaignCreationWizardPage() {
                   onClick={() => setStep(2)}
                   className="px-6 py-2.5 rounded-lg bg-secondary text-on-secondary font-bold text-sm hover:bg-on-secondary-container transition-colors shadow-xs"
                 >
-                  Next: Budget & Escrow Lock →
+                  Next: Pricing & Budgeting →
                 </button>
               </div>
             </div>
           )}
 
           {step === 2 && (
-            <div className="space-y-4">
-              <h2 className="font-headline text-base font-bold text-on-surface">Step 2: Budget Allocation & Escrow Lock</h2>
+            <div className="space-y-5">
+              <div>
+                <h2 className="font-headline text-base font-bold text-on-surface">Step 2: Pricing Model, Budget & Targeting</h2>
+                <p className="text-xs text-on-surface-variant mt-0.5">
+                  Select your commercial billing model. Funds are held in partner bank escrow and disbursed upon validated delivery.
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+              {/* Pricing Model Selector Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div
+                  onClick={() => setPricingModel('CPO')}
+                  className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                    pricingModel === 'CPO'
+                      ? 'border-secondary bg-secondary-container/20 shadow-xs'
+                      : 'border-outline-variant/30 bg-surface-container-low hover:border-outline-variant'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-bold text-on-surface">CPO (Verified Outcomes)</span>
+                    <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${pricingModel === 'CPO' ? 'border-secondary bg-secondary' : 'border-outline-variant'}`}>
+                      {pricingModel === 'CPO' && <span className="w-1.5 h-1.5 rounded-full bg-on-secondary"></span>}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-on-surface-variant">Pay only for audited cognitive task completions, trials, or high-intent forms.</p>
+                </div>
+
+                <div
+                  onClick={() => setPricingModel('CPC')}
+                  className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                    pricingModel === 'CPC'
+                      ? 'border-secondary bg-secondary-container/20 shadow-xs'
+                      : 'border-outline-variant/30 bg-surface-container-low hover:border-outline-variant'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-bold text-on-surface">CPC (Cost Per Click)</span>
+                    <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${pricingModel === 'CPC' ? 'border-secondary bg-secondary' : 'border-outline-variant'}`}>
+                      {pricingModel === 'CPC' && <span className="w-1.5 h-1.5 rounded-full bg-on-secondary"></span>}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-on-surface-variant">Pay for verified extension clicks with signed telemetry and anti-bot validation.</p>
+                </div>
+
+                <div
+                  onClick={() => setPricingModel('CPM')}
+                  className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                    pricingModel === 'CPM'
+                      ? 'border-secondary bg-secondary-container/20 shadow-xs'
+                      : 'border-outline-variant/30 bg-surface-container-low hover:border-outline-variant'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-bold text-on-surface">CPM (Viewable Impressions)</span>
+                    <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${pricingModel === 'CPM' ? 'border-secondary bg-secondary' : 'border-outline-variant'}`}>
+                      {pricingModel === 'CPM' && <span className="w-1.5 h-1.5 rounded-full bg-on-secondary"></span>}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-on-surface-variant">Pay per 1,000 IAB-compliant in-viewport impressions with verified dwell time.</p>
+                </div>
+              </div>
+
+              {/* Dynamic Rates according to Pricing Model */}
+              <div className="p-4 rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-4">
+                <span className="text-xs font-bold text-on-surface block">Commercial Rate Configuration</span>
+
+                {pricingModel === 'CPO' && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+                    <div className="space-y-1">
+                      <label className="text-xs font-semibold text-on-surface">Cost Per Verified Outcome (₹)</label>
+                      <input
+                        type="number"
+                        min="5"
+                        step="1"
+                        value={costPerOutcomeRupees}
+                        onChange={(e) => setCostPerOutcomeRupees(e.target.value)}
+                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm font-semibold tabular-nums outline-none focus:border-secondary"
+                      />
+                      <span className="text-[10px] text-on-surface-variant">Minimum ₹5.00 per completed task</span>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-semibold text-on-surface">Target Outcomes</label>
+                      <input
+                        type="number"
+                        min="10"
+                        value={targetOutcomes}
+                        onChange={(e) => setTargetOutcomes(e.target.value)}
+                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm font-semibold tabular-nums outline-none focus:border-secondary"
+                      />
+                      <span className="text-[10px] text-on-surface-variant">Expected outcome volume for this flight</span>
+                    </div>
+                  </div>
+                )}
+
+                {pricingModel === 'CPC' && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+                    <div className="space-y-1">
+                      <label className="text-xs font-semibold text-on-surface">Advertiser Cost Per Click (₹)</label>
+                      <input
+                        type="number"
+                        min="0.5"
+                        step="0.25"
+                        value={cpcRateRupees}
+                        onChange={(e) => setCpcRateRupees(e.target.value)}
+                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm font-semibold tabular-nums outline-none focus:border-secondary"
+                      />
+                      <span className="text-[10px] text-on-surface-variant">Charged per cryptographically signed click</span>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-semibold text-on-surface">User Click Reward (₹)</label>
+                      <input
+                        type="number"
+                        min="0.1"
+                        step="0.1"
+                        value={creatorClickRewardRupees}
+                        onChange={(e) => setCreatorClickRewardRupees(e.target.value)}
+                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm font-semibold tabular-nums outline-none focus:border-secondary"
+                      />
+                      <span className="text-[10px] text-on-surface-variant">Micro-reward allocated to participating user wallet</span>
+                    </div>
+                  </div>
+                )}
+
+                {pricingModel === 'CPM' && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+                    <div className="space-y-1">
+                      <label className="text-xs font-semibold text-on-surface">CPM Rate (₹ per 1,000 Impressions)</label>
+                      <input
+                        type="number"
+                        min="20"
+                        step="5"
+                        value={cpmRateRupees}
+                        onChange={(e) => setCpmRateRupees(e.target.value)}
+                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm font-semibold tabular-nums outline-none focus:border-secondary"
+                      />
+                      <span className="text-[10px] text-on-surface-variant">₹{(parseFloat(cpmRateRupees || '0') / 1000).toFixed(3)} per single verified view</span>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-semibold text-on-surface">Creator Reward (₹ per 1,000 Views)</label>
+                      <input
+                        type="number"
+                        min="5"
+                        step="5"
+                        value={creatorImpressionRewardRupees}
+                        onChange={(e) => setCreatorImpressionRewardRupees(e.target.value)}
+                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm font-semibold tabular-nums outline-none focus:border-secondary"
+                      />
+                      <span className="text-[10px] text-on-surface-variant">Shared with creators meeting dwell criteria</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Budgets & Spending Limits */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-space-md">
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-on-surface">Total Budget (INR)</label>
+                  <label className="text-xs font-semibold text-on-surface">Total Campaign Budget Allocation (INR)</label>
                   <div className="relative">
                     <span className="absolute left-3 top-2 text-sm font-bold text-on-surface-variant">₹</span>
                     <input
                       type="number"
-                      min="5000"
+                      min="1000"
+                      step="500"
                       value={budgetAllocatedRupees}
                       onChange={(e) => setBudgetAllocatedRupees(e.target.value)}
                       className="w-full pl-8 pr-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm focus:border-secondary outline-none tabular-nums font-semibold"
                     />
                   </div>
+                  <span className="text-[10px] text-on-surface-variant">Minimum ₹1,000. Reserved atomically from unreserved escrow balance</span>
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-on-surface">Cost Per Verified Outcome (CPO)</label>
+                  <label className="text-xs font-semibold text-on-surface">Daily Spending Cap (Optional)</label>
                   <div className="relative">
                     <span className="absolute left-3 top-2 text-sm font-bold text-on-surface-variant">₹</span>
                     <input
                       type="number"
-                      min="10"
-                      value={costPerOutcomeRupees}
-                      onChange={(e) => setCostPerOutcomeRupees(e.target.value)}
+                      min="100"
+                      step="100"
+                      value={dailyBudgetCapRupees}
+                      onChange={(e) => setDailyBudgetCapRupees(e.target.value)}
                       className="w-full pl-8 pr-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm focus:border-secondary outline-none tabular-nums font-semibold"
                     />
                   </div>
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-xs font-semibold text-on-surface">Target Outcomes</label>
-                  <input
-                    type="number"
-                    value={targetOutcomes}
-                    onChange={(e) => setTargetOutcomes(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm focus:border-secondary outline-none tabular-nums font-semibold"
-                  />
+                  <span className="text-[10px] text-on-surface-variant">Paces campaign delivery across the flight window</span>
                 </div>
               </div>
 
-              {/* Escrow Guarantee Notice */}
-              <div className="p-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-secondary text-[20px]">verified</span>
-                  <span className="text-xs font-bold text-on-surface">RBI Nodal Escrow Lock Guarantee</span>
+              {/* Targeting & Optional Rewards Settings */}
+              <div className="p-4 rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-3">
+                <span className="text-xs font-bold text-on-surface block">Audience Targeting & Reward Participation</span>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-on-surface">User KYC Verification Requirement</label>
+                    <select
+                      value={minKycTier}
+                      onChange={(e) => setMinKycTier(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-xs focus:border-secondary outline-none"
+                    >
+                      <option value="TIER_0">Tier 0 (Registered Extension Users)</option>
+                      <option value="TIER_1">Tier 1 (Phone & Email Verified Only)</option>
+                      <option value="TIER_2">Tier 2 (Government ID & Bank Verified)</option>
+                    </select>
+                  </div>
+
+                  <div className="flex items-center pt-5">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={rewardsEnabled}
+                        onChange={(e) => setRewardsEnabled(e.target.checked)}
+                        className="accent-secondary w-4 h-4 rounded"
+                      />
+                      <span className="text-xs text-on-surface font-medium">
+                        Enable optional user reward payouts for this campaign
+                      </span>
+                    </label>
+                  </div>
                 </div>
-                <p className="text-xs text-on-surface-variant">
-                  When launched, ₹{parseFloat(budgetAllocatedRupees || '0').toLocaleString('en-IN')} will be securely moved from your unreserved pool into this campaign&apos;s locked escrow register. Creators receive rewards solely upon authentic kinematic telemetry validation.
-                </p>
               </div>
 
               <div className="flex justify-between pt-4">
@@ -402,7 +638,36 @@ export default function CampaignCreationWizardPage() {
 
           {step === 3 && (
             <div className="space-y-4">
-              <h2 className="font-headline text-base font-bold text-on-surface">Step 3: ASCI Regulatory Policy & Launch</h2>
+              <h2 className="font-headline text-base font-bold text-on-surface">Step 3: Review Breakdown & Policy Declaration</h2>
+
+              {/* Summary Card */}
+              <div className="p-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-3">
+                <div className="flex items-center justify-between pb-2 border-b border-outline-variant/20">
+                  <span className="text-xs font-bold text-on-surface">Campaign Commercial Summary</span>
+                  <span className="px-2 py-0.5 rounded bg-secondary/15 text-secondary text-[11px] font-bold">
+                    {pricingModel} Model
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                  <div>
+                    <span className="text-on-surface-variant block text-[10px]">Total Escrow Lock</span>
+                    <span className="font-bold text-on-surface text-sm">₹{parseFloat(budgetAllocatedRupees || '0').toLocaleString('en-IN')}</span>
+                  </div>
+                  <div>
+                    <span className="text-on-surface-variant block text-[10px]">Pricing Model</span>
+                    <span className="font-bold text-on-surface">{pricingModel}</span>
+                  </div>
+                  <div>
+                    <span className="text-on-surface-variant block text-[10px]">Daily Cap</span>
+                    <span className="font-bold text-on-surface">₹{dailyBudgetCapRupees || 'None'}</span>
+                  </div>
+                  <div>
+                    <span className="text-on-surface-variant block text-[10px]">Reward Payouts</span>
+                    <span className="font-bold text-on-surface">{rewardsEnabled ? 'Enabled' : 'Disabled'}</span>
+                  </div>
+                </div>
+              </div>
 
               <div className="p-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-3">
                 <label className="flex items-start gap-2.5 cursor-pointer">
@@ -413,7 +678,7 @@ export default function CampaignCreationWizardPage() {
                     className="mt-0.5 accent-secondary"
                   />
                   <span className="text-xs text-on-surface font-medium">
-                    <strong>Mandatory Advertiser Declaration:</strong> We certify that this campaign complies with ASCI (Advertising Standards Council of India) codes. This activity is voluntary, non-coercive, and contains no deceptive earnings guarantees.
+                    <strong>Mandatory Advertiser Declaration:</strong> We certify that this campaign complies with ASCI (Advertising Standards Council of India) codes and applicable digital advertising guidelines. This campaign is served exclusively within verified extension inventory surfaces without third-party website DOM injection.
                   </span>
                 </label>
               </div>

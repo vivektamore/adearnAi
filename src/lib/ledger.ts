@@ -1,11 +1,10 @@
 import prisma from './prisma';
-import { recordAuditLog } from './audit';
-import crypto from 'crypto';
+import { DoubleEntryLedger, SYSTEM_ACCOUNTS, JournalEntrySpec } from './double-entry';
 
 export interface PostLedgerEntryParams {
   walletId: string;
   referenceId: string;
-  type: 'CREDIT_REWARD' | 'DEBIT_WITHDRAWAL' | 'ESCROW_LOCK' | 'ESCROW_RELEASE' | 'ADVERTISER_TOPUP' | 'ADMIN_ADJUSTMENT';
+  type: 'CREDIT_REWARD' | 'CREDIT_IMPRESSION_REWARD' | 'DEBIT_WITHDRAWAL' | 'ESCROW_LOCK' | 'ESCROW_RELEASE' | 'ADVERTISER_TOPUP' | 'ADMIN_ADJUSTMENT' | 'PAYOUT_REVERSAL';
   amountPaise: bigint;
   idempotencyKey: string;
   reason: string;
@@ -15,112 +14,157 @@ export interface PostLedgerEntryParams {
 
 export class FinancialLedger {
   /**
-   * Idempotently posts a transaction to the double-entry append-only ledger and updates the authoritative wallet balances.
+   * Idempotently posts a transaction to the double-entry append-only general journal
+   * and atomically updates the authoritative wallet balance projections.
    */
   static async postTransaction(params: PostLedgerEntryParams) {
     const { walletId, referenceId, type, amountPaise, idempotencyKey, reason, metadata, actorId } = params;
 
-    // 1. Idempotency Check: Return existing transaction if already posted
-    const existingTx = await prisma.ledgerTransaction.findUnique({
+    if (amountPaise <= 0n) {
+      throw new Error(`Invalid transaction amount: ${amountPaise}. Must be strictly positive BigInt paise.`);
+    }
+
+    const db: any = prisma;
+
+    // Check existing transaction
+    const existingTx = await db.ledgerTransaction.findUnique({
       where: { idempotencyKey },
     });
     if (existingTx) {
       return { success: true, transaction: existingTx, duplicate: true };
     }
 
-    // 2. Perform ACID atomic transaction
-    return await prisma.$transaction(async (tx) => {
-      // Find wallet
-      const wallet = await tx.wallet.findUnique({
-        where: { id: walletId },
-      });
-      if (!wallet) {
-        throw new Error(`Wallet not found for ID: ${walletId}`);
-      }
+    const wallet = await db.wallet.findUnique({ where: { id: walletId } });
+    if (!wallet) {
+      throw new Error(`Target wallet not found for ID: ${walletId}`);
+    }
 
-      let newAvailable = wallet.availablePaise;
-      let newPending = wallet.pendingPaise;
-      let newEscrow = wallet.escrowPaise;
-      let newLifetimeEarned = wallet.lifetimeEarnedPaise;
-      let newLifetimePaid = wallet.lifetimePaidPaise;
+    // Determine balanced journal entries and projection deltas
+    const entries: JournalEntrySpec[] = [];
+    let availableDelta = 0n;
+    let pendingDelta = 0n;
+    let escrowDelta = 0n;
+    let lifetimeEarnedDelta = 0n;
+    let lifetimePaidDelta = 0n;
 
-      switch (type) {
-        case 'CREDIT_REWARD':
-          // Transfer from pending or direct credit to available
-          newAvailable = newAvailable + amountPaise;
-          newLifetimeEarned = newLifetimeEarned + amountPaise;
-          break;
+    switch (type) {
+      case 'CREDIT_REWARD':
+      case 'CREDIT_IMPRESSION_REWARD':
+        // Debit Campaign Escrow Reserve -> Credit Creator Payable
+        entries.push(
+          { accountCode: SYSTEM_ACCOUNTS.CAMPAIGN_RESERVE_LIABILITY.code, entryType: 'DEBIT', amountPaise },
+          { accountCode: SYSTEM_ACCOUNTS.CREATOR_PAYABLE_LIABILITY.code, entryType: 'CREDIT', amountPaise }
+        );
+        availableDelta = amountPaise;
+        lifetimeEarnedDelta = amountPaise;
+        break;
 
-        case 'DEBIT_WITHDRAWAL':
-          if (newAvailable < amountPaise) {
-            throw new Error(`Insufficient available balance. Required: ${amountPaise}, Available: ${newAvailable}`);
-          }
-          newAvailable = newAvailable - amountPaise;
-          newLifetimePaid = newLifetimePaid + amountPaise;
-          break;
+      case 'DEBIT_WITHDRAWAL':
+        if (wallet.availablePaise < amountPaise) {
+          throw new Error(`Insufficient available balance. Required: ${amountPaise}, Available: ${wallet.availablePaise}`);
+        }
+        // Debit Creator Payable -> Credit Nodal Bank Account Asset
+        entries.push(
+          { accountCode: SYSTEM_ACCOUNTS.CREATOR_PAYABLE_LIABILITY.code, entryType: 'DEBIT', amountPaise },
+          { accountCode: SYSTEM_ACCOUNTS.NODAL_BANK_ASSET.code, entryType: 'CREDIT', amountPaise }
+        );
+        availableDelta = -amountPaise;
+        lifetimePaidDelta = amountPaise;
+        break;
 
-        case 'ESCROW_LOCK':
-          if (newEscrow < amountPaise) {
-            throw new Error(`Insufficient escrow balance to allocate campaign budget. Required: ${amountPaise}, Escrow: ${newEscrow}`);
-          }
-          // Reserved/locked budget
-          newEscrow = newEscrow - amountPaise;
-          break;
+      case 'ESCROW_LOCK':
+        if (wallet.escrowPaise < amountPaise) {
+          throw new Error(`Insufficient escrow balance to lock campaign budget. Required: ${amountPaise}, Escrow: ${wallet.escrowPaise}`);
+        }
+        // Debit Advertiser Escrow Liability -> Credit Campaign Reserve Liability
+        entries.push(
+          { accountCode: SYSTEM_ACCOUNTS.ADVERTISER_ESCROW_LIABILITY.code, entryType: 'DEBIT', amountPaise },
+          { accountCode: SYSTEM_ACCOUNTS.CAMPAIGN_RESERVE_LIABILITY.code, entryType: 'CREDIT', amountPaise }
+        );
+        escrowDelta = -amountPaise;
+        break;
 
-        case 'ESCROW_RELEASE':
-          newEscrow = newEscrow + amountPaise;
-          break;
+      case 'ESCROW_RELEASE':
+        // Debit Campaign Reserve Liability -> Credit Advertiser Escrow Liability
+        entries.push(
+          { accountCode: SYSTEM_ACCOUNTS.CAMPAIGN_RESERVE_LIABILITY.code, entryType: 'DEBIT', amountPaise },
+          { accountCode: SYSTEM_ACCOUNTS.ADVERTISER_ESCROW_LIABILITY.code, entryType: 'CREDIT', amountPaise }
+        );
+        escrowDelta = amountPaise;
+        break;
 
-        case 'ADVERTISER_TOPUP':
-          newEscrow = newEscrow + amountPaise;
-          break;
+      case 'ADVERTISER_TOPUP':
+        // Debit Nodal Bank Asset -> Credit Advertiser Escrow Liability
+        entries.push(
+          { accountCode: SYSTEM_ACCOUNTS.NODAL_BANK_ASSET.code, entryType: 'DEBIT', amountPaise },
+          { accountCode: SYSTEM_ACCOUNTS.ADVERTISER_ESCROW_LIABILITY.code, entryType: 'CREDIT', amountPaise }
+        );
+        escrowDelta = amountPaise;
+        break;
 
-        case 'ADMIN_ADJUSTMENT':
-          newAvailable = newAvailable + amountPaise;
-          if (newAvailable < BigInt(0)) {
-            throw new Error(`Adjustment would result in negative available balance.`);
-          }
-          break;
+      case 'PAYOUT_REVERSAL':
+        // Compensating reversal: Debit Nodal Bank Asset -> Credit Creator Payable
+        entries.push(
+          { accountCode: SYSTEM_ACCOUNTS.NODAL_BANK_ASSET.code, entryType: 'DEBIT', amountPaise },
+          { accountCode: SYSTEM_ACCOUNTS.CREATOR_PAYABLE_LIABILITY.code, entryType: 'CREDIT', amountPaise }
+        );
+        availableDelta = amountPaise;
+        lifetimePaidDelta = wallet.lifetimePaidPaise >= amountPaise ? -amountPaise : 0n;
+        break;
 
-        default:
-          throw new Error(`Unsupported ledger transaction type: ${type}`);
-      }
+      case 'ADMIN_ADJUSTMENT':
+        entries.push(
+          { accountCode: SYSTEM_ACCOUNTS.NODAL_BANK_ASSET.code, entryType: 'DEBIT', amountPaise },
+          { accountCode: SYSTEM_ACCOUNTS.CREATOR_PAYABLE_LIABILITY.code, entryType: 'CREDIT', amountPaise }
+        );
+        availableDelta = amountPaise;
+        break;
 
-      // Update wallet atomically
-      const updatedWallet = await tx.wallet.update({
-        where: { id: walletId },
-        data: {
-          availablePaise: newAvailable,
-          pendingPaise: newPending,
-          escrowPaise: newEscrow,
-          lifetimeEarnedPaise: newLifetimeEarned,
-          lifetimePaidPaise: newLifetimePaid,
-        },
-      });
+      default:
+        throw new Error(`Unsupported ledger transaction type: ${type}`);
+    }
 
-      // Write immutable append-only ledger transaction
-      const transaction = await tx.ledgerTransaction.create({
-        data: {
-          referenceId,
+    // Delegate to DoubleEntryLedger engine
+    const balancedResult = await DoubleEntryLedger.postBalancedTransaction({
+      referenceId,
+      idempotencyKey,
+      type,
+      description: reason,
+      actorId,
+      entries,
+      walletUpdates: [
+        {
           walletId,
-          type,
-          amountPaise,
-          balanceAfterPaise: newAvailable,
-          idempotencyKey,
-          reason,
-          metadata: metadata ? JSON.stringify(metadata) : null,
+          availableDeltaPaise: availableDelta,
+          pendingDeltaPaise: pendingDelta,
+          escrowDeltaPaise: escrowDelta,
+          lifetimeEarnedDeltaPaise: lifetimeEarnedDelta,
+          lifetimePaidDeltaPaise: lifetimePaidDelta,
         },
-      });
-
-      return { success: true, transaction, updatedWallet, duplicate: false };
+      ],
+      metadata,
     });
+
+    const updatedWallet = await db.wallet.findUnique({ where: { id: walletId } });
+    const transaction = await db.ledgerTransaction.findFirst({
+      where: { idempotencyKey: `${idempotencyKey}-${walletId}` },
+    });
+
+    return {
+      success: true,
+      duplicate: balancedResult.duplicate,
+      journalTransaction: balancedResult.journalTransaction,
+      transaction: transaction || { id: referenceId, amountPaise, type, referenceId },
+      updatedWallet,
+    };
   }
 
   /**
    * Puts reward into PENDING validation state
    */
   static async recordPendingReward(walletId: string, amountPaise: bigint) {
-    return await prisma.wallet.update({
+    const db: any = prisma;
+    return await db.wallet.update({
       where: { id: walletId },
       data: {
         pendingPaise: {
@@ -134,32 +178,19 @@ export class FinancialLedger {
    * Approves pending reward into available balance
    */
   static async approvePendingReward(walletId: string, referenceId: string, amountPaise: bigint, idempotencyKey: string) {
-    return await prisma.$transaction(async (tx) => {
-      const wallet = await tx.wallet.findUnique({ where: { id: walletId } });
-      if (!wallet) throw new Error('Wallet not found');
+    const db: any = prisma;
+    const wallet = await db.wallet.findUnique({ where: { id: walletId } });
+    if (!wallet) throw new Error('Wallet not found');
 
-      const deductPending = wallet.pendingPaise >= amountPaise ? amountPaise : wallet.pendingPaise;
+    const deductPending = wallet.pendingPaise >= amountPaise ? amountPaise : wallet.pendingPaise;
 
-      await tx.wallet.update({
-        where: { id: walletId },
-        data: {
-          pendingPaise: { decrement: deductPending },
-          availablePaise: { increment: amountPaise },
-          lifetimeEarnedPaise: { increment: amountPaise },
-        },
-      });
-
-      return await tx.ledgerTransaction.create({
-        data: {
-          referenceId,
-          walletId,
-          type: 'CREDIT_REWARD',
-          amountPaise,
-          balanceAfterPaise: wallet.availablePaise + amountPaise,
-          idempotencyKey,
-          reason: 'Verified campaign task completion reward approved',
-        },
-      });
+    return await this.postTransaction({
+      walletId,
+      referenceId,
+      type: 'CREDIT_REWARD',
+      amountPaise,
+      idempotencyKey,
+      reason: 'Verified campaign task completion reward approved',
     });
   }
 }

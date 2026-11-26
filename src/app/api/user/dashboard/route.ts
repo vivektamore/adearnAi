@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
+import { serializeBigInts } from '@/lib/money';
 
 export async function GET(req: NextRequest) {
   const auth = requireAuth(req, ['USER', 'ADMIN']);
@@ -51,15 +52,17 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'User wallet not found.' }, { status: 404 });
   }
 
-  return NextResponse.json({
-    user,
-    metrics: {
-      availableBalancePaise: wallet.availablePaise,
-      pendingBalancePaise: wallet.pendingPaise,
-      lifetimeEarnedPaise: wallet.lifetimeEarnedPaise,
-      lifetimePaidPaise: wallet.lifetimePaidPaise,
-      activeCampaignsAvailable: activeCampaignsCount,
-    },
-    recentTasks,
-  });
+  return NextResponse.json(
+    serializeBigInts({
+      user,
+      metrics: {
+        availableBalancePaise: wallet.availablePaise,
+        pendingBalancePaise: wallet.pendingPaise,
+        lifetimeEarnedPaise: wallet.lifetimeEarnedPaise,
+        lifetimePaidPaise: wallet.lifetimePaidPaise,
+        activeCampaignsAvailable: activeCampaignsCount,
+      },
+      recentTasks,
+    })
+  );
 }

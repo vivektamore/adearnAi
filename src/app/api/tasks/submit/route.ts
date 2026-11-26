@@ -4,6 +4,7 @@ import { requireAuth } from '@/lib/auth';
 import { evaluateTaskTelemetry, verifySessionToken, TelemetryPayload } from '@/lib/telemetry';
 import { FinancialLedger } from '@/lib/ledger';
 import { recordAuditLog } from '@/lib/audit';
+import { serializeBigInts } from '@/lib/money';
 
 export async function POST(req: NextRequest) {
   const auth = requireAuth(req, ['USER', 'ADMIN']);
@@ -132,10 +133,12 @@ export async function POST(req: NextRequest) {
     newState: { rewardPaise: task.rewardPaise.toString() },
   });
 
-  return NextResponse.json({
-    success: true,
-    status: 'VALIDATED',
-    rewardPaise: task.rewardPaise,
-    message: 'Task validated and approved. Reward credited to your available balance.',
-  });
+  return NextResponse.json(
+    serializeBigInts({
+      success: true,
+      status: 'VALIDATED',
+      rewardPaise: task.rewardPaise,
+      message: 'Task validated and approved. Reward credited to your available balance.',
+    })
+  );
 }

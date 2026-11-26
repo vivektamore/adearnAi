@@ -1,93 +1,94 @@
 # Database Backup and Disaster Recovery Runbook — AdEarn AI
+## Production MySQL 8.0 Backup Automation, Retention, Off-Site Replication, and Restoration
 
-Financial applications must maintain verifiable, automated, encrypted, and tested backup procedures.
+Financial applications must maintain verifiable, automated, encrypted, and tested backup and restoration procedures.
 
 ---
 
-## 1. Automated Daily Logical Backup Script
+## 1. Automated Logical Backup Utility (`scripts/backup_db.sh`)
 
-Create `/home/adearn/scripts/backup_db.sh`:
+AdEarn AI provides a standalone, production-hardened backup script at `scripts/backup_db.sh`.
 
+### Key Characteristics:
+- **Consistent Snapshot:** Uses `mysqldump --single-transaction --quick` to capture consistent state without locking tables or interrupting user sessions.
+- **Includes Stored Logic:** Captures `--routines` and `--triggers`.
+- **Max Compression:** Pipes dump output directly into `gzip -9` to minimize storage footprint.
+- **Integrity Validation:** Verifies file creation and non-zero byte size before exiting.
+- **Automated Retention:** Automatically prunes dumps older than `RETENTION_DAYS` (default: 7 daily backups).
+
+### Manual Invocation:
 ```bash
-#!/usr/bin/env bash
-set -eo pipefail
+# Run backup to default directory (./backups/mysql)
+bash ./scripts/backup_db.sh
 
-
-BACKUP_DIR="/home/adearn/backups/mysql"
-TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-FILENAME="${BACKUP_DIR}/adearn_ai_${TIMESTAMP}.sql.gz"
-RETENTION_DAYS=30
-
-mkdir -p "${BACKUP_DIR}"
-
-echo "[INFO] Starting database backup: ${FILENAME}"
-
-# Dump database using single-transaction (consistent snapshot without locking tables)
-docker compose exec -T db mysqldump -u adearn_user -p"${DB_PASSWORD}" \
-  --single-transaction \
-  --quick \
-  --routines \
-  --triggers \
-  adearn_ai | gzip > "${FILENAME}"
-
-# Generate SHA256 checksum for tamper-evidence
-sha256sum "${FILENAME}" > "${FILENAME}.sha256"
-
-echo "[SUCCESS] Backup complete. Size: $(du -h "${FILENAME}" | cut -f1)"
-
-# Prune backups older than 30 days
-find "${BACKUP_DIR}" -type f -name "adearn_ai_*.sql.gz*" -mtime +${RETENTION_DAYS} -delete
-echo "[INFO] Pruned backups older than ${RETENTION_DAYS} days."
-```
-
-Make executable:
-```bash
-chmod 700 /home/adearn/scripts/backup_db.sh
+# Run backup to custom destination
+bash ./scripts/backup_db.sh /mnt/secure_backup_volume/mysql
 ```
 
 ---
 
-## 2. Automated Cron Schedule
+## 2. Automated Cron Scheduling
 
-Add to crontab:
+Schedule automated nightly execution on the production host via the `adearn` user crontab:
+
+```bash
+crontab -e
+```
+
+Add the following schedule (runs daily at 02:00 AM):
 ```cron
-# Run daily at 02:00 UTC
-0 2 * * * /home/adearn/scripts/backup_db.sh >> /home/adearn/logs/backup.log 2>&1
+0 2 * * * /home/adearn/app/scripts/backup_db.sh /home/adearn/app/backups/mysql >> /home/adearn/app/logs/backup.log 2>&1
 ```
 
 ---
 
 ## 3. Off-Site Replication to S3 / Cloudflare R2
 
-Never store backups solely on the host running the application. Sync backups to private object storage:
+Never store backups solely on the host running the application. Synchronize daily archives to private, encrypted object storage with bucket versioning enabled:
 
 ```bash
-# Using AWS CLI / R2 CLI
-aws s3 sync /home/adearn/backups/mysql s3://adearn-backups-secure/mysql/ --sse AES256
+# Append to cron job or backup script
+aws s3 sync /home/adearn/app/backups/mysql s3://adearn-backups-vault/mysql/ \
+  --sse AES256 \
+  --region ap-south-1
 ```
 
 ---
 
-## 4. Full Disaster Recovery / Restoration Procedure
+## 4. Disaster Recovery & Restoration Procedure (`scripts/restore_db.sh`)
 
-To restore the database from a backup file (e.g., following server failure or data corruption):
+To restore the MySQL database from a compressed backup archive (e.g., following hardware failure, corrupt state, or catastrophic incident):
+
+### Interactive Restoration:
+```bash
+# Syntax: ./scripts/restore_db.sh <path_to_backup_file.sql.gz> [--force]
+bash ./scripts/restore_db.sh ./backups/mysql/adearn_ai_backup_20261018_020000.sql.gz
+```
+
+### Script Execution Steps:
+1. Validates that the input archive exists and is non-empty.
+2. Prompts operator for explicit `yes` confirmation (unless `--force` is provided).
+3. Automatically creates a **pre-restore safety snapshot** of the live database in `./backups/mysql/pre_restore_safety/` before making any modifications.
+4. Streams decompression and imports SQL directly into the running `adearn-db` container.
+5. Runs verification query counting tables in `information_schema.tables` and reporting verified table counts.
+
+---
+
+## 5. Post-Restoration Verification & Health Check
+
+After restoring:
 
 ```bash
-# 1. Stop web application traffic to prevent concurrent writes during restore
-docker compose stop app
+# 1. Verify application container health
+curl -s http://127.0.0.1:3000/api/health | jq .
 
-# 2. Verify SHA256 checksum of the backup file
-sha256sum -c adearn_ai_20261017_020000.sql.gz.sha256
+# 2. Check table record counts
+docker compose exec db mysql -u adearn_user -p"$(grep DB_PASSWORD .env | cut -d '=' -f2)" -e "
+  SELECT table_name, table_rows 
+  FROM information_schema.tables 
+  WHERE table_schema = 'adearn_ai';
+"
 
-# 3. Decompress and restore into database
-gunzip < adearn_ai_20261017_020000.sql.gz | docker compose exec -T db mysql -u adearn_user -p"${DB_PASSWORD}" adearn_ai
-
-# 4. Run Prisma schema validation check
-docker compose run --rm app npx prisma validate
-
-# 5. Restart application
-docker compose start app
-
-# 6. Verify health endpoint
-curl -s http://localhost:3000/api/health | jq .
+# 3. Verify user and campaign data integrity
+docker compose run --rm app node scripts/verify_db.js
 ```
