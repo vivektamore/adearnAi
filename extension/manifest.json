@@ -17,21 +17,8 @@
     "storage",
     "sidePanel"
   ],
-  "content_scripts": [
-    {
-      "matches": [
-        "https://chatgpt.com/*",
-        "https://chat.openai.com/*"
-      ],
-      "js": ["chatgpt_content.js"],
-      "css": ["chatgpt_content.css"],
-      "run_at": "document_idle"
-    }
-  ],
   "host_permissions": [
     "http://localhost:3000/*",
-    "https://*.adearn.ai/*",
-    "https://chatgpt.com/*",
-    "https://chat.openai.com/*"
+    "https://*.adearn.ai/*"
   ]
 }

@@ -159,6 +159,35 @@ enum WebhookStatus {
   IGNORED
 }
 
+enum AdvertisingChannel {
+  ADEARN_EXTENSION
+  OPENAI_CHATGPT
+}
+
+enum OpenaiObjective {
+  IMPRESSIONS
+  CLICKS
+  CONVERSIONS
+}
+
+enum OpenaiBudgetType {
+  DAILY
+  LIFETIME
+}
+
+enum OpenaiResourceStatus {
+  PAUSED
+  ACTIVE
+  ARCHIVED
+}
+
+enum OpenaiAccountStatus {
+  UNLINKED
+  PENDING_VERIFICATION
+  ACTIVE
+  SUSPENDED
+}
+
 model User {
   id                 String       @id @default(cuid())
   email              String       @unique
@@ -203,6 +232,8 @@ model Organization {
   pan                String?
   contactEmail       String
   isVerified         Boolean      @default(true)
+  openaiAccountId    String?
+  openaiAccountStatus OpenaiAccountStatus @default(UNLINKED)
   createdAt          DateTime     @default(now())
   updatedAt          DateTime     @updatedAt
 
@@ -210,8 +241,11 @@ model Organization {
   wallet             Wallet?
   campaigns          Campaign[]
   fundingOrders      FundingOrder[]
+  openaiCampaigns    OpenaiCampaign[]
+  openaiConversionConfig OpenaiConversionConfig?
 
   @@index([name])
+  @@index([openaiAccountId])
 }
 
 model UserOrganization {
@@ -283,6 +317,7 @@ model Campaign {
   creatorImpressionRewardPaise BigInt         @default(0)
   dailyBudgetCapPaise          BigInt         @default(0)
   minKycTier                   KycTier        @default(TIER_0)
+  channel                      AdvertisingChannel @default(ADEARN_EXTENSION)
   targetOutcomes               Int            @default(100)
   verifiedOutcomes             Int            @default(0)
   impressionsCount             Int            @default(0)
@@ -298,6 +333,7 @@ model Campaign {
   moderationRecords    ModerationRecord[]
   impressions          CampaignImpression[]
   campaignPlacements   CampaignPlacement[]
+  openaiCampaign       OpenaiCampaign?
   adDecisions          AdDecision[]
   adEvents             AdEvent[]
   dailyAggregates      CampaignDailyAggregate[]
@@ -880,3 +916,120 @@ model PlacementDailyAggregate {
   @@index([placementId])
   @@index([date])
 }
+
+model OpenaiCampaign {
+  id                   String               @id @default(cuid())
+  organizationId       String
+  campaignId           String?              @unique
+  externalCampaignId   String?              @unique @db.VarChar(64)
+  name                 String
+  objective            OpenaiObjective      @default(CLICKS)
+  status               OpenaiResourceStatus @default(PAUSED)
+  budgetType           OpenaiBudgetType     @default(DAILY)
+  budgetMicros         BigInt               @default(0) // Integer micros in OpenAI account currency ($1 = 1,000,000 micros)
+  reportedSpendMicros  BigInt               @default(0)
+  currency             String               @default("USD")
+  startDate            DateTime?
+  endDate              DateTime?
+  geoTargetingJson     String?              @db.Text
+  platformsJson        String?              @db.Text
+  landingPageUrl       String               @db.Text
+  complianceJson       String?              @db.Text
+  lastSyncedAt         DateTime?
+  syncError            String?              @db.Text
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  organization         Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  adearnCampaign       Campaign?            @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  adGroups             OpenaiAdGroup[]
+  insightReports       OpenaiInsightReport[]
+
+  @@index([organizationId])
+  @@index([externalCampaignId])
+  @@index([status])
+}
+
+model OpenaiAdGroup {
+  id                   String               @id @default(cuid())
+  openaiCampaignId     String
+  externalAdGroupId    String?              @unique @db.VarChar(64)
+  name                 String
+  status               OpenaiResourceStatus @default(PAUSED)
+  contextHintsJson     String?              @db.Text
+  bidStrategy          String               @default("MAX_CLICKS")
+  maxBidMicros         BigInt?
+  billingEvent         String               @default("click") // impression | click
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  openaiCampaign       OpenaiCampaign       @relation(fields: [openaiCampaignId], references: [id], onDelete: Cascade)
+  ads                  OpenaiAd[]
+
+  @@index([openaiCampaignId])
+  @@index([externalAdGroupId])
+}
+
+model OpenaiAd {
+  id                   String               @id @default(cuid())
+  adGroupId            String
+  externalAdId         String?              @unique @db.VarChar(64)
+  name                 String
+  brandName            String
+  faviconUrl           String?              @db.Text
+  headline             String
+  description          String               @db.Text
+  imageUrl             String               @db.Text
+  landingPageUrl       String               @db.Text
+  utmParameters        String?              @db.Text
+  status               OpenaiResourceStatus @default(PAUSED)
+  reviewStatus         String               @default("PENDING_REVIEW")
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  adGroup              OpenaiAdGroup        @relation(fields: [adGroupId], references: [id], onDelete: Cascade)
+
+  @@index([adGroupId])
+  @@index([externalAdId])
+}
+
+model OpenaiInsightReport {
+  id                    String         @id @default(cuid())
+  openaiCampaignId      String
+  dataDate              DateTime       @db.Date
+  impressions           Int            @default(0)
+  clicks                Int            @default(0)
+  spendMicros           BigInt         @default(0)
+  ctrPercent            Float          @default(0.0)
+  avgCpcMicros          BigInt         @default(0)
+  avgCpmMicros          BigInt         @default(0)
+  conversions           Int            @default(0)
+  cpaMicros             BigInt         @default(0)
+  attributedSalesMicros BigInt         @default(0)
+  roas                  Float          @default(0.0)
+  freshnessTimestamp    DateTime       @default(now())
+  createdAt             DateTime       @default(now())
+
+  openaiCampaign        OpenaiCampaign @relation(fields: [openaiCampaignId], references: [id], onDelete: Cascade)
+
+  @@unique([openaiCampaignId, dataDate])
+  @@index([openaiCampaignId])
+  @@index([dataDate])
+}
+
+model OpenaiConversionConfig {
+  id                         String       @id @default(cuid())
+  organizationId             String       @unique
+  pixelId                    String?
+  pixelCode                  String?      @db.Text
+  conversionsApiEnabled      Boolean      @default(false)
+  attributionWindowDays      Int          @default(7)
+  eventDeduplicationEnabled  Boolean      @default(true)
+  createdAt                  DateTime     @default(now())
+  updatedAt                  DateTime     @updatedAt
+
+  organization               Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+}
+

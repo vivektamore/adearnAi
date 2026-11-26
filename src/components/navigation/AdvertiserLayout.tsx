@@ -39,6 +39,7 @@ export default function AdvertiserLayout({ children }: { children: React.ReactNo
   const navLinks = [
     { label: 'Overview', href: '/advertiser', icon: 'grid_view' },
     { label: 'Campaigns', href: '/advertiser/campaigns', icon: 'campaign' },
+    { label: 'ChatGPT Ads', href: '/advertiser/chatgpt-ads', icon: 'smart_toy' },
     { label: 'Create Campaign', href: '/advertiser/campaigns/new', icon: 'add_circle' },
     { label: 'Team Members', href: '/advertiser/members', icon: 'group' },
     { label: 'Analytics & Attribution', href: '/advertiser/analytics', icon: 'insights' },
