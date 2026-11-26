@@ -189,6 +189,24 @@ export async function POST(req: NextRequest) {
     return response;
   } catch (err: any) {
     console.error('Login error:', err);
-    return NextResponse.json({ error: 'Internal server error during authentication.' }, { status: 500 });
+
+    let errorMessage = 'Internal server error during authentication.';
+    if (
+      err.code === 'P1001' ||
+      err.message?.includes("Can't reach database server") ||
+      err.message?.includes('localhost:3306') ||
+      err.message?.includes('ECONNREFUSED')
+    ) {
+      errorMessage = 'Database connection error: Cannot reach database server. If running on Vercel, ensure a remote cloud MySQL DATABASE_URL is configured in Vercel Environment Variables (localhost cannot be reached from Vercel).';
+    } else if (
+      err.code === 'P2021' ||
+      (err.message?.includes('Table') && err.message?.includes("doesn't exist"))
+    ) {
+      errorMessage = 'Database schema error: Required database tables do not exist on the remote database. Please run "npx prisma db push" or apply migrations to your remote DATABASE_URL.';
+    } else if (err.message) {
+      errorMessage = `Authentication failed: ${err.message}`;
+    }
+
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
