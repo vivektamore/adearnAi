@@ -3,6 +3,10 @@ import prisma from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
 import { recordAuditLog } from '@/lib/audit';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+
 function maskUpi(vpa: string): string {
   const parts = vpa.split('@');
   if (parts.length !== 2) return '••••@upi';

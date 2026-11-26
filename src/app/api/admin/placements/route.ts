@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdminPermission, requireRole } from '@/lib/rbac';
 import { recordAuditLog } from '@/lib/audit';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+
 // In-memory persistent placement inventory configuration
 const PLACEMENTS_STORE: Record<string, any> = {
   EXTENSION_POPUP: {

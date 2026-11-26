@@ -4,6 +4,10 @@ import { requireAuth } from '@/lib/auth';
 import { generateSessionToken } from '@/lib/telemetry';
 import { serializeBigInts } from '@/lib/money';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+
 export async function POST(req: NextRequest) {
   const auth = requireAuth(req, ['USER', 'ADMIN']);
   if (auth.error) {

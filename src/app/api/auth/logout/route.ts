@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getSessionFromRequest } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+
 export async function POST(req: NextRequest) {
   const cookieToken = req.cookies.get('adearn_session')?.value;
   const authHeader = req.headers.get('authorization');

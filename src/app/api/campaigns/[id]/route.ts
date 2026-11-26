@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { serializeBigInts } from '@/lib/money';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const campaign = await prisma.campaign.findUnique({

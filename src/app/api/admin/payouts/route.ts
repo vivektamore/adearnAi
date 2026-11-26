@@ -6,6 +6,10 @@ import { recordAuditLog } from '@/lib/audit';
 import { FinancialLedger } from '@/lib/ledger';
 import { serializeBigInts } from '@/lib/money';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+
 export async function GET(req: NextRequest) {
   const auth = requireRole(req, ['ADMIN', 'SUPER_ADMIN']);
   if (!auth.authorized) {

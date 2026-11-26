@@ -6,6 +6,10 @@ import { getPayoutAdapter } from '@/lib/payout-adapter';
 import { recordAuditLog } from '@/lib/audit';
 import { parseRupeesToPaise, paiseToDecimalRupees, serializeBigInts } from '@/lib/money';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+
 const MIN_WITHDRAWAL_PAISE = BigInt(process.env.MIN_WITHDRAWAL_THRESHOLD_PAISE || 10000); // ₹100.00
 
 export async function GET(req: NextRequest) {

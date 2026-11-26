@@ -5,6 +5,10 @@ import { FinancialLedger } from '@/lib/ledger';
 import { recordAuditLog } from '@/lib/audit';
 import { parseRupeesToPaise, paiseToDecimalRupees, calculateGstInclusive, serializeBigInts } from '@/lib/money';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+
 export async function GET(req: NextRequest) {
   const auth = requireAuth(req, ['ADVERTISER', 'ADMIN', 'SUPER_ADMIN']);
   if (auth.error) {
