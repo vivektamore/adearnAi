@@ -30,7 +30,7 @@ async function handleSync() {
 
     // 3. Campaign table additions
     "ALTER TABLE `Campaign` ADD COLUMN `channel` VARCHAR(32) NOT NULL DEFAULT 'ADEARN_EXTENSION'",
-    "ALTER TABLE `Campaign` ADD COLUMN `targetUrl` TEXT NULL",
+    "ALTER TABLE `Campaign` ADD COLUMN `targetUrl` VARCHAR(1024) NOT NULL DEFAULT 'https://adearn.ai'",
 
     // 4. OpenaiCampaign table
     `CREATE TABLE IF NOT EXISTS \`OpenaiCampaign\` (

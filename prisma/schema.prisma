@@ -307,7 +307,7 @@ model Campaign {
   category                     String         @default("FinTech")
   actionType                   ActionType     @default(SURVEY)
   status                       CampaignStatus @default(DRAFT)
-  targetUrl                    String         @default("https://adearn.ai") @db.Text
+  targetUrl                    String         @default("https://adearn.ai") @db.VarChar(1024)
   requirementsJson             String?        @db.Text
   budgetAllocatedPaise         BigInt         @default(0)
   budgetSpentPaise             BigInt         @default(0)
