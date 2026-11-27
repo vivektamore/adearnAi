@@ -192,7 +192,7 @@ model User {
   id                 String       @id @default(cuid())
   email              String       @unique
   passwordHash       String
-  name               String
+  name               String       @default("User")
   role               Role         @default(USER)
   status             UserStatus   @default(ACTIVE)
   kycTier            KycTier      @default(TIER_1)
@@ -307,7 +307,7 @@ model Campaign {
   category                     String         @default("FinTech")
   actionType                   ActionType     @default(SURVEY)
   status                       CampaignStatus @default(DRAFT)
-  targetUrl                    String         @db.Text
+  targetUrl                    String         @default("https://adearn.ai") @db.Text
   requirementsJson             String?        @db.Text
   budgetAllocatedPaise         BigInt         @default(0)
   budgetSpentPaise             BigInt         @default(0)
