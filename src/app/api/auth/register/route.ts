@@ -32,9 +32,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Password must contain at least one letter and one number or special character.' }, { status: 400 });
     }
 
-    const existing = await prisma.user.findUnique({
-      where: { email: cleanEmail },
-    });
+    let existing;
+    try {
+      existing = await prisma.user.findUnique({
+        where: { email: cleanEmail },
+      });
+    } catch (findErr: any) {
+      if (
+        findErr.message?.includes('User.name') ||
+        findErr.message?.includes("Unknown column 'name'") ||
+        findErr.message?.includes('does not exist')
+      ) {
+        console.warn('Auto-healing: Adding missing User.name column to database...');
+        try {
+          await prisma.$executeRawUnsafe("ALTER TABLE `User` ADD COLUMN `name` VARCHAR(191) NOT NULL DEFAULT 'User'");
+        } catch {}
+        existing = await prisma.user.findUnique({
+          where: { email: cleanEmail },
+        });
+      } else {
+        throw findErr;
+      }
+    }
 
     if (existing) {
       return NextResponse.json({ error: 'An account with this email already exists.' }, { status: 409 });

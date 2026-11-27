@@ -89,12 +89,34 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const user = await prisma.user.findUnique({
-      where: { email: cleanEmail },
-      include: {
-        userOrganizations: true,
-      },
-    });
+    let user;
+    try {
+      user = await prisma.user.findUnique({
+        where: { email: cleanEmail },
+        include: {
+          userOrganizations: true,
+        },
+      });
+    } catch (findErr: any) {
+      if (
+        findErr.message?.includes('User.name') ||
+        findErr.message?.includes("Unknown column 'name'") ||
+        findErr.message?.includes('does not exist')
+      ) {
+        console.warn('Auto-healing: Adding missing User.name column to database...');
+        try {
+          await prisma.$executeRawUnsafe("ALTER TABLE `User` ADD COLUMN `name` VARCHAR(191) NOT NULL DEFAULT 'User'");
+        } catch {}
+        user = await prisma.user.findUnique({
+          where: { email: cleanEmail },
+          include: {
+            userOrganizations: true,
+          },
+        });
+      } else {
+        throw findErr;
+      }
+    }
 
     if (!user) {
       recordFailedAttempt(rateLimitKey);
