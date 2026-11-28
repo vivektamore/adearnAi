@@ -196,7 +196,7 @@ export default function ChatGptAdsDashboardPage() {
             </button>
 
             <Link
-              href="/advertiser/chatgpt-ads/new"
+              href="/advertiser/campaigns/new"
               className="px-4 py-1.5 bg-black hover:bg-neutral-800 text-white rounded-lg text-xs font-semibold flex items-center space-x-1 shadow-sm"
             >
               <span className="material-symbols-outlined text-sm">add</span>
@@ -315,7 +315,7 @@ export default function ChatGptAdsDashboardPage() {
               Launch autonomous, high-relevance native advertisements displayed below ChatGPT conversational responses via the official OpenAI Advertiser API.
             </p>
             <Link
-              href="/advertiser/chatgpt-ads/new"
+              href="/advertiser/campaigns/new"
               className="inline-flex items-center space-x-1.5 px-4 py-2 bg-black hover:bg-neutral-800 text-white rounded-lg text-xs font-semibold"
             >
               <span className="material-symbols-outlined text-sm">add</span>

@@ -29,6 +29,7 @@ enum KycTier {
 enum CampaignStatus {
   DRAFT
   IN_REVIEW
+  PENDING_APPROVAL
   ACTIVE
   PAUSED
   COMPLETED
@@ -162,6 +163,7 @@ enum WebhookStatus {
 enum AdvertisingChannel {
   ADEARN_EXTENSION
   OPENAI_CHATGPT
+  OMNICHANNEL
 }
 
 enum OpenaiObjective {
@@ -318,6 +320,10 @@ model Campaign {
   dailyBudgetCapPaise          BigInt         @default(0)
   minKycTier                   KycTier        @default(TIER_0)
   channel                      AdvertisingChannel @default(ADEARN_EXTENSION)
+  headline                     String?
+  brandName                    String?
+  faviconUrl                   String?        @db.Text
+  contextHintsJson             String?        @db.Text
   targetOutcomes               Int            @default(100)
   verifiedOutcomes             Int            @default(0)
   impressionsCount             Int            @default(0)

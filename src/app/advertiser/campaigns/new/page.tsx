@@ -1,78 +1,93 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import AdvertiserLayout from '@/components/navigation/AdvertiserLayout';
+import { formatINR } from '@/lib/currency';
 
-export default function CampaignCreationWizardPage() {
+export default function UnifiedCampaignCreationWizardPage() {
   const router = useRouter();
-  const [step, setStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [escrowBalancePaise, setEscrowBalancePaise] = useState<bigint | number>(0);
 
-  // Form states
+  // Core Form States
   const [title, setTitle] = useState('');
+  const [brandName, setBrandName] = useState('Fintect');
+  const [faviconUrl, setFaviconUrl] = useState('https://api.dicebear.com/7.x/identicon/svg?seed=fintect');
+  const [headline, setHeadline] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('FinTech');
-  const [actionType, setActionType] = useState('SURVEY');
-  const [targetUrl, setTargetUrl] = useState('');
+  const [targetUrl, setTargetUrl] = useState('https://fintech.ai');
   const [assetUrl, setAssetUrl] = useState('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80');
+  const [contextHintsInput, setContextHintsInput] = useState('fintech solutions, accounting automation, business banking');
 
-  // Pricing & Budget states
-  const [pricingModel, setPricingModel] = useState<'CPO' | 'CPC' | 'CPM'>('CPO');
-  const [budgetAllocatedRupees, setBudgetAllocatedRupees] = useState('5000');
-  const [dailyBudgetCapRupees, setDailyBudgetCapRupees] = useState('1000');
-  const [costPerOutcomeRupees, setCostPerOutcomeRupees] = useState('25');
-  const [targetOutcomes, setTargetOutcomes] = useState('200');
-  const [cpcRateRupees, setCpcRateRupees] = useState('2.50');
-  const [creatorClickRewardRupees, setCreatorClickRewardRupees] = useState('1.25');
-  const [cpmRateRupees, setCpmRateRupees] = useState('60');
-  const [creatorImpressionRewardRupees, setCreatorImpressionRewardRupees] = useState('30');
+  // Distribution Channels: OMNICHANNEL by default, or individual
+  const [selectedChannel, setSelectedChannel] = useState<'OMNICHANNEL' | 'OPENAI_CHATGPT' | 'ADEARN_EXTENSION'>('OMNICHANNEL');
 
-  // Targeting & Rewards states
-  const [rewardsEnabled, setRewardsEnabled] = useState(true);
-  const [minKycTier, setMinKycTier] = useState('TIER_0');
+  // Budget in Indian Rupees (INR)
+  const [budgetAllocatedRupees, setBudgetAllocatedRupees] = useState('2000');
+  const [pricingModel, setPricingModel] = useState<'CPO' | 'CPC' | 'CPM'>('CPC');
+  const [costPerOutcomeRupees, setCostPerOutcomeRupees] = useState('2.50');
   const [policyDeclared, setPolicyDeclared] = useState(true);
 
+  // AI Assistant States
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiNotice, setAiNotice] = useState<string | null>(null);
+
+  // Submission States
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // AI / ChatGPT generation state
-  const [aiPrompt, setAiPrompt] = useState('');
-  const [aiLoading, setAiLoading] = useState(false);
-  const [aiSuccess, setAiSuccess] = useState(false);
+  useEffect(() => {
+    fetch('/api/advertiser/overview')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.metrics?.escrowBalancePaise !== undefined) {
+          setEscrowBalancePaise(data.metrics.escrowBalancePaise);
+        }
+        if (data?.organization?.name) {
+          setBrandName(data.organization.name);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
-  async function handleAiGenerate(customPrompt?: string) {
-    const promptToUse = customPrompt || aiPrompt;
-    if (!promptToUse.trim()) {
-      setErrorMessage('Please type a product or brand idea to generate your campaign.');
+  // Run AI Creative Assistant
+  async function handleAiGenerate() {
+    if (!aiPrompt.trim()) {
+      setErrorMessage('Please type a brief summary of what you are promoting.');
       return;
     }
 
     setAiLoading(true);
     setErrorMessage('');
-    setAiSuccess(false);
+    setAiNotice(null);
 
     try {
-      const res = await fetch('/api/campaigns/ai-generate', {
+      const res = await fetch('/api/advertiser/openai/ai-assistant', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: promptToUse, category }),
+        body: JSON.stringify({
+          brandName,
+          productDescription: aiPrompt,
+          landingPageUrl: targetUrl,
+          category,
+          objective: pricingModel === 'CPM' ? 'impressions' : 'clicks',
+        }),
       });
 
       const data = await res.json();
-      if (res.ok && data.success && data.campaign) {
-        const c = data.campaign;
-        setTitle(c.title || '');
-        setDescription(c.description || '');
-        if (c.category) setCategory(c.category);
-        if (c.actionType) setActionType(c.actionType);
-        if (c.targetUrl) setTargetUrl(c.targetUrl);
-        if (c.recommendedCostPerOutcome) setCostPerOutcomeRupees(c.recommendedCostPerOutcome.toString());
-        if (c.suggestedBudget) setBudgetAllocatedRupees(c.suggestedBudget.toString());
-        if (c.targetOutcomes) setTargetOutcomes(c.targetOutcomes.toString());
-        setAiSuccess(true);
+      if (res.ok && data.creativeAssistant) {
+        const ca = data.creativeAssistant;
+        setTitle(ca.headlines[0] || `${brandName} Promotional Campaign`);
+        setHeadline(ca.headlines[0] || '');
+        setDescription(ca.descriptions[0] || '');
+        setContextHintsInput(ca.contextHints?.join(', ') || '');
+        setAiNotice('AI generated optimized copy adhering to ASCI and OpenAI advertising policies.');
       } else {
-        setErrorMessage(data.error || 'Failed to auto-generate campaign with AI.');
+        setErrorMessage(data.error || 'Failed to generate campaign with AI.');
       }
     } catch {
       setErrorMessage('Network error while generating with AI.');
@@ -81,65 +96,61 @@ export default function CampaignCreationWizardPage() {
     }
   }
 
-  async function handleCreateCampaign(e: React.FormEvent) {
+  // Submit Campaign for Admin Approval
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!title || !description || !targetUrl) {
-      setErrorMessage('Please complete all mandatory campaign details.');
-      return;
-    }
-    if (!policyDeclared) {
-      setErrorMessage('You must confirm adherence to ASCI and Indian advertising regulations.');
-      return;
-    }
-
     setSubmitting(true);
     setErrorMessage('');
 
+    if (!title || !description || !targetUrl) {
+      setErrorMessage('Please fill in all mandatory fields before submitting.');
+      setCurrentStep(1);
+      setSubmitting(false);
+      return;
+    }
+
+    if (!policyDeclared) {
+      setErrorMessage('Please accept the ASCI & Advertising Terms compliance statement.');
+      setSubmitting(false);
+      return;
+    }
+
     try {
-      const payload: any = {
-        title,
-        description,
-        category,
-        actionType,
-        pricingModel,
-        targetUrl,
-        assetUrl,
-        budgetAllocatedRupees: parseFloat(budgetAllocatedRupees),
-        rewardsEnabled,
-        minKycTier,
-      };
-
-      if (dailyBudgetCapRupees) {
-        payload.dailyBudgetCapRupees = parseFloat(dailyBudgetCapRupees);
-      }
-
-      if (pricingModel === 'CPO') {
-        payload.costPerOutcomeRupees = parseFloat(costPerOutcomeRupees);
-        payload.targetOutcomes = parseInt(targetOutcomes, 10) || 200;
-      } else if (pricingModel === 'CPC') {
-        payload.cpcRateRupees = parseFloat(cpcRateRupees);
-        payload.creatorClickRewardRupees = parseFloat(creatorClickRewardRupees);
-        payload.targetOutcomes = Math.floor(parseFloat(budgetAllocatedRupees) / parseFloat(cpcRateRupees));
-      } else if (pricingModel === 'CPM') {
-        payload.cpmRateRupees = parseFloat(cpmRateRupees);
-        payload.creatorImpressionRewardRupees = parseFloat(creatorImpressionRewardRupees);
-        payload.targetOutcomes = Math.floor((parseFloat(budgetAllocatedRupees) / parseFloat(cpmRateRupees)) * 1000);
-      }
+      const contextHints = contextHintsInput
+        .split(',')
+        .map((h) => h.trim())
+        .filter((h) => h.length > 0);
 
       const res = await fetch('/api/advertiser/campaigns', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          title,
+          description,
+          category,
+          channel: selectedChannel,
+          headline: headline || title.slice(0, 60),
+          brandName,
+          faviconUrl,
+          contextHints,
+          targetUrl,
+          assetUrl,
+          budgetAllocatedRupees,
+          pricingModel,
+          cpcRateRupees: costPerOutcomeRupees,
+          costPerOutcomeRupees,
+        }),
       });
 
       const data = await res.json();
       if (res.ok && data.success) {
-        router.push('/advertiser');
+        alert('Campaign submitted successfully! It is now in the Admin Moderation Queue for review and auto-deployment.');
+        router.push('/advertiser/campaigns');
       } else {
-        setErrorMessage(data.error || 'Failed to initialize campaign.');
+        setErrorMessage(data.error || 'Campaign submission failed.');
       }
-    } catch {
-      setErrorMessage('Network error while deploying campaign.');
+    } catch (err: any) {
+      setErrorMessage('Network error: ' + err.message);
     } finally {
       setSubmitting(false);
     }
@@ -147,566 +158,499 @@ export default function CampaignCreationWizardPage() {
 
   return (
     <AdvertiserLayout>
-      <div className="w-full max-w-[1080px] mx-auto px-space-lg py-space-xl space-y-space-lg">
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs text-on-surface-variant">
-          <Link href="/advertiser" className="hover:text-on-surface">Advertiser Studio</Link>
-          <span>/</span>
-          <span className="text-on-surface font-semibold">New Campaign Wizard</span>
-        </div>
-
-        {/* Wizard Header */}
-        <div className="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/30 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+      <div className="p-6 max-w-5xl mx-auto space-y-6">
+        {/* Top Header */}
+        <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="font-headline text-2xl font-bold text-on-surface">
-              Campaign Creation & Escrow Allocation Wizard
-            </h1>
-            <p className="text-sm text-on-surface-variant mt-1">
-              Deploy verified advertising campaigns across CPM, CPC, or CPO pricing models with guaranteed partner bank escrow protection.
+            <div className="flex items-center space-x-2">
+              <h1 className="text-2xl font-bold text-gray-900">Create Unified Campaign</h1>
+              <span className="text-xs bg-purple-100 text-purple-900 font-bold px-2 py-0.5 rounded-full">
+                Multi-Channel Middleware
+              </span>
+            </div>
+            <p className="text-xs text-gray-500 mt-1">
+              Submit your offer in INR. AdEarn AI structures the creatives, obtains admin approval, and autonomously deploys across ChatGPT AI conversations and the AdEarn extension network.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-semibold text-secondary">
-            <span className="material-symbols-outlined text-[18px]">verified_user</span>
-            <span>ASCI / SEBI Validated Framework</span>
+          <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 flex items-center space-x-2">
+            <span className="material-symbols-outlined text-sm text-emerald-600">account_balance_wallet</span>
+            <div className="text-xs">
+              <span className="text-gray-500">Escrow Balance: </span>
+              <span className="font-bold text-gray-900">{formatINR(BigInt(escrowBalancePaise))}</span>
+            </div>
           </div>
         </div>
 
         {/* Step Indicator */}
-        <div className="grid grid-cols-3 gap-2 text-center text-xs font-semibold">
-          <div className={`p-2.5 rounded-lg border ${step === 1 ? 'bg-primary-container text-on-primary border-primary-container' : 'bg-surface-container-lowest text-on-surface-variant border-outline-variant/30'}`}>
-            1. Campaign Identity & Assets
-          </div>
-          <div className={`p-2.5 rounded-lg border ${step === 2 ? 'bg-primary-container text-on-primary border-primary-container' : 'bg-surface-container-lowest text-on-surface-variant border-outline-variant/30'}`}>
-            2. Pricing, Budgets & Targeting
-          </div>
-          <div className={`p-2.5 rounded-lg border ${step === 3 ? 'bg-primary-container text-on-primary border-primary-container' : 'bg-surface-container-lowest text-on-surface-variant border-outline-variant/30'}`}>
-            3. Regulatory Review & Launch
-          </div>
+        <div className="grid grid-cols-3 gap-2 text-xs font-semibold">
+          <button
+            type="button"
+            onClick={() => setCurrentStep(1)}
+            className={`p-3 rounded-xl border text-left transition-colors ${
+              currentStep === 1
+                ? 'bg-purple-50 border-purple-300 text-purple-900'
+                : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            <span className="block text-[10px] uppercase text-gray-400 font-bold">Step 1</span>
+            1. Offer & AI Copy
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setCurrentStep(2)}
+            className={`p-3 rounded-xl border text-left transition-colors ${
+              currentStep === 2
+                ? 'bg-purple-50 border-purple-300 text-purple-900'
+                : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            <span className="block text-[10px] uppercase text-gray-400 font-bold">Step 2</span>
+            2. Channels & Budget
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setCurrentStep(3)}
+            className={`p-3 rounded-xl border text-left transition-colors ${
+              currentStep === 3
+                ? 'bg-purple-50 border-purple-300 text-purple-900'
+                : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            <span className="block text-[10px] uppercase text-gray-400 font-bold">Step 3</span>
+            3. Preview & Submit
+          </button>
         </div>
 
+        {/* Error / AI notices */}
         {errorMessage && (
-          <div className="p-3 rounded-lg bg-error-container text-on-error-container text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-semibold">
-            <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-[18px]">error</span>
-              <span>{errorMessage}</span>
-            </div>
-            {errorMessage.toLowerCase().includes('escrow') && (
-              <Link
-                href="/advertiser/billing"
-                className="px-3 py-1 bg-on-error-container text-error-container rounded font-bold hover:opacity-90 shrink-0 text-center"
-              >
-                Top-Up Escrow &rarr;
-              </Link>
-            )}
+          <div className="bg-rose-50 border border-rose-200 text-rose-800 text-xs p-3 rounded-xl flex items-center space-x-2">
+            <span className="material-symbols-outlined text-sm text-rose-600">error</span>
+            <span>{errorMessage}</span>
           </div>
         )}
 
-        {/* Wizard Body Form */}
-        <form onSubmit={handleCreateCampaign} className="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/30 shadow-xs space-y-space-lg">
-          {step === 1 && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-headline text-base font-bold text-on-surface">Step 1: Campaign Details & Creative Assets</h2>
-                <span className="text-[11px] text-secondary font-bold flex items-center gap-1">
-                  <span className="material-symbols-outlined text-[15px]">auto_awesome</span>
-                  AI Assisted
-                </span>
+        {aiNotice && (
+          <div className="bg-purple-50 border border-purple-200 text-purple-900 text-xs p-3 rounded-xl flex items-center space-x-2">
+            <span className="material-symbols-outlined text-sm text-purple-600">auto_awesome</span>
+            <span>{aiNotice}</span>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* STEP 1: OFFER & AI CREATIVE ASSISTANT */}
+          {currentStep === 1 && (
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 space-y-6 shadow-sm">
+              <div className="border-b border-gray-100 pb-4">
+                <h3 className="text-base font-bold text-gray-900">What are you promoting?</h3>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Type a quick prompt or paste your product link. Our AI will craft compliant copy for both ChatGPT sponsored cards and extension popups.
+                </p>
               </div>
 
               {/* AI Generator Box */}
-              <div className="p-4 rounded-xl bg-gradient-to-r from-secondary-container/30 to-primary-container/20 border border-secondary/30 space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shadow-xs">
-                      <span className="material-symbols-outlined text-[18px]">auto_awesome</span>
-                    </div>
-                    <div>
-                      <span className="text-xs font-bold text-on-surface block">
-                        Auto-Draft Campaign with ChatGPT & AI
-                      </span>
-                      <span className="text-[11px] text-on-surface-variant">
-                        Type your product idea, app name, or website URL and AI will fill this wizard automatically.
-                      </span>
-                    </div>
-                  </div>
+              <div className="bg-purple-50/60 border border-purple-200/80 rounded-xl p-4 space-y-3">
+                <div className="flex items-center space-x-1.5 text-xs font-bold text-purple-900">
+                  <span className="material-symbols-outlined text-sm text-purple-700">psychology</span>
+                  <span>AI Creative Generator</span>
                 </div>
-
-                <div className="flex flex-col sm:flex-row gap-2">
+                <div className="flex gap-2">
                   <input
                     type="text"
                     value={aiPrompt}
                     onChange={(e) => setAiPrompt(e.target.value)}
-                    placeholder="e.g. AI-powered financial trading assistant with zero commission"
-                    className="flex-1 px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-xs focus:border-secondary outline-none"
-                    disabled={aiLoading}
+                    placeholder="e.g. Fintech AI platform offering automated tax filing, invoice reconciliation, and 14-day free trial..."
+                    className="flex-1 px-3 py-2 border border-purple-200 rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-purple-400"
                   />
                   <button
                     type="button"
-                    onClick={() => handleAiGenerate()}
+                    onClick={handleAiGenerate}
                     disabled={aiLoading}
-                    className="px-4 py-2 rounded-lg bg-secondary text-on-secondary text-xs font-bold hover:bg-on-secondary-container transition-colors shadow-xs flex items-center justify-center gap-1.5 shrink-0"
+                    className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs px-4 py-2 rounded-lg flex items-center space-x-1 transition-colors"
                   >
-                    {aiLoading ? (
-                      <>
-                        <div className="w-3.5 h-3.5 border-2 border-on-secondary border-t-transparent rounded-full animate-spin"></div>
-                        <span>Drafting with AI...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span className="material-symbols-outlined text-[16px]">auto_awesome</span>
-                        <span>Generate with AI</span>
-                      </>
-                    )}
+                    <span className="material-symbols-outlined text-sm">
+                      {aiLoading ? 'sync' : 'auto_awesome'}
+                    </span>
+                    <span>{aiLoading ? 'Drafting...' : 'Generate Copy'}</span>
                   </button>
                 </div>
-
-                {/* Quick inspiration chips */}
-                <div className="flex items-center gap-1.5 flex-wrap pt-1">
-                  <span className="text-[10px] text-on-surface-variant font-semibold">Quick Ideas:</span>
-                  {[
-                    'ChatGPT SaaS Productivity Tool',
-                    'Zero Brokerage FinTech App',
-                    'D2C Organic Skincare Store',
-                    'Solar Energy Green Initiative',
-                  ].map((idea) => (
-                    <button
-                      key={idea}
-                      type="button"
-                      onClick={() => {
-                        setAiPrompt(idea);
-                        handleAiGenerate(idea);
-                      }}
-                      className="px-2 py-0.5 rounded-md bg-surface text-[10px] font-medium text-on-surface hover:text-secondary border border-outline-variant/30 hover:border-secondary transition-colors"
-                    >
-                      {idea}
-                    </button>
-                  ))}
-                </div>
-
-                {aiSuccess && (
-                  <div className="p-2 rounded-lg bg-secondary-container/40 text-secondary text-xs font-semibold flex items-center gap-1.5">
-                    <span className="material-symbols-outlined text-[16px]">check_circle</span>
-                    <span>Campaign drafted by AI! You can customize any field below or proceed to Step 2.</span>
-                  </div>
-                )}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-space-md pt-1">
-                <div className="space-y-1 md:col-span-2">
-                  <label className="text-xs font-semibold text-on-surface">Campaign Title</label>
+              {/* Form Fields */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Campaign Title (Internal)</label>
                   <input
                     type="text"
-                    placeholder="e.g. Sovereign Gold Bond & Equity Readiness Survey 2026"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm focus:border-secondary outline-none"
+                    placeholder="e.g. Fintech Q4 Growth"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs"
                     required
                   />
                 </div>
 
-                <div className="space-y-1 md:col-span-2">
-                  <label className="text-xs font-semibold text-on-surface">Activity Description / Ad Copy</label>
-                  <textarea
-                    rows={3}
-                    placeholder="Provide clear guidelines on the value proposition and engagement expected from users..."
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm focus:border-secondary outline-none resize-none"
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Brand Name (Public)</label>
+                  <input
+                    type="text"
+                    value={brandName}
+                    onChange={(e) => setBrandName(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <div className="flex justify-between items-center mb-1">
+                    <label className="text-xs font-semibold text-gray-700">Ad Headline</label>
+                    <span className="text-[10px] text-gray-400">{headline.length}/60 chars</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={headline}
+                    onChange={(e) => setHeadline(e.target.value)}
+                    placeholder="e.g. Automate Your Tax & Accounting"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs"
+                    maxLength={60}
                     required
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-xs font-semibold text-on-surface">Category Vertical</label>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Category</label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm focus:border-secondary outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs bg-white"
                   >
-                    <option value="FinTech">FinTech & Investment</option>
-                    <option value="Enterprise SaaS">Enterprise SaaS & Productivity</option>
-                    <option value="Digital Commerce">Digital Commerce & Retail</option>
-                    <option value="Sustainability">ESG & Green Finance</option>
-                    <option value="EdTech">EdTech & Upskilling</option>
-                    <option value="Web3">Web3 & Decentralized Tools</option>
+                    <option value="FinTech">FinTech & Banking</option>
+                    <option value="SaaS & Software">SaaS & Software</option>
+                    <option value="E-Commerce">E-Commerce & Retail</option>
+                    <option value="Education">Education & Courses</option>
+                    <option value="Healthcare">Healthcare & Wellness</option>
                   </select>
                 </div>
+              </div>
 
-                <div className="space-y-1">
-                  <label className="text-xs font-semibold text-on-surface">Action Verification Type</label>
-                  <select
-                    value={actionType}
-                    onChange={(e) => setActionType(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm focus:border-secondary outline-none"
-                  >
-                    <option value="SURVEY">Diagnostic Questionnaire (Survey)</option>
-                    <option value="SANDBOX_TRIAL">Interactive Sandbox Trial</option>
-                    <option value="APP_INSTALL">Application Trial & Exploration</option>
-                    <option value="SENTIMENT_POLL">Public Sentiment Poll</option>
-                    <option value="VIDEO_ATTENTION">High-Attention Brand Video</option>
-                  </select>
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="text-xs font-semibold text-gray-700">Short Ad Description</label>
+                  <span className="text-[10px] text-gray-400">{description.length}/120 chars</span>
                 </div>
+                <textarea
+                  rows={2}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="e.g. Experience seamless cloud accounting with instant reconciliation. Start your 14-day free trial."
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs"
+                  maxLength={120}
+                  required
+                />
+              </div>
 
-                <div className="space-y-1 md:col-span-2">
-                  <label className="text-xs font-semibold text-on-surface">Destination URL (SSL/HTTPS Only)</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Landing Page URL (Destination)</label>
                   <input
                     type="url"
-                    placeholder="https://yourbrand.com/landing"
                     value={targetUrl}
                     onChange={(e) => setTargetUrl(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm focus:border-secondary outline-none font-mono"
+                    placeholder="https://yourbrand.com/landing"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs font-mono"
                     required
                   />
                 </div>
 
-                <div className="space-y-1 md:col-span-2">
-                  <label className="text-xs font-semibold text-on-surface">Creative Banner / Asset Image URL</label>
-                  <div className="flex gap-2">
-                    <input
-                      type="url"
-                      placeholder="https://images.unsplash.com/photo-..."
-                      value={assetUrl}
-                      onChange={(e) => setAssetUrl(e.target.value)}
-                      className="flex-1 px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-xs focus:border-secondary outline-none font-mono"
-                    />
-                    {assetUrl && (
-                      <div className="w-12 h-9 rounded border border-outline-variant/30 overflow-hidden shrink-0 bg-surface-container">
-                        <img src={assetUrl} alt="Preview" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
-                      </div>
-                    )}
-                  </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Creative Banner / Image URL</label>
+                  <input
+                    type="url"
+                    value={assetUrl}
+                    onChange={(e) => setAssetUrl(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs font-mono"
+                    required
+                  />
                 </div>
               </div>
 
-              <div className="flex justify-end pt-4">
-                <button
-                  type="button"
-                  onClick={() => setStep(2)}
-                  className="px-6 py-2.5 rounded-lg bg-secondary text-on-secondary font-bold text-sm hover:bg-on-secondary-container transition-colors shadow-xs"
-                >
-                  Next: Pricing & Budgeting →
-                </button>
-              </div>
-            </div>
-          )}
-
-          {step === 2 && (
-            <div className="space-y-5">
               <div>
-                <h2 className="font-headline text-base font-bold text-on-surface">Step 2: Pricing Model, Budget & Targeting</h2>
-                <p className="text-xs text-on-surface-variant mt-0.5">
-                  Select your commercial billing model. Funds are held in partner bank escrow and disbursed upon validated delivery.
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  AI Context Relevance Hints (Comma separated)
+                </label>
+                <input
+                  type="text"
+                  value={contextHintsInput}
+                  onChange={(e) => setContextHintsInput(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs font-mono text-gray-700"
+                  placeholder="accounting, tax filing, invoice management"
+                />
+                <p className="text-[10px] text-gray-400 mt-1">
+                  Used by the backend to contextually position your ad below matching ChatGPT conversational answers.
                 </p>
               </div>
 
-              {/* Pricing Model Selector Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div
-                  onClick={() => setPricingModel('CPO')}
-                  className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
-                    pricingModel === 'CPO'
-                      ? 'border-secondary bg-secondary-container/20 shadow-xs'
-                      : 'border-outline-variant/30 bg-surface-container-low hover:border-outline-variant'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold text-on-surface">CPO (Verified Outcomes)</span>
-                    <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${pricingModel === 'CPO' ? 'border-secondary bg-secondary' : 'border-outline-variant'}`}>
-                      {pricingModel === 'CPO' && <span className="w-1.5 h-1.5 rounded-full bg-on-secondary"></span>}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-on-surface-variant">Pay only for audited cognitive task completions, trials, or high-intent forms.</p>
-                </div>
-
-                <div
-                  onClick={() => setPricingModel('CPC')}
-                  className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
-                    pricingModel === 'CPC'
-                      ? 'border-secondary bg-secondary-container/20 shadow-xs'
-                      : 'border-outline-variant/30 bg-surface-container-low hover:border-outline-variant'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold text-on-surface">CPC (Cost Per Click)</span>
-                    <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${pricingModel === 'CPC' ? 'border-secondary bg-secondary' : 'border-outline-variant'}`}>
-                      {pricingModel === 'CPC' && <span className="w-1.5 h-1.5 rounded-full bg-on-secondary"></span>}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-on-surface-variant">Pay for verified extension clicks with signed telemetry and anti-bot validation.</p>
-                </div>
-
-                <div
-                  onClick={() => setPricingModel('CPM')}
-                  className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
-                    pricingModel === 'CPM'
-                      ? 'border-secondary bg-secondary-container/20 shadow-xs'
-                      : 'border-outline-variant/30 bg-surface-container-low hover:border-outline-variant'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold text-on-surface">CPM (Viewable Impressions)</span>
-                    <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${pricingModel === 'CPM' ? 'border-secondary bg-secondary' : 'border-outline-variant'}`}>
-                      {pricingModel === 'CPM' && <span className="w-1.5 h-1.5 rounded-full bg-on-secondary"></span>}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-on-surface-variant">Pay per 1,000 IAB-compliant in-viewport impressions with verified dwell time.</p>
-                </div>
-              </div>
-
-              {/* Dynamic Rates according to Pricing Model */}
-              <div className="p-4 rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-4">
-                <span className="text-xs font-bold text-on-surface block">Commercial Rate Configuration</span>
-
-                {pricingModel === 'CPO' && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-                    <div className="space-y-1">
-                      <label className="text-xs font-semibold text-on-surface">Cost Per Verified Outcome (₹)</label>
-                      <input
-                        type="number"
-                        min="5"
-                        step="1"
-                        value={costPerOutcomeRupees}
-                        onChange={(e) => setCostPerOutcomeRupees(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm font-semibold tabular-nums outline-none focus:border-secondary"
-                      />
-                      <span className="text-[10px] text-on-surface-variant">Minimum ₹5.00 per completed task</span>
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-xs font-semibold text-on-surface">Target Outcomes</label>
-                      <input
-                        type="number"
-                        min="10"
-                        value={targetOutcomes}
-                        onChange={(e) => setTargetOutcomes(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm font-semibold tabular-nums outline-none focus:border-secondary"
-                      />
-                      <span className="text-[10px] text-on-surface-variant">Expected outcome volume for this flight</span>
-                    </div>
-                  </div>
-                )}
-
-                {pricingModel === 'CPC' && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-                    <div className="space-y-1">
-                      <label className="text-xs font-semibold text-on-surface">Advertiser Cost Per Click (₹)</label>
-                      <input
-                        type="number"
-                        min="0.5"
-                        step="0.25"
-                        value={cpcRateRupees}
-                        onChange={(e) => setCpcRateRupees(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm font-semibold tabular-nums outline-none focus:border-secondary"
-                      />
-                      <span className="text-[10px] text-on-surface-variant">Charged per cryptographically signed click</span>
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-xs font-semibold text-on-surface">User Click Reward (₹)</label>
-                      <input
-                        type="number"
-                        min="0.1"
-                        step="0.1"
-                        value={creatorClickRewardRupees}
-                        onChange={(e) => setCreatorClickRewardRupees(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm font-semibold tabular-nums outline-none focus:border-secondary"
-                      />
-                      <span className="text-[10px] text-on-surface-variant">Micro-reward allocated to participating user wallet</span>
-                    </div>
-                  </div>
-                )}
-
-                {pricingModel === 'CPM' && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-                    <div className="space-y-1">
-                      <label className="text-xs font-semibold text-on-surface">CPM Rate (₹ per 1,000 Impressions)</label>
-                      <input
-                        type="number"
-                        min="20"
-                        step="5"
-                        value={cpmRateRupees}
-                        onChange={(e) => setCpmRateRupees(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm font-semibold tabular-nums outline-none focus:border-secondary"
-                      />
-                      <span className="text-[10px] text-on-surface-variant">₹{(parseFloat(cpmRateRupees || '0') / 1000).toFixed(3)} per single verified view</span>
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-xs font-semibold text-on-surface">Creator Reward (₹ per 1,000 Views)</label>
-                      <input
-                        type="number"
-                        min="5"
-                        step="5"
-                        value={creatorImpressionRewardRupees}
-                        onChange={(e) => setCreatorImpressionRewardRupees(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm font-semibold tabular-nums outline-none focus:border-secondary"
-                      />
-                      <span className="text-[10px] text-on-surface-variant">Shared with creators meeting dwell criteria</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Budgets & Spending Limits */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-space-md">
-                <div className="space-y-1">
-                  <label className="text-xs font-semibold text-on-surface">Total Campaign Budget Allocation (INR)</label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-2 text-sm font-bold text-on-surface-variant">₹</span>
-                    <input
-                      type="number"
-                      min="1000"
-                      step="500"
-                      value={budgetAllocatedRupees}
-                      onChange={(e) => setBudgetAllocatedRupees(e.target.value)}
-                      className="w-full pl-8 pr-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm focus:border-secondary outline-none tabular-nums font-semibold"
-                    />
-                  </div>
-                  <span className="text-[10px] text-on-surface-variant">Minimum ₹1,000. Reserved atomically from unreserved escrow balance</span>
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-xs font-semibold text-on-surface">Daily Spending Cap (Optional)</label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-2 text-sm font-bold text-on-surface-variant">₹</span>
-                    <input
-                      type="number"
-                      min="100"
-                      step="100"
-                      value={dailyBudgetCapRupees}
-                      onChange={(e) => setDailyBudgetCapRupees(e.target.value)}
-                      className="w-full pl-8 pr-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-sm focus:border-secondary outline-none tabular-nums font-semibold"
-                    />
-                  </div>
-                  <span className="text-[10px] text-on-surface-variant">Paces campaign delivery across the flight window</span>
-                </div>
-              </div>
-
-              {/* Targeting & Optional Rewards Settings */}
-              <div className="p-4 rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-3">
-                <span className="text-xs font-bold text-on-surface block">Audience Targeting & Reward Participation</span>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-on-surface">User KYC Verification Requirement</label>
-                    <select
-                      value={minKycTier}
-                      onChange={(e) => setMinKycTier(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/40 text-xs focus:border-secondary outline-none"
-                    >
-                      <option value="TIER_0">Tier 0 (Registered Extension Users)</option>
-                      <option value="TIER_1">Tier 1 (Phone & Email Verified Only)</option>
-                      <option value="TIER_2">Tier 2 (Government ID & Bank Verified)</option>
-                    </select>
-                  </div>
-
-                  <div className="flex items-center pt-5">
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={rewardsEnabled}
-                        onChange={(e) => setRewardsEnabled(e.target.checked)}
-                        className="accent-secondary w-4 h-4 rounded"
-                      />
-                      <span className="text-xs text-on-surface font-medium">
-                        Enable optional user reward payouts for this campaign
-                      </span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-between pt-4">
+              <div className="flex justify-end pt-2">
                 <button
                   type="button"
-                  onClick={() => setStep(1)}
-                  className="px-4 py-2 rounded-lg bg-surface-container text-on-surface text-xs font-semibold"
+                  onClick={() => setCurrentStep(2)}
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs px-5 py-2.5 rounded-lg flex items-center space-x-1"
                 >
-                  ← Back
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setStep(3)}
-                  className="px-6 py-2.5 rounded-lg bg-secondary text-on-secondary font-bold text-sm hover:bg-on-secondary-container transition-colors shadow-xs"
-                >
-                  Next: Regulatory Policy & Submit →
+                  <span>Next: Choose Channels & Budget</span>
+                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
                 </button>
               </div>
             </div>
           )}
 
-          {step === 3 && (
-            <div className="space-y-4">
-              <h2 className="font-headline text-base font-bold text-on-surface">Step 3: Review Breakdown & Policy Declaration</h2>
+          {/* STEP 2: CHANNELS & BUDGET */}
+          {currentStep === 2 && (
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 space-y-6 shadow-sm">
+              <div className="border-b border-gray-100 pb-4">
+                <h3 className="text-base font-bold text-gray-900">Distribution Channels & Escrow Budget</h3>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Select where your advertisement should be distributed. All spending is funded directly from your verified INR escrow reserve.
+                </p>
+              </div>
 
-              {/* Summary Card */}
-              <div className="p-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-3">
-                <div className="flex items-center justify-between pb-2 border-b border-outline-variant/20">
-                  <span className="text-xs font-bold text-on-surface">Campaign Commercial Summary</span>
-                  <span className="px-2 py-0.5 rounded bg-secondary/15 text-secondary text-[11px] font-bold">
-                    {pricingModel} Model
-                  </span>
+              {/* Channel Selector Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div
+                  onClick={() => setSelectedChannel('OMNICHANNEL')}
+                  className={`p-4 rounded-xl border-2 cursor-pointer transition-all space-y-2 ${
+                    selectedChannel === 'OMNICHANNEL'
+                      ? 'border-purple-600 bg-purple-50/50 shadow-xs'
+                      : 'border-gray-200 hover:border-gray-300 bg-white'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="material-symbols-outlined text-purple-700 text-xl">hub</span>
+                    <span className="text-[10px] bg-purple-200 text-purple-900 font-bold px-1.5 py-0.5 rounded">
+                      Recommended
+                    </span>
+                  </div>
+                  <div className="font-bold text-xs text-gray-900">Omnichannel (Max Reach)</div>
+                  <p className="text-[11px] text-gray-500 leading-snug">
+                    Deploys to both ChatGPT conversational responses and AdEarn verified extension user popups.
+                  </p>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                <div
+                  onClick={() => setSelectedChannel('OPENAI_CHATGPT')}
+                  className={`p-4 rounded-xl border-2 cursor-pointer transition-all space-y-2 ${
+                    selectedChannel === 'OPENAI_CHATGPT'
+                      ? 'border-purple-600 bg-purple-50/50 shadow-xs'
+                      : 'border-gray-200 hover:border-gray-300 bg-white'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-purple-700 text-xl">smart_toy</span>
+                  <div className="font-bold text-xs text-gray-900">ChatGPT AI Only</div>
+                  <p className="text-[11px] text-gray-500 leading-snug">
+                    Native sponsored cards rendered directly underneath relevant user answers inside ChatGPT.
+                  </p>
+                </div>
+
+                <div
+                  onClick={() => setSelectedChannel('ADEARN_EXTENSION')}
+                  className={`p-4 rounded-xl border-2 cursor-pointer transition-all space-y-2 ${
+                    selectedChannel === 'ADEARN_EXTENSION'
+                      ? 'border-purple-600 bg-purple-50/50 shadow-xs'
+                      : 'border-gray-200 hover:border-gray-300 bg-white'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-blue-700 text-xl">extension</span>
+                  <div className="font-bold text-xs text-gray-900">Extension Network Only</div>
+                  <p className="text-[11px] text-gray-500 leading-snug">
+                    Verified browser popup inventory with IVT protection and optional voluntary creator reward tasks.
+                  </p>
+                </div>
+              </div>
+
+              {/* Budget Configuration */}
+              <div className="border-t border-gray-100 pt-5 space-y-4">
+                <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider">Campaign Budget</h4>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <span className="text-on-surface-variant block text-[10px]">Total Escrow Lock</span>
-                    <span className="font-bold text-on-surface text-sm">₹{parseFloat(budgetAllocatedRupees || '0').toLocaleString('en-IN')}</span>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">
+                      Total Allocated Budget (INR ₹)
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-2 text-gray-500 text-xs">₹</span>
+                      <input
+                        type="number"
+                        min="500"
+                        value={budgetAllocatedRupees}
+                        onChange={(e) => setBudgetAllocatedRupees(e.target.value)}
+                        className="w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg text-xs font-bold text-gray-900"
+                        required
+                      />
+                    </div>
+                    <p className="text-[10px] text-gray-400 mt-1">
+                      Reserved safely in your nodal escrow balance upon submission.
+                    </p>
                   </div>
+
                   <div>
-                    <span className="text-on-surface-variant block text-[10px]">Pricing Model</span>
-                    <span className="font-bold text-on-surface">{pricingModel}</span>
-                  </div>
-                  <div>
-                    <span className="text-on-surface-variant block text-[10px]">Daily Cap</span>
-                    <span className="font-bold text-on-surface">₹{dailyBudgetCapRupees || 'None'}</span>
-                  </div>
-                  <div>
-                    <span className="text-on-surface-variant block text-[10px]">Reward Payouts</span>
-                    <span className="font-bold text-on-surface">{rewardsEnabled ? 'Enabled' : 'Disabled'}</span>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Target Cost Per Click (CPC ₹)</label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-2 text-gray-500 text-xs">₹</span>
+                      <input
+                        type="number"
+                        step="0.10"
+                        value={costPerOutcomeRupees}
+                        onChange={(e) => setCostPerOutcomeRupees(e.target.value)}
+                        className="w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg text-xs"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="p-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-3">
-                <label className="flex items-start gap-2.5 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={policyDeclared}
-                    onChange={(e) => setPolicyDeclared(e.target.checked)}
-                    className="mt-0.5 accent-secondary"
-                  />
-                  <span className="text-xs text-on-surface font-medium">
-                    <strong>Mandatory Advertiser Declaration:</strong> We certify that this campaign complies with ASCI (Advertising Standards Council of India) codes and applicable digital advertising guidelines. This campaign is served exclusively within verified extension inventory surfaces without third-party website DOM injection.
-                  </span>
+              <div className="flex justify-between pt-2">
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep(1)}
+                  className="border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold text-xs px-5 py-2.5 rounded-lg"
+                >
+                  Back: Offer & Copy
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep(3)}
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs px-5 py-2.5 rounded-lg flex items-center space-x-1"
+                >
+                  <span>Next: Preview & Submit</span>
+                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 3: DUAL LIVE PREVIEW & SUBMIT */}
+          {currentStep === 3 && (
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 space-y-6 shadow-sm">
+              <div className="border-b border-gray-100 pb-4">
+                <h3 className="text-base font-bold text-gray-900">Review & Dual Channel Preview</h3>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Confirm how your advertisement renders on both channels before submitting for admin moderation approval.
+                </p>
+              </div>
+
+              {/* Previews Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Preview 1: ChatGPT Native Card Preview */}
+                <div className="bg-neutral-900 text-white rounded-xl p-4 shadow-sm border border-neutral-800 space-y-3">
+                  <div className="text-[10px] text-neutral-400 font-semibold flex justify-between items-center border-b border-neutral-800 pb-2">
+                    <span className="flex items-center space-x-1">
+                      <span className="material-symbols-outlined text-xs">smart_toy</span>
+                      <span>ChatGPT Native Delivery Preview</span>
+                    </span>
+                    <span className="bg-neutral-800 text-neutral-300 px-1.5 py-0.2 rounded text-[9px]">Dark Mode</span>
+                  </div>
+
+                  <div className="text-[11px] text-neutral-400 font-medium">This might also interest you.</div>
+
+                  <div className="bg-[#1f1f23] border border-neutral-700/60 rounded-xl p-3 flex items-start space-x-3">
+                    <div className="w-16 h-16 rounded-lg bg-neutral-800 overflow-hidden flex-shrink-0 border border-neutral-700">
+                      <img src={assetUrl} alt={title} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-0.5">
+                        <span className="text-xs font-semibold text-neutral-200 truncate">{brandName}</span>
+                        <span className="text-[9px] font-bold bg-neutral-700 text-neutral-300 px-1 py-0.2 rounded">Ad</span>
+                      </div>
+                      <div className="text-xs font-bold text-white truncate">{headline || title}</div>
+                      <div className="text-[10px] text-neutral-400 line-clamp-2 mt-0.5 leading-snug">{description}</div>
+                      <div className="text-[10px] text-neutral-300 underline font-semibold mt-1">Learn more ↗</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Preview 2: AdEarn Extension Card Preview */}
+                <div className="bg-gray-50 rounded-xl p-4 border border-gray-200 space-y-3">
+                  <div className="text-[10px] text-gray-500 font-semibold flex justify-between items-center border-b border-gray-200 pb-2">
+                    <span className="flex items-center space-x-1">
+                      <span className="material-symbols-outlined text-xs text-blue-600">extension</span>
+                      <span>AdEarn Extension Popup Preview</span>
+                    </span>
+                    <span className="bg-blue-100 text-blue-800 px-1.5 py-0.2 rounded text-[9px] font-bold">Popup Unit</span>
+                  </div>
+
+                  <div className="bg-white border border-gray-200 rounded-xl p-3 flex items-center space-x-3 shadow-xs">
+                    <img src={assetUrl} alt={title} className="w-14 h-14 rounded-lg object-cover border border-gray-100" />
+                    <div className="flex-1 min-w-0">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-purple-700">{category}</span>
+                      <div className="text-xs font-bold text-gray-900 truncate">{headline || title}</div>
+                      <div className="text-[10px] text-gray-500 line-clamp-1">{description}</div>
+                      <div className="text-[10px] text-purple-700 font-semibold mt-0.5">Visit Sponsor ↗</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Summary Strip */}
+              <div className="bg-gray-50 rounded-xl p-4 border border-gray-200 text-xs space-y-2">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  <div>
+                    <span className="text-gray-500 text-[10px] uppercase font-bold block">Allocated Budget:</span>
+                    <span className="font-bold text-gray-900">₹{parseFloat(budgetAllocatedRupees || '0').toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500 text-[10px] uppercase font-bold block">Selected Channel:</span>
+                    <span className="font-bold text-purple-900">{selectedChannel}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500 text-[10px] uppercase font-bold block">Destination:</span>
+                    <span className="font-mono text-gray-700 text-[11px] truncate block">{targetUrl}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500 text-[10px] uppercase font-bold block">Approval Status:</span>
+                    <span className="bg-amber-100 text-amber-900 font-bold px-1.5 py-0.2 rounded text-[10px]">
+                      Pending Review
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Policy Checkbox */}
+              <div className="flex items-start space-x-2.5 text-xs text-gray-700 pt-2">
+                <input
+                  type="checkbox"
+                  id="policy"
+                  checked={policyDeclared}
+                  onChange={(e) => setPolicyDeclared(e.target.checked)}
+                  className="mt-0.5 rounded text-purple-600 focus:ring-purple-500"
+                />
+                <label htmlFor="policy" className="cursor-pointer leading-relaxed text-[11px]">
+                  I confirm that all ad creatives comply with ASCI Guidelines and OpenAI Advertising Policies. I acknowledge that campaign budget will be locked in domestic escrow upon submission and deployed autonomously upon administrator moderation approval.
                 </label>
               </div>
 
-              <div className="flex justify-between pt-4">
+              {/* Action Buttons */}
+              <div className="flex justify-between pt-2">
                 <button
                   type="button"
-                  onClick={() => setStep(2)}
-                  className="px-4 py-2 rounded-lg bg-surface-container text-on-surface text-xs font-semibold"
+                  onClick={() => setCurrentStep(2)}
+                  className="border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold text-xs px-5 py-2.5 rounded-lg"
                 >
-                  ← Back
+                  Back: Channels & Budget
                 </button>
+
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-8 py-2.5 rounded-lg bg-secondary text-on-secondary font-bold text-sm hover:bg-on-secondary-container transition-colors shadow-xs flex items-center gap-2"
+                  className="bg-black hover:bg-neutral-800 text-white font-bold text-xs px-6 py-2.5 rounded-lg shadow-sm flex items-center space-x-2 transition-all"
                 >
-                  {submitting ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-on-secondary border-t-transparent rounded-full animate-spin"></div>
-                      <span>Locking Escrow & Launching...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Lock Escrow & Deploy Campaign</span>
-                      <span className="material-symbols-outlined text-[18px]">rocket_launch</span>
-                    </>
-                  )}
+                  <span className="material-symbols-outlined text-sm">
+                    {submitting ? 'sync' : 'send'}
+                  </span>
+                  <span>{submitting ? 'Submitting Proposal...' : 'Submit Campaign for Approval'}</span>
                 </button>
               </div>
             </div>
