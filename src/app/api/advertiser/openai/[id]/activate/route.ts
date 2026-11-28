@@ -57,6 +57,48 @@ export async function POST(
     const body = await req.json().catch(() => ({}));
     const targetStatus = body.status === 'ACTIVE' ? 'active' : 'paused';
 
+    // Gatekeeping: An advertiser cannot activate an unapproved OpenAI campaign
+    const userRole = auth.session!.role || 'ADVERTISER';
+    if (targetStatus === 'active' && userRole !== 'ADMIN' && userRole !== 'SUPER_ADMIN') {
+      if (!campaign.campaignId) {
+        return NextResponse.json(
+          { error: 'OpenAI campaign cannot be activated directly. It must be linked to an approved campaign.' },
+          { status: 403 }
+        );
+      }
+
+      const parentCampaign = await prisma.campaign.findUnique({
+        where: { id: campaign.campaignId },
+      });
+
+      if (!parentCampaign || ['IN_REVIEW', 'PENDING_APPROVAL', 'DRAFT', 'REJECTED'].includes(parentCampaign.status)) {
+        return NextResponse.json(
+          {
+            error:
+              'Forbidden. This campaign is awaiting administrative moderation approval in AdEarn Admin before it can be deployed or activated in OpenAI inventory.',
+          },
+          { status: 403 }
+        );
+      }
+
+      const approvedDecision = await prisma.moderationRecord.findFirst({
+        where: {
+          campaignId: campaign.campaignId,
+          decision: 'ACTIVE',
+        },
+      });
+
+      if (!approvedDecision) {
+        return NextResponse.json(
+          {
+            error:
+              'Forbidden. This campaign has not received an approved administrative moderation decision and cannot be activated.',
+          },
+          { status: 403 }
+        );
+      }
+    }
+
     // 1. Call OpenAI Ads API state transition endpoint
     const updatedStatus = await OpenaiAdsService.updateCampaignStatus(
       campaign.externalCampaignId || campaign.id,

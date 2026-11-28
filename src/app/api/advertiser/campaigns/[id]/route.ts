@@ -111,6 +111,47 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     return NextResponse.json({ error: 'Invalid campaign status update' }, { status: 400 });
   }
 
+  // Gatekeeping: An advertiser cannot transition an unapproved campaign to ACTIVE
+  if (role === 'ADVERTISER') {
+    if (status === 'ACTIVE') {
+      if (['IN_REVIEW', 'PENDING_APPROVAL', 'DRAFT', 'REJECTED'].includes(campaign.status)) {
+        return NextResponse.json(
+          {
+            error:
+              'Forbidden. This campaign is awaiting administrative moderation approval and cannot be activated until approved by AdEarn Compliance.',
+          },
+          { status: 403 }
+        );
+      }
+
+      // If it was paused, ensure it received an approved moderation decision previously
+      const priorApproval = await prisma.moderationRecord.findFirst({
+        where: {
+          campaignId: campaign.id,
+          decision: 'ACTIVE',
+        },
+      });
+
+      if (!priorApproval) {
+        return NextResponse.json(
+          {
+            error:
+              'Forbidden. This campaign has not received an approved administrative moderation decision and cannot be set to ACTIVE.',
+          },
+          { status: 403 }
+        );
+      }
+    } else if (status === 'PAUSED' && ['IN_REVIEW', 'PENDING_APPROVAL'].includes(campaign.status)) {
+      return NextResponse.json(
+        {
+          error:
+            'Campaign is currently under compliance review and will remain in review until an admin decision is issued.',
+        },
+        { status: 400 }
+      );
+    }
+  }
+
   const updatedCampaign = await prisma.campaign.update({
     where: { id: params.id },
     data: { status },

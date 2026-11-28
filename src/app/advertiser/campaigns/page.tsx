@@ -41,6 +41,10 @@ export default function AdvertiserCampaignsListPage() {
   }, []);
 
   async function handleToggleStatus(campaignId: string, currentStatus: string) {
+    if (['IN_REVIEW', 'PENDING_APPROVAL', 'DRAFT', 'REJECTED'].includes(currentStatus)) {
+      alert('This campaign is awaiting administrator moderation review. It will automatically go live once approved by AdEarn Compliance.');
+      return;
+    }
     const nextStatus = currentStatus === 'ACTIVE' ? 'PAUSED' : 'ACTIVE';
     try {
       const res = await fetch(`/api/advertiser/campaigns/${campaignId}`, {
@@ -48,13 +52,17 @@ export default function AdvertiserCampaignsListPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: nextStatus }),
       });
+      const data = await res.json();
       if (res.ok) {
         setCampaigns((prev) =>
           prev.map((c) => (c.id === campaignId ? { ...c, status: nextStatus } : c))
         );
+      } else {
+        alert(data.error || 'Failed to update campaign status');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert('Error updating campaign: ' + err.message);
     }
   }
 
@@ -215,20 +223,27 @@ export default function AdvertiserCampaignsListPage() {
                           </span>
                         </td>
                         <td className="py-3 px-space-md">
-                          <span
-                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
-                              camp.status === 'ACTIVE'
-                                ? 'bg-secondary-container/50 text-secondary'
-                                : 'bg-surface-container text-on-surface-variant'
-                            }`}
-                          >
-                            <span
-                              className={`w-1.5 h-1.5 rounded-full ${
-                                camp.status === 'ACTIVE' ? 'bg-secondary' : 'bg-outline'
-                              }`}
-                            ></span>
-                            {camp.status}
-                          </span>
+                          {camp.status === 'ACTIVE' ? (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                              ACTIVE
+                            </span>
+                          ) : camp.status === 'IN_REVIEW' || camp.status === 'PENDING_APPROVAL' ? (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                              <span className="material-symbols-outlined text-[13px] text-amber-600 animate-spin">progress_activity</span>
+                              IN REVIEW
+                            </span>
+                          ) : camp.status === 'REJECTED' ? (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+                              <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                              REJECTED
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-container text-on-surface-variant border border-outline-variant/30">
+                              <span className="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                              PAUSED
+                            </span>
+                          )}
                         </td>
                         <td className="py-3 px-space-md">
                           <div className="space-y-1">
@@ -266,7 +281,7 @@ export default function AdvertiserCampaignsListPage() {
                           <span className="text-secondary text-xs font-bold">{camp.ivtRatePercent}%</span>
                         </td>
                         <td className="py-3 px-space-md text-right">
-                          <div className="flex items-center justify-end gap-1">
+                          <div className="flex items-center justify-end gap-1.5">
                             <Link
                               href={`/advertiser/campaigns/${camp.id}`}
                               className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface text-xs font-semibold transition-colors"
@@ -275,19 +290,37 @@ export default function AdvertiserCampaignsListPage() {
                               <span className="material-symbols-outlined text-[16px]">insights</span>
                               <span>Telemetry</span>
                             </Link>
-                            <button
-                              onClick={() => handleToggleStatus(camp.id, camp.status)}
-                              className={`p-1.5 rounded-md hover:bg-surface-container text-xs font-semibold transition-colors ${
-                                camp.status === 'ACTIVE'
-                                  ? 'text-on-surface-variant hover:text-error'
-                                  : 'text-secondary hover:text-secondary'
-                              }`}
-                              title={camp.status === 'ACTIVE' ? 'Pause Campaign' : 'Resume Campaign'}
-                            >
-                              <span className="material-symbols-outlined text-[18px]">
-                                {camp.status === 'ACTIVE' ? 'pause' : 'play_arrow'}
+                            {camp.status === 'IN_REVIEW' || camp.status === 'PENDING_APPROVAL' ? (
+                              <span
+                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-amber-50/80 border border-amber-200 text-amber-800 text-xs font-semibold cursor-help"
+                                title="Pending compliance review in AdEarn Admin Moderation Queue"
+                              >
+                                <span className="material-symbols-outlined text-[14px] text-amber-600">lock_clock</span>
+                                <span>In Review</span>
                               </span>
-                            </button>
+                            ) : camp.status === 'REJECTED' ? (
+                              <span
+                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold cursor-help"
+                                title="Campaign declined in moderation"
+                              >
+                                <span className="material-symbols-outlined text-[14px] text-rose-600">cancel</span>
+                                <span>Declined</span>
+                              </span>
+                            ) : (
+                              <button
+                                onClick={() => handleToggleStatus(camp.id, camp.status)}
+                                className={`p-1.5 rounded-md hover:bg-surface-container text-xs font-semibold transition-colors ${
+                                  camp.status === 'ACTIVE'
+                                    ? 'text-on-surface-variant hover:text-error'
+                                    : 'text-secondary hover:text-secondary'
+                                }`}
+                                title={camp.status === 'ACTIVE' ? 'Pause Campaign' : 'Resume Flight'}
+                              >
+                                <span className="material-symbols-outlined text-[18px]">
+                                  {camp.status === 'ACTIVE' ? 'pause' : 'play_arrow'}
+                                </span>
+                              </button>
+                            )}
                           </div>
                         </td>
                       </tr>

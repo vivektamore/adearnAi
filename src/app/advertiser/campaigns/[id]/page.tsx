@@ -27,14 +27,25 @@ export default function CampaignDetailTelemetryPage() {
 
   async function handleToggleStatus() {
     if (!campaign) return;
+    if (['IN_REVIEW', 'PENDING_APPROVAL', 'DRAFT', 'REJECTED'].includes(campaign.status)) {
+      alert('This campaign is awaiting administrator moderation review. It will automatically go live once approved by AdEarn Compliance.');
+      return;
+    }
     const nextStatus = campaign.status === 'ACTIVE' ? 'PAUSED' : 'ACTIVE';
-    const res = await fetch(`/api/advertiser/campaigns/${campaignId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: nextStatus }),
-    });
-    if (res.ok) {
-      setCampaign({ ...campaign, status: nextStatus });
+    try {
+      const res = await fetch(`/api/advertiser/campaigns/${campaignId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: nextStatus }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setCampaign({ ...campaign, status: nextStatus });
+      } else {
+        alert(data.error || 'Failed to update campaign status');
+      }
+    } catch (err: any) {
+      alert('Error updating campaign: ' + err.message);
     }
   }
 
@@ -79,14 +90,27 @@ export default function CampaignDetailTelemetryPage() {
         <div className="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/30 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-space-md">
           <div className="space-y-1">
             <div className="flex items-center gap-space-sm flex-wrap">
-              <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                campaign.status === 'ACTIVE'
-                  ? 'bg-secondary-container/50 text-secondary'
-                  : 'bg-surface-container text-on-surface-variant'
-              }`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${campaign.status === 'ACTIVE' ? 'bg-secondary animate-pulse' : 'bg-outline'}`}></span>
-                {campaign.status} Live Flight
-              </span>
+              {campaign.status === 'ACTIVE' ? (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  ACTIVE Live Flight
+                </span>
+              ) : campaign.status === 'IN_REVIEW' || campaign.status === 'PENDING_APPROVAL' ? (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                  <span className="material-symbols-outlined text-[13px] text-amber-600 animate-spin">progress_activity</span>
+                  Awaiting Admin Moderation
+                </span>
+              ) : campaign.status === 'REJECTED' ? (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                  REJECTED
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-container text-on-surface-variant border border-outline-variant/30">
+                  <span className="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                  PAUSED
+                </span>
+              )}
               <span className="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[11px] font-semibold uppercase">
                 {campaign.category}
               </span>
@@ -100,19 +124,37 @@ export default function CampaignDetailTelemetryPage() {
           </div>
 
           <div className="flex items-center gap-space-sm shrink-0">
-            <button
-              onClick={handleToggleStatus}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors shadow-xs flex items-center gap-1.5 ${
-                campaign.status === 'ACTIVE'
-                  ? 'bg-surface-container text-on-surface hover:bg-surface-container-high border border-outline-variant/30'
-                  : 'bg-secondary text-on-secondary hover:bg-on-secondary-container'
-              }`}
-            >
-              <span className="material-symbols-outlined text-[16px]">
-                {campaign.status === 'ACTIVE' ? 'pause' : 'play_arrow'}
-              </span>
-              <span>{campaign.status === 'ACTIVE' ? 'Pause Campaign' : 'Resume Flight'}</span>
-            </button>
+            {campaign.status === 'IN_REVIEW' || campaign.status === 'PENDING_APPROVAL' ? (
+              <div className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold shadow-xs">
+                <span className="material-symbols-outlined text-[18px] text-amber-600 animate-spin">progress_activity</span>
+                <div>
+                  <div className="font-bold">In Moderation Queue</div>
+                  <div className="text-[10px] text-amber-700 font-normal">Escrow budget is securely locked. Deploys live once approved.</div>
+                </div>
+              </div>
+            ) : campaign.status === 'REJECTED' ? (
+              <div className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold shadow-xs">
+                <span className="material-symbols-outlined text-[18px] text-rose-600">cancel</span>
+                <div>
+                  <div className="font-bold">Proposal Declined</div>
+                  <div className="text-[10px] text-rose-700 font-normal">Review moderation feedback in Admin desk.</div>
+                </div>
+              </div>
+            ) : (
+              <button
+                onClick={handleToggleStatus}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors shadow-xs flex items-center gap-1.5 ${
+                  campaign.status === 'ACTIVE'
+                    ? 'bg-surface-container text-on-surface hover:bg-surface-container-high border border-outline-variant/30'
+                    : 'bg-secondary text-on-secondary hover:bg-on-secondary-container'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[16px]">
+                  {campaign.status === 'ACTIVE' ? 'pause' : 'play_arrow'}
+                </span>
+                <span>{campaign.status === 'ACTIVE' ? 'Pause Campaign' : 'Resume Flight'}</span>
+              </button>
+            )}
           </div>
         </div>
 

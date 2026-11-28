@@ -396,7 +396,7 @@ export default function ChatGptAdsDashboardPage() {
                             onClick={() => handleToggleStatus(c.id, c.status)}
                             className="text-xs text-gray-700 hover:text-black font-semibold underline mr-3"
                           >
-                            {c.status === 'ACTIVE' ? 'Pause' : 'Activate'}
+                            {c.status === 'ACTIVE' ? 'Pause' : 'Resume Flight'}
                           </button>
                         </td>
                       </tr>
